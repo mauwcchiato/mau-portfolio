@@ -13,7 +13,7 @@ window.SITE = {
     program: "BSIT",
     school: "Mapúa Malayan Colleges Laguna",
     gradYear: "2027",
-    ojt: "November 2026 · ~600 hours",
+    ojt: "November 2026 · 486 hours",
     email: "jhanmauricederoxas@gmail.com",
     phone: "0932 447 5709",
     github: "https://github.com/mauwcchiato",
