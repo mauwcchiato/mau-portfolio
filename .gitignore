@@ -1,0 +1,8 @@
+.vercel
+.env
+.env.*
+Thumbs.db
+.DS_Store
+*.log
+_legacy_index.html
+assets/video

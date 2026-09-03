@@ -1,0 +1,146 @@
+/* ==========================================================================
+   tokens.css — the whole visual language in one place.
+   Light is defined on :root. Dark overrides only what changes, twice:
+   once for prefers-color-scheme (system), once for an explicit toggle.
+   ========================================================================== */
+
+:root {
+  /* --- surfaces --- */
+  --bg:        #FAF7F5;
+  --bg-2:      #FFFFFF;
+  --bg-3:      #F2EDE9;
+  --bg-sunk:   #EFE8E3;
+
+  /* --- lines --- */
+  --line:      #E4DAD3;
+  --line-2:    #CDC0B7;
+  --line-hard: #1C1A26;
+
+  /* --- ink --- */
+  --ink:       #1B1922;
+  --ink-2:     #55505F;
+  --ink-3:     #7C7589;
+
+  /* --- accents (light: deepened for contrast) --- */
+  --lilac:     #6A41D6;
+  --lilac-ink: #4C2AA8;
+  --mint:      #0B7F60;
+  --peach:     #B84D2A;
+  --sun:       #9A6B00;
+
+  /* --- accent washes --- */
+  --lilac-wash: rgba(106, 65, 214, .09);
+  --mint-wash:  rgba(11, 127, 96, .09);
+  --peach-wash: rgba(184, 77, 42, .09);
+
+  /* --- effects --- */
+  --glow:      0 0 0 rgba(0,0,0,0);
+  --shadow-1:  0 1px 2px rgba(28,26,38,.06), 0 4px 14px rgba(28,26,38,.06);
+  --shadow-2:  0 2px 6px rgba(28,26,38,.08), 0 18px 44px rgba(28,26,38,.10);
+  --pixel-shadow: 4px 4px 0 var(--line-2);
+  --scanline:  rgba(28,26,38,.028);
+
+  /* --- terminal --- */
+  --term-bg:   #171426;
+  --term-ink:  #E9E6F5;
+  --term-dim:  #9C93C4;
+  --term-accent: #9E86FF;
+
+  /* --- type --- */
+  --f-pixel:   "Press Start 2P", "Courier New", monospace;
+  --f-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* --- rhythm --- */
+  --shell:     1180px;
+  --shell-wide:1360px;
+  --pad:       clamp(20px, 5vw, 56px);
+  --gap:       clamp(16px, 2.4vw, 28px);
+  --sec-y:     clamp(72px, 11vh, 132px);
+
+  --r-sm: 8px;
+  --r:    14px;
+  --r-lg: 22px;
+
+  --t-fast: 140ms;
+  --t:      240ms;
+  --t-slow: 520ms;
+  --ease:   cubic-bezier(.22,.61,.36,1);
+}
+
+/* ---------- dark: system default ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #090B12;
+    --bg-2:      #10131E;
+    --bg-3:      #171B2A;
+    --bg-sunk:   #06070C;
+
+    --line:      #232838;
+    --line-2:    #343B52;
+    --line-hard: #47506E;
+
+    --ink:       #E9EBF4;
+    --ink-2:     #A3AAC2;
+    --ink-3:     #7B839E;
+
+    --lilac:     #B49CFF;
+    --lilac-ink: #CDBCFF;
+    --mint:      #6FE3BE;
+    --peach:     #FFAC8C;
+    --sun:       #FFD166;
+
+    --lilac-wash: rgba(180, 156, 255, .12);
+    --mint-wash:  rgba(111, 227, 190, .12);
+    --peach-wash: rgba(255, 172, 140, .12);
+
+    --glow:      0 0 26px rgba(180,156,255,.22);
+    --shadow-1:  0 1px 2px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
+    --shadow-2:  0 2px 8px rgba(0,0,0,.55), 0 22px 54px rgba(0,0,0,.5);
+    --pixel-shadow: 4px 4px 0 var(--line-2);
+    --scanline:  rgba(255,255,255,.022);
+
+    --term-bg:   #0B0E17;
+    --term-ink:  #E4E7F2;
+    --term-dim:  #8790AE;
+    --term-accent: #B49CFF;
+  }
+}
+
+/* ---------- dark: explicit toggle (wins in both directions) ---------- */
+:root[data-theme="dark"] {
+  --bg:        #090B12;
+  --bg-2:      #10131E;
+  --bg-3:      #171B2A;
+  --bg-sunk:   #06070C;
+
+  --line:      #232838;
+  --line-2:    #343B52;
+  --line-hard: #47506E;
+
+  --ink:       #E9EBF4;
+  --ink-2:     #A3AAC2;
+  --ink-3:     #7B839E;
+
+  --lilac:     #B49CFF;
+  --lilac-ink: #CDBCFF;
+  --mint:      #6FE3BE;
+  --peach:     #FFAC8C;
+  --sun:       #FFD166;
+
+  --lilac-wash: rgba(180, 156, 255, .12);
+  --mint-wash:  rgba(111, 227, 190, .12);
+  --peach-wash: rgba(255, 172, 140, .12);
+
+  --glow:      0 0 26px rgba(180,156,255,.22);
+  --shadow-1:  0 1px 2px rgba(0,0,0,.5), 0 4px 16px rgba(0,0,0,.4);
+  --shadow-2:  0 2px 8px rgba(0,0,0,.55), 0 22px 54px rgba(0,0,0,.5);
+  --pixel-shadow: 4px 4px 0 var(--line-2);
+  --scanline:  rgba(255,255,255,.022);
+
+  --term-bg:   #0B0E17;
+  --term-ink:  #E4E7F2;
+  --term-dim:  #8790AE;
+  --term-accent: #B49CFF;
+}
