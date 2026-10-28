@@ -3,631 +3,438 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jhan Maurice De Roxas · IT Student & Developer</title>
-<meta name="description" content="Jhan Maurice De Roxas, BSIT student at Mapúa Malayan Colleges Laguna. Android, IoT, cloud and full-stack projects, playable game recreations, and 31 certifications. Open for OJT, November 2026.">
+<title>Jhan Maurice De Roxas · Portfolio</title>
+<meta name="description" content="Portfolio of Jhan Maurice De Roxas, BSIT at Mapúa Malayan Colleges Laguna. Android, IoT, cloud and full-stack projects, playable browser recreations of my college games, and 31 certifications.">
 <meta name="author" content="Jhan Maurice C. De Roxas">
-<meta name="theme-color" content="#FAF7F5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#090B12" media="(prefers-color-scheme: dark)">
-<link rel="canonical" href="./index.html">
+<meta name="theme-color" content="#07050D">
 
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Jhan Maurice De Roxas · IT Student & Developer">
-<meta property="og:description" content="Android, IoT, cloud and full-stack projects from a BSIT journey, with playable browser recreations of my college games.">
+<meta property="og:title" content="Jhan Maurice De Roxas · Portfolio">
+<meta property="og:description" content="Android, IoT, cloud and full-stack projects, with playable browser recreations of my college games.">
 <meta property="og:image" content="assets/img/projects/dilig-hardware-prototype.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23B49CFF'/%3E%3Crect x='3' y='4' width='2' height='8' fill='%23090B12'/%3E%3Crect x='6' y='4' width='2' height='2' fill='%23090B12'/%3E%3Crect x='6' y='10' width='2' height='2' fill='%23090B12'/%3E%3Crect x='9' y='4' width='2' height='8' fill='%23090B12'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%237C3AED'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-weight='700' font-size='14' fill='white' text-anchor='middle'%3EJM%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Press+Start+2P&display=swap">
 
-<link rel="stylesheet" href="css/tokens.css?v=8">
-<link rel="stylesheet" href="css/base.css?v=8">
-<link rel="stylesheet" href="css/components.css?v=12">
-<link rel="stylesheet" href="css/sections.css?v=11">
-<link rel="stylesheet" href="css/games.css?v=8">
-<link rel="stylesheet" href="css/motion.css?v=3">
-<link rel="stylesheet" href="css/showcase.css?v=6">
+<link rel="stylesheet" href="css/site.css?v=33">
+<link rel="stylesheet" href="css/games.css?v=9">
 
 <script>
-  /* Set the theme before first paint so there is never a flash of the wrong one. */
+  /* Apply the saved theme before first paint, so light mode never flashes dark. */
   (function () {
-    try {
-      var t = localStorage.getItem("jm-theme");
-      if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
-    } catch (e) {}
-    document.documentElement.classList.add("splash-lock");
+    try { if (localStorage.getItem("jm-theme") === "light") document.documentElement.setAttribute("data-theme", "light"); } catch (e) {}
+  })();
+  /* Play the laptop intro once per visit, and never when motion is reduced. */
+  (function () {
+    var seen = false;
+    try { seen = sessionStorage.getItem("jm-intro") === "1"; } catch (e) {}
+    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!seen && !calm) document.documentElement.classList.add("is-intro");
   })();
 </script>
 </head>
 <body>
 
-<div class="splash" id="splash" role="dialog" aria-modal="true" aria-label="Intro">
-  <div class="splash__grid" aria-hidden="true"></div>
-  <div class="splash__scan" aria-hidden="true"></div>
-  <div class="splash__stage">
-    <p class="splash__who">MAU</p>
-    <p class="splash__line" id="splash-typed">She is typing…</p>
-    <div class="mau-board mau-board--splash">
-      <div class="mau-typer is-typing" aria-hidden="true">
-        <img class="mau-typer__cat pixelated" src="assets/img/pixel/cat.png" alt="">
-        <i class="mau-typer__paw mau-typer__paw--l"></i>
-        <i class="mau-typer__paw mau-typer__paw--r"></i>
-      </div>
-      <div class="keybed" id="splash-keys"></div>
-    </div>
-    <p class="splash__name">Jhan Maurice De Roxas</p>
-    <div class="splash__boot" aria-hidden="true"><i></i></div>
-    <button type="button" class="splash__skip" id="splash-skip">Skip intro</button>
-  </div>
-</div>
-
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
+<canvas class="sky" id="sky" aria-hidden="true"></canvas>
 
-<!-- ===================================================== TOP BAR -->
-<header class="topbar" id="topbar">
-  <a class="brand" href="#top" aria-label="Jhan Maurice De Roxas, back to top">
-    <span class="brand__mark" aria-hidden="true">JM</span>
-    <span>
-      <span class="brand__name">Jhan Maurice</span>
-      <span class="brand__role">De Roxas</span>
-    </span>
+<!-- ===================================================== NAV -->
+<!-- phones: a slim top bar that opens the sidebar -->
+<div class="mbar">
+  <a class="nav__brand" href="#home" aria-label="Jhan Maurice De Roxas, back to top">
+    <span class="nav__mark">JM</span><span class="nav__name">JHAN<b>MAURICE</b></span>
+  </a>
+  <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="side__scrim" id="side-scrim" hidden></div>
+
+<aside class="side" id="nav">
+  <a class="nav__brand side__brand" href="#home" aria-label="Jhan Maurice De Roxas, back to top">
+    <span class="nav__mark">JM</span>
+    <span class="side__who fade"><b>Jhan Maurice</b><small>De Roxas · Portfolio</small></span>
   </a>
 
-  <nav class="topnav" id="topnav" aria-label="Sections">
-    <a href="#about">About</a>
-    <a href="#journey">Journey</a>
-    <a href="#work">Work</a>
-    <a href="#playable">Playable</a>
-    <a href="#skills">Skills</a>
-    <a href="#certs">Certs</a>
-    <a href="#leadership">Leadership</a>
-    <a href="#contact">Contact</a>
+  <nav class="side__links" id="nav-links" aria-label="Sections">
+    <p class="side__label fade">Menu</p>
+    <a href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="fade">Home</span></a>
+    <a href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></svg><span class="fade">About</span></a>
+    <a href="#stack"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><span class="fade">Tech Stack</span></a>
+    <a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg><span class="fade">Projects</span></a>
+    <a href="#play"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18 14h.01"/></svg><span class="fade">Play</span></a>
+    <a href="#certs"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-3 5 3-1.5-8"/></svg><span class="fade">Certificates</span></a>
+    <a href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span class="fade">Contact</span></a>
   </nav>
 
-  <div class="topbar__tools">
-    <button class="icon-btn" id="term-open" type="button" aria-label="Open terminal (press T)" title="Open terminal (press T)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+  <div class="side__foot">
+    <button class="side__theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light mode">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="fade" id="theme-label">Light mode</span>
     </button>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-      <span class="theme-toggle__stars" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="theme-toggle__knob" aria-hidden="true"></span>
-    </button>
-    <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
-    </button>
+    <a class="btn btn--primary btn--sm side__cv" href="assets/docs/resume.pdf?v=2" download aria-label="Download résumé"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="fade">Download résumé</span></a>
+    <div class="side__social fade" id="side-social"></div>
+    <p class="side__status fade"><i></i>Cabuyao, Laguna</p>
   </div>
-</header>
-
-<nav class="drawer" id="drawer" aria-label="Mobile menu" hidden>
-  <button class="icon-btn drawer__close" id="drawer-close" type="button" aria-label="Close menu">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-  </button>
-  <a href="#about"><span>01</span> About</a>
-  <a href="#journey"><span>02</span> My Journey</a>
-  <a href="#work"><span>03</span> Featured Work</a>
-  <a href="#playable"><span>04</span> Playable</a>
-  <a href="#design"><span>05</span> Design</a>
-  <a href="#more"><span>06</span> More Projects</a>
-  <a href="#skills"><span>07</span> Skills</a>
-  <a href="#certs"><span>08</span> Certifications</a>
-  <a href="#leadership"><span>09</span> Leadership</a>
-  <a href="#education"><span>10</span> Education</a>
-  <a href="#contact"><span>11</span> Contact</a>
-</nav>
+</aside>
 
 <main id="main">
-<span id="top"></span>
 
-<!-- ===================================================== HERO -->
-<section class="hero" id="hero">
-  <div class="hero__bg" aria-hidden="true"></div>
-  <div class="hero__grid-lines" aria-hidden="true"></div>
+<!-- ===================================================== HOME -->
+<section class="hero" id="home">
+  <div class="hero__scene" id="hero-scene" aria-hidden="true">
+    <div class="hero__sun"></div>
+    <i class="shard shard--1"></i><i class="shard shard--2"></i><i class="shard shard--3"></i>
+    <i class="shard shard--4"></i><i class="shard shard--5"></i><i class="shard shard--6"></i>
+    <div class="hero__beams"><i></i><i></i><i></i><i></i></div>
+    <div class="hero__floor"></div>
+  </div>
 
-  <div class="shell-wide">
-    <div class="hero__layout">
-      <div>
-        <p class="hero__status"><span class="dot" aria-hidden="true"></span> Open for OJT · November 2026</p>
-
-        <h1>I build things that<br><span class="accent">have to talk</span><br>to each other.</h1>
-
-        <p class="hero__role" id="hero-role" aria-live="polite"><span class="cursor" aria-hidden="true"></span></p>
-
-        <p class="hero__lede">
-          BSIT student at Mapúa Malayan Colleges Laguna. I write the Android app, the REST layer
-          underneath it, and the firmware that talks to both. Then I hold the schedule that keeps
-          the build shipping. Currently building a plant that waters itself and a word game
-          made out of Filipino food.
-        </p>
-
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="#work">
-            See the work
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn--ghost" href="#playable">
-            Play my college games
-          </a>
+  <div class="wrap hero__solo">
+    <div class="intro" id="hero-intro" aria-hidden="true">
+      <div class="laptop">
+        <div class="laptop__lid">
+          <div class="laptop__screen">
+            <div class="laptop__wall"></div>
+            <pre class="laptop__log" id="intro-log"></pre>
+            <div class="laptop__app">
+              <div class="laptop__appbar"><i></i><i></i><i></i><span>~/whoami</span></div>
+              <div class="laptop__appbody">
+                <img src="assets/img/profile.jpg?v=2" alt="">
+                <div><b></b><b></b><b></b><b></b><b></b><b></b></div>
+              </div>
+            </div>
+            <div class="laptop__dock"><i></i><i></i><i class="is-app">&gt;_</i><i></i><i></i></div>
+          </div>
         </div>
-
-        <div class="hero__facts">
-          <div class="hero__fact"><b>16</b><span>PROJECTS SHOWN</span></div>
-          <div class="hero__fact"><b>31</b><span>CERTIFICATES</span></div>
-          <div class="hero__fact"><b>5</b><span>PLAYABLE DEMOS</span></div>
-          <div class="hero__fact"><b>1</b><span>ORG PRESIDENCY</span></div>
-        </div>
+        <div class="laptop__base"></div>
       </div>
+      <p class="intro__skip">click to skip</p>
+    </div>
 
-      <div class="hero__stage">
-        <div class="desk">
-          <div class="desk__glow" aria-hidden="true"></div>
+    <h1 class="sr-only">Jhan Maurice De Roxas · Full-stack &amp; Android developer, BSIT at Mapúa Malayan Colleges Laguna</h1>
 
-          <img class="sprite sprite--1 pixelated" src="assets/img/pixel/burger.png" alt="" aria-hidden="true">
-          <img class="sprite sprite--2 pixelated" src="assets/img/pixel/cat.png" alt="" aria-hidden="true">
-          <img class="sprite sprite--3 pixelated" src="assets/img/pixel/teddy.png" alt="" aria-hidden="true">
-
-          <div class="crt">
-            <div class="crt__screen">
-              <canvas id="hero-canvas" width="320" height="100" role="img"
-                      aria-label="A pixel-art image being drawn one rectangle at a time, replayed from my original x86 assembly source."></canvas>
+    <div class="hero__visual" id="hero-visual">
+      <div class="profile">
+        <div class="win profile__win">
+          <div class="win__bar"><i></i><i></i><i></i><span>~/whoami</span></div>
+          <div class="profile__body">
+            <figure class="profile__photo">
+              <img src="assets/img/profile.jpg?v=2" alt="Jhan Maurice De Roxas" width="960" height="1280" decoding="async" fetchpriority="high">
+              <figcaption>@mauwcchiato</figcaption>
+            </figure>
+            <div class="profile__main">
+              <pre class="hero__out" id="hero-out" aria-hidden="true"></pre>
+              <div class="profile__actions">
+                <a class="btn btn--primary" href="#projects">View projects
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a class="btn btn--glass" href="assets/docs/resume.pdf?v=2" download>Download résumé</a>
+              </div>
             </div>
-            <div class="crt__foot">
-              <span class="crt__led" aria-hidden="true"></span>
-              <span class="crt__label" id="crt-label">INT 10H</span>
-              <span class="crt__switch">
-                <button type="button" data-art="burger" aria-pressed="true">BURGER</button>
-                <button type="button" data-art="cat" aria-pressed="false">MAU</button>
-                <button type="button" data-art="teddy" aria-pressed="false">BEAR</button>
-              </span>
-            </div>
+          </div>
+          <div class="profile__status">
+            <span aria-hidden="true"><i></i>online</span>
+            <span aria-hidden="true">Cabuyao, PH</span>
+            <span class="profile__social" id="hero-social"></span>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <a class="hero__scroll" href="#about" aria-label="Scroll to About"><span></span></a>
 </section>
-<section class="section" id="about">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">About me</span>
-          <h2>Two jobs on the same project</h2>
-        </div>
-        <span class="sec-head__num">01 / 11</span>
-      </div>
-    </div>
 
-    <div class="about__layout">
-      <div class="about__body reveal">
+<!-- ===================================================== ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">01 · who I am</p>
+      <h2 class="sec__title" data-title>About Me</h2>
+    </header>
+
+    <div class="about">
+      <div class="glass about__bio reveal">
+        <!-- phrases with data-link light up the matching fact, badge or trait -->
         <p>
-          On paper I keep ending up as the <strong>project manager</strong>. In practice I never step back from the code.
-          On D.I.L.I.G. I led the work and wrote the Kotlin app, the PHP API, and the Arduino firmware.
-          On Kusina Kode I run the schedule and own the game engine.
+          Hi, I'm <strong>Jhan Maurice</strong>. I'm studying <span class="kw" data-link="bsit">BS Information Technology</span>
+          at <span class="kw" data-link="school">Mapúa Malayan Colleges Laguna</span>, and I'm from
+          <span class="kw" data-link="home">Cabuyao, Laguna</span>.
         </p>
         <p>
-          I like the seams: the ESP8266 talking to PHP, a Compose ViewModel talking to MySQL.
-          That is where projects actually fail, and it is the part I want to get right.
-          I'm looking for an OJT placement where I can build the thing and keep the build legible to everyone on it.
+          In group work I often help <span class="kw" data-link="organized">keep things organized</span>, but I still enjoy
+          doing the <span class="kw" data-link="hands-on">hands-on part</span>.
+          I'm most interested in how apps, servers and small devices <span class="kw" data-link="curious">work together</span>.
         </p>
-
-        <dl class="about__quick">
-          <div>
-            <dt>Program</dt>
-            <dd>BS Information Technology</dd>
-          </div>
-          <div>
-            <dt>School</dt>
-            <dd>Mapúa Malayan Colleges Laguna</dd>
-          </div>
-          <div>
-            <dt>Graduating</dt>
-            <dd>2027 (expected)</dd>
-          </div>
-          <div>
-            <dt>OJT window</dt>
-            <dd>November 2026, 486 hours</dd>
-          </div>
+        <p>
+          Outside of class I've served as <span class="kw" data-link="itsoc">president of our IT Society</span> and as a
+          <span class="kw" data-link="amb">student ambassador</span>, and I like
+          <span class="kw" data-link="helpful">helping classmates review</span>. Right now I'm learning more about
+          <a class="kw kw--go" data-link="curious" href="#certs">cloud, networking and security</a>.
+        </p>
+        <dl class="about__facts">
+          <div data-link="bsit"><dt>Program</dt><dd>BS Information Technology</dd></div>
+          <div data-link="school"><dt>School</dt><dd>Mapúa Malayan Colleges Laguna</dd></div>
+          <div data-link="grad"><dt>Graduating</dt><dd>2027 (expected)</dd></div>
+          <div data-link="home"><dt>Based in</dt><dd>Cabuyao, Laguna</dd></div>
         </dl>
+        <ul class="about__honors" id="honors"></ul>
       </div>
 
-      <aside class="pass reveal" id="id-stage" aria-label="Student ID">
-        <div class="pass__hang">
-          <div class="pass__lace" aria-hidden="true">
-            <span>JHAN MAURICE DE ROXAS</span>
-            <span>JHAN MAURICE DE ROXAS</span>
-            <span>JHAN MAURICE DE ROXAS</span>
-          </div>
-          <div class="pass__clip" aria-hidden="true">
-            <i class="pass__ring"></i>
-            <i class="pass__claw"></i>
-          </div>
-          <figure class="pass__card">
-            <img src="assets/img/profile.jpg?v=2" alt="Jhan Maurice De Roxas" width="960" height="1280" decoding="async">
-            <figcaption>
-              <span>Student ID · BSIT</span>
-              <b>Jhan Maurice C. De Roxas</b>
-              <em>Mapúa Malayan Colleges Laguna</em>
-              <i class="pass__bars" aria-hidden="true"></i>
-            </figcaption>
-          </figure>
-        </div>
-      </aside>
+      <div class="traits reveal" style="--d:80ms">
+        <h3 class="traits__title">How I work</h3>
+        <ul class="traits__list" id="traits"></ul>
+      </div>
     </div>
+
+    <h3 class="sub reveal">Milestones</h3>
+    <ol class="miles" id="timeline"></ol>
+
+    <h3 class="sub reveal">Leadership &amp; recognition</h3>
+    <div class="lead reveal">
+      <div class="glass lead__card" id="lead-card"></div>
+      <div class="lead__strip" id="lead-strip"></div>
+    </div>
+    <ul class="recog reveal" id="recog"></ul>
   </div>
 </section>
 
-<!-- ===================================================== JOURNEY -->
-<section class="section section--sunk" id="journey">
-  <div class="shell">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">My journey</span>
-          <h2>Learning → Building → Leading → Creating → Preparing</h2>
-        </div>
-        <span class="sec-head__num">02 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        Three academic years, in the order they happened. Pick a chapter.
-      </p>
-    </div>
-
-    <div class="journey__rail reveal" role="tablist" aria-label="Journey chapters" id="journey-rail"></div>
-    <div class="journey__panel reveal" id="journey-panel" role="tabpanel" tabindex="0"></div>
+<!-- ===================================================== TECH STACK -->
+<section class="sec" id="stack">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">02 · what I use</p>
+      <h2 class="sec__title" data-title>Tech Stack</h2>
+    </header>
+    <div class="glass stack" id="stack-grid"></div>
+    <div class="roles" id="roles"></div>
   </div>
 </section>
 
-<!-- ===================================================== FEATURED WORK -->
-<section class="section" id="work">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Selected work</span>
-          <h2>Work gallery</h2>
-        </div>
-        <span class="sec-head__num">03 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        The seven I'd show you first. Click the centre card for the full case: problem, what I owned,
-        the stack, and the real screenshots.
-      </p>
-    </div>
+<!-- ===================================================== PROJECTS -->
+<section class="sec" id="projects">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">03 · what I built</p>
+      <h2 class="sec__title" data-title>Projects</h2>
+      <p class="sec__lede">Keep scrolling to turn through my featured work. Click the project in the middle to dive in.</p>
+    </header>
+  </div>
 
-    <div class="coverflow reveal" id="coverflow">
-      <button class="coverflow__nav coverflow__nav--prev" id="cover-prev" type="button" aria-label="Previous project">‹</button>
-      <div class="coverflow__stage" id="coverflow-stage"></div>
-      <button class="coverflow__nav coverflow__nav--next" id="cover-next" type="button" aria-label="Next project">›</button>
+  <!-- a tall track with a pinned stage: page scroll turns the arc -->
+  <div class="pc-scroll" id="pc-scroll">
+    <div class="pc" id="pc">
+      <div class="pc__bg" aria-hidden="true"></div>
+      <div class="pc__stage" id="pc-stage" role="group" aria-roledescription="carousel" aria-label="Featured projects"></div>
+      <div class="pc__pedestal" aria-live="polite">
+        <span class="pc__kicker" id="pc-kicker"></span>
+        <b class="pc__name" id="pc-name"></b>
+        <button class="btn btn--primary btn--sm" type="button" id="pc-dive">Dive in
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <button class="pc__arrow pc__arrow--prev" id="pc-prev" type="button" aria-label="Previous project">‹</button>
+      <button class="pc__arrow pc__arrow--next" id="pc-next" type="button" aria-label="Next project">›</button>
+      <div class="pc__progress" aria-hidden="true"><i id="pc-bar"></i></div>
+      <span class="pc__count" id="pc-count" aria-hidden="true"></span>
     </div>
-    <div class="coverflow__meta" id="coverflow-meta"></div>
-    <div class="coverflow__dots" id="coverflow-dots"></div>
-    <p style="text-align:center;margin-top:18px">
-      <a class="btn btn--ghost" href="#more">View the rest of the archive</a>
-    </p>
+  </div>
+
+  <div class="wrap">
+    <h3 class="sub reveal">More projects</h3>
+    <div class="pc-more" id="pc-more"></div>
   </div>
 </section>
 
-<!-- ===================================================== PLAYABLE -->
-<section class="section section--sunk" id="playable">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Playable projects</span>
-          <h2>Games I made, rebuilt for your browser</h2>
-        </div>
-        <span class="sec-head__num">04 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        These started life as an Android app, a Xamarin app, a Tkinter window and an assembly file.
-        Press play. No download, no install.
-      </p>
-    </div>
 
-    <div class="play-grid" id="play-grid"></div>
 
-    <div class="note recreation-note reveal">
-      <span>
-        <strong>These are web recreations of my college projects</strong>, rebuilt in JavaScript so they run
-        in a browser. They keep the original rules, artwork and datasets, but they are not the original
-        Kotlin, C#, Python or assembly binaries. Those live in the project archives.
-      </span>
-    </div>
+<!-- ===================================================== PLAY -->
+<section class="sec" id="play">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">04 · press start</p>
+      <h2 class="sec__title" data-title>Play My Games</h2>
+      <p class="sec__lede">College projects rebuilt in JavaScript so they run right here. Same rules, same artwork. No install.</p>
+    </header>
+    <div class="games" id="games"></div>
   </div>
 </section>
 
-<!-- ===================================================== DESIGN -->
-<section class="section" id="design">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Design & interface work</span>
-          <h2>Diagrams and systems</h2>
-        </div>
-        <span class="sec-head__num">05 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        Architecture diagrams and schema work: the pieces that aren't already the hero of a case study.
-        Click any of them to inspect it full size.
-      </p>
-    </div>
-
-    <div class="filters reveal" id="gal-filters" role="group" aria-label="Filter gallery"></div>
-    <div class="gal-grid" id="gal-grid"></div>
+<!-- ===================================================== CERTIFICATES -->
+<section class="sec" id="certs">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">05 · proof of learning</p>
+      <h2 class="sec__title" data-title>Certificates</h2>
+      <p class="sec__lede">Drag the ring or let it spin. Click any certificate to open the original document.</p>
+    </header>
   </div>
-</section>
 
-<!-- ===================================================== MORE PROJECTS -->
-<section class="section section--sunk" id="more">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">More projects</span>
-          <h2>The rest of the archive</h2>
-        </div>
-        <span class="sec-head__num">06 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        Supporting coursework and smaller builds. Smaller in scope, but they're where most of
-        the fundamentals actually got learned.
-      </p>
-    </div>
-
-    <div class="mini-grid" id="more-grid"></div>
+  <div class="ring-stage reveal" id="ring-stage">
+    <div class="ring" id="ring"></div>
   </div>
-</section>
 
-<!-- ===================================================== SKILLS -->
-<section class="section" id="skills">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">My capabilities</span>
-          <h2>What I can do</h2>
-        </div>
-        <span class="sec-head__num">07 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        Mau types. Press a key.
-      </p>
-    </div>
-
-    <p class="skill-hit" id="skill-hit" hidden></p>
-
-    <div class="mau-board reveal" id="skill-board">
-      <p class="mau-typed" id="skill-typed">hint: press a key</p>
-      <div class="mau-typer is-typing" aria-hidden="true">
-        <img class="mau-typer__cat pixelated" src="assets/img/pixel/cat.png" alt="">
-        <i class="mau-typer__paw mau-typer__paw--l"></i>
-        <i class="mau-typer__paw mau-typer__paw--r"></i>
-      </div>
-      <div class="keybed" id="tech-grid"></div>
-    </div>
-
-    <label class="skill-find reveal" for="skill-q">
-      <span class="sr-only">Filter skills</span>
-      <input id="skill-q" type="search" placeholder="Find a skill: Kotlin, RFID, Figma…" autocomplete="off">
-    </label>
-
-    <div class="cap-roles reveal" id="cap-roles"></div>
-
-    <div class="soft-block reveal">
-      <div>
-        <span class="eyebrow">Soft skills</span>
-        <h3>How I actually work</h3>
-        <p class="soft-block__lede">
-          Not a buzzword list. These are habits from running an org and shipping the code myself.
-          Tap the deck to shuffle.
-        </p>
-      </div>
-      <div>
-        <div class="soft-deck" id="soft-deck" tabindex="0" role="button" aria-label="Shuffle soft skill cards"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================================================== CERTIFICATIONS -->
-<section class="section section--sunk" id="certs">
-  <div class="shell-wide">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Certifications & credentials</span>
-          <h2>Thirty-one, and most of them back a project</h2>
-        </div>
-        <span class="sec-head__num">08 / 11</span>
-      </div>
-      <p class="sec-head__lede">
-        Click any certificate to read the original document. Every credential is labelled for what it
-        actually is. A course completion is not a professional certification, and this page says so.
-      </p>
-    </div>
-
-    <div class="cert-feature reveal" id="cert-featured"></div>
-
-    <div class="filters reveal" id="cert-filters" role="group" aria-label="Filter certificates"></div>
-    <p class="cert-count" id="cert-count"></p>
-    <div class="cert-list" id="cert-list"></div>
-
-    <div class="note reveal" style="margin-top:26px">
-      <span id="badge-note"></span>
-    </div>
-    <div class="badge-grid reveal" id="badge-grid"></div>
-  </div>
-</section>
-
-<!-- ===================================================== LEADERSHIP -->
-<section class="section" id="leadership">
-  <div class="shell">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Leadership & experience</span>
-          <h2>A year of running the org</h2>
-        </div>
-        <span class="sec-head__num">09 / 11</span>
-      </div>
-    </div>
-
-    <div class="lead-film reveal" id="lead-film"></div>
-
-    <div class="lead-layout">
-      <div class="lead-card reveal" id="lead-card"></div>
-      <div class="events reveal" style="--d:90ms" id="lead-events"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================================================== EDUCATION -->
-<section class="section section--sunk" id="education">
-  <div class="shell">
-    <div class="sec-head reveal">
-      <div class="sec-head__row">
-        <div>
-          <span class="eyebrow">Education & awards</span>
-          <h2>Where all of this came from</h2>
-        </div>
-        <span class="sec-head__num">10 / 11</span>
-      </div>
-    </div>
-
-    <div class="edu reveal" id="edu-grid"></div>
-    <div class="honors reveal" id="honors"></div>
-    <p class="sec-head__lede reveal" style="margin-top:28px">Proof in pictures. Click any photo.</p>
-    <div class="proof-wall reveal" id="proof-wall"></div>
+  <div class="wrap">
+    <div class="filters" id="cert-filters" role="group" aria-label="Filter certificates"></div>
+    <div class="certs" id="cert-grid"></div>
+    <p class="certs__badges" id="badges"></p>
   </div>
 </section>
 
 <!-- ===================================================== CONTACT -->
-<section class="section contact" id="contact">
-  <div class="shell">
-    <div class="sec-head reveal">
-      <span class="sec-head__num" style="margin:0 0 10px">11 / 11</span>
-      <span class="eyebrow">Contact</span>
-    </div>
+<section class="sec" id="contact">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">06 · say hello</p>
+      <h2 class="sec__title" data-title>Contact</h2>
+    </header>
 
-    <div class="contact__layout">
-      <div class="reveal">
-        <h2>Let's talk about an OJT placement.</h2>
-        <p class="contact__lede">
-          I'm looking for a company where I can build and ship real systems: full-stack, mobile,
-          or cloud. Email is the fastest way to reach me, and I answer everything.
-        </p>
+    <div class="contact">
+      <div class="contact__main reveal">
+        <h3>Let's connect</h3>
+        <p>Have a question or want to work on something together? Email is the best way to reach me.</p>
+        <div class="contact__list" id="contact-list"></div>
 
-        <div class="contact__links" id="contact-links"></div>
+        <div class="apk reveal">
+          <img src="assets/img/game/kusinakode/kk-logo.png" alt="" width="72" height="72" loading="lazy">
+          <div class="apk__copy">
+            <b>Want to try Kusina Kode?</b>
+            <p>It's an Android word game about Filipino dishes. Ask me and I'll send you the APK (about 115 MB, Android 8.0 or newer).</p>
+          </div>
+          <a class="btn btn--primary btn--sm" id="apk-request" href="#">Request the APK</a>
+        </div>
       </div>
-
-      <aside class="contact__card reveal" style="--d:100ms">
-        <h3>At a glance</h3>
-        <dl class="avail">
-          <div><dt>Status</dt><dd><span class="live-dot" aria-hidden="true"></span>4th-year BSIT · open for OJT</dd></div>
-          <div><dt>Window</dt><dd>November 2026 · 486 hours</dd></div>
-          <div><dt>Graduating</dt><dd>2027 (expected)</dd></div>
-          <div><dt>Based in</dt><dd>Cabuyao, Laguna</dd></div>
-          <div><dt>Strongest</dt><dd>Kotlin + Compose · PHP/REST · MySQL · AWS · Arduino/ESP</dd></div>
-          <div><dt>Also does</dt><dd>Project management and documentation</dd></div>
-        </dl>
-
-        <a class="btn btn--primary" href="assets/docs/resume.pdf?v=2" id="resume-btn" style="margin-top:20px;width:100%" download>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download résumé
-        </a>
+      <aside class="glass contact__card reveal" style="--d:100ms">
+        <img src="assets/img/profile.jpg?v=2" alt="" width="96" height="96" loading="lazy">
+        <p>Thanks for stopping by. Feel free to say hi.</p>
+        <a class="btn btn--primary" href="assets/docs/resume.pdf?v=2" download>Download résumé</a>
       </aside>
     </div>
   </div>
 </section>
 </main>
 
-<!-- ===================================================== FOOTER -->
-<footer class="footer">
-  <div class="shell">
-    <div class="footer__row">
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <a class="nav__brand" href="#home" aria-label="Back to top">
+          <span class="nav__mark">JM</span><span class="nav__name">JHAN<b>MAURICE</b></span>
+        </a>
+        <p>BSIT student from Cabuyao, Laguna.</p>
+      </div>
+
+      <div class="foot__col">
+        <h4>Find me on</h4>
+        <ul class="foot__social" id="foot-social"></ul>
+      </div>
+
+      <nav class="foot__col" aria-label="Footer">
+        <h4>Explore</h4>
+        <ul class="foot__links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#stack">Tech Stack</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#play">Play</a></li>
+          <li><a href="#certs">Certificates</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="foot__bottom">
       <span>© <span id="year"></span> Jhan Maurice C. De Roxas</span>
-      <span>Built by hand. No framework, no build step.</span>
-      <span class="footer__hint">
-        Press <kbd>T</kbd> for the terminal · <kbd>/</kbd> to jump · Mau is in the corner
-      </span>
+      <a class="foot__up" href="#home">Back to top
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </a>
     </div>
   </div>
 </footer>
 
-<button id="pixel-cat" type="button" aria-label="Poke Mau" title="Mau">
-  <img src="assets/img/pixel/cat.png" alt="" class="pixelated" width="40" height="40">
-</button>
-
 <!-- ===================================================== OVERLAYS -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-  <div class="modal__panel" id="modal-panel">
-    <button class="icon-btn modal__close" id="modal-close" type="button" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-    </button>
-    <div class="modal__body" id="modal-body"></div>
+<!-- the scroll-driven deep dive into one project -->
+<div class="pf" id="pf" role="dialog" aria-modal="true" aria-labelledby="pf-name" hidden>
+  <div class="pf__track" id="pf-track">
+    <div class="pf__stage">
+      <div class="pf__bg" aria-hidden="true"></div>
+      <div class="pf__copy">
+        <span class="pf__kicker" id="pf-kicker"></span>
+        <h3 class="pf__name" id="pf-name" tabindex="-1"></h3>
+        <div class="pf__chapter" id="pf-chapter" aria-live="polite"></div>
+        <div class="pf__buttons" id="pf-buttons"></div>
+      </div>
+      <figure class="pf__card" id="pf-card"><img id="pf-img" alt=""></figure>
+      <!-- apps with real screens get a phone instead of the card -->
+      <figure class="pf__phone" id="pf-phone">
+        <div class="phone">
+          <div class="phone__screen" id="phone-screen"></div>
+          <i class="phone__island" aria-hidden="true"></i>
+        </div>
+        <div class="phone__dots" id="phone-dots" aria-label="App screens"></div>
+      </figure>
+      <!-- websites get a laptop -->
+      <figure class="pf__laptop" id="pf-laptop">
+        <div class="lap">
+          <div class="lap__lid"><div class="lap__screen" id="laptop-screen"></div></div>
+          <div class="lap__base"></div>
+        </div>
+        <div class="phone__dots" id="laptop-dots" aria-label="Website screens"></div>
+      </figure>
+      <nav class="pf__dots" id="pf-dots" aria-label="Project sections"></nav>
+      <div class="pf__top">
+        <button class="icon-btn" id="pf-prev" type="button" aria-label="Previous project">‹</button>
+        <button class="icon-btn" id="pf-next" type="button" aria-label="Next project">›</button>
+        <button class="icon-btn" id="pf-close" type="button" aria-label="Close">✕</button>
+      </div>
+      <p class="pf__hint" aria-hidden="true">scroll ↓</p>
+    </div>
   </div>
 </div>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Asset viewer" hidden>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal__panel win" id="modal-panel"></div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Viewer" hidden>
   <div class="lightbox__bar">
-    <div>
-      <div class="lightbox__title" id="lb-title"></div>
-      <div class="lightbox__meta" id="lb-meta"></div>
-    </div>
-    <div class="lightbox__nav">
-      <button class="icon-btn" id="lb-prev" type="button" aria-label="Previous">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="icon-btn" id="lb-next" type="button" aria-label="Next">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-    <button class="icon-btn" id="lb-close" type="button" aria-label="Close viewer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-    </button>
+    <div class="lightbox__title"><b id="lb-title"></b><span id="lb-meta"></span></div>
+    <button class="icon-btn" id="lb-prev" type="button" aria-label="Previous">‹</button>
+    <button class="icon-btn" id="lb-next" type="button" aria-label="Next">›</button>
+    <button class="icon-btn" id="lb-close" type="button" aria-label="Close viewer">✕</button>
   </div>
   <div class="lightbox__stage" id="lb-stage"></div>
   <div class="lightbox__foot" id="lb-foot"></div>
 </div>
 
-<div class="modal" id="term-modal" role="dialog" aria-modal="true" aria-label="Terminal" hidden>
-  <div class="modal__panel" style="max-width:720px">
-    <div class="term" style="border:0;border-radius:0">
-      <div class="term__bar">
-        <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
-        <span class="term__title">jm@portfolio ~</span>
-        <button class="icon-btn" id="term-close" type="button" aria-label="Close terminal" style="margin-left:auto;width:26px;height:26px;background:transparent;border-color:rgba(255,255,255,.15)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="term__body" id="term-out" style="max-height:56vh;overflow-y:auto" tabindex="0" aria-live="polite"></div>
-      <div class="term__body" style="border-top:1px solid rgba(255,255,255,.09);padding-top:12px;padding-bottom:12px">
-        <label class="sr-only" for="term-in">Terminal command</label>
-        <span class="term__prompt">jm@portfolio:~$</span>
-        <input id="term-in" type="text" autocomplete="off" spellcheck="false"
-               style="background:transparent;border:0;outline:0;color:inherit;font:inherit;width:70%;margin-left:8px">
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="fx-cursor" id="fx-cursor" aria-hidden="true">
-  <span class="fx-cursor__ring"></span>
-  <span class="fx-cursor__dot"></span>
+
+<!-- the guided tour: a second cursor that points things out on a first visit -->
+<div class="guide" id="guide" aria-hidden="true">
+  <svg class="guide__arrow" viewBox="0 0 24 24"><path d="M4 2.5l15.5 7.2-6.6 2.1-2.4 6.9z"/></svg>
+  <div class="guide__tag"><b>Jhan</b><span class="guide__text" id="guide-text"></span><i class="guide__caret"></i></div>
+</div>
+<div class="guide-prompt" id="guide-prompt" hidden>
+  <button type="button" class="guide-prompt__replay" id="guide-replay">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.6M13 2.6v2.7h-2.7"/></svg>
+    Take the tour again
+  </button>
+  <button type="button" class="guide-prompt__close" id="guide-close" aria-label="Dismiss tour prompt">✕</button>
 </div>
 
 <script src="js/asm-art-data.js?v=4"></script>
-<script src="js/data.js?v=13"></script>
-<script src="js/games/kusinakode.js?v=3"></script>
+<script src="js/data.js?v=20"></script>
+<script src="js/games/kusinakode.js?v=4"></script>
 <script src="js/games/facechange.js?v=3"></script>
 <script src="js/games/mines.js?v=3"></script>
 <script src="js/games/pixelplot.js?v=3"></script>
 <script src="js/games/cipher.js?v=3"></script>
-<script src="js/app.js?v=18"></script>
+<script src="js/main.js?v=27"></script>
 </body>
 </html>

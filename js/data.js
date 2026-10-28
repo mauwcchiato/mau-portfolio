@@ -13,7 +13,6 @@ window.SITE = {
     program: "BSIT",
     school: "Mapúa Malayan Colleges Laguna",
     gradYear: "2027",
-    ojt: "November 2026 · 486 hours",
     email: "jhanmauricederoxas@gmail.com",
     phone: "0932 447 5709",
     github: "https://github.com/mauwcchiato",
@@ -93,7 +92,7 @@ window.SITE = {
       title: "Preparing",
       years: "2026 – 2027",
       lede: "Certifications, cloud architecture, and a field trip to Japan.",
-      body: "Thirty-one certificates so far, mostly AWS, DevOps and security, each backing a project I was already building. Next is an OJT placement where I do this for someone who is not grading me.",
+      body: "Thirty-one certificates so far, mostly AWS, DevOps and security, each backing a project I was already building. Next is shipping this kind of work for real users, not just for a grade.",
       items: [
         { t: "Cloud & DevOps track", s: "2025 – 2026", p: "AWS essentials, Architecting on AWS, Kubernetes, CI/CD, IaC, Git. Nine certificates." },
         { t: "CCNA: Introduction to Networks", s: "Jul 2025", p: "Cisco Networking Academy through Mapúa MCL, plus about 40 Packet Tracer labs." },
@@ -101,6 +100,37 @@ window.SITE = {
         { t: "Google Cloud Skills Boost", s: "Feb – Mar 2024", p: "Eight badges: four Computing Foundations completions, plus skill badges for networks, load balancing, app-dev setup, and ML APIs." }
       ]
     }
+  ],
+
+  /* ----------------------------------------------------------- ABOUT (personal)
+     The About section talks about me, not my projects. Everything here is
+     restated from facts elsewhere in this file. */
+  traits: [
+    { t: "Organized", p: "I like keeping track of tasks and deadlines so group work stays on schedule." },
+    { t: "Hands-on", p: "I learn best by building things myself." },
+    { t: "Helpful", p: "I enjoy helping classmates review topics I've already worked through." },
+    { t: "Responsible", p: "I try to finish what I start, including the documentation." },
+    { t: "Curious", p: "I like learning how different pieces of technology fit together." }
+  ],
+
+  /* shown under Leadership & recognition */
+  recognition: [
+    { t: "President's Lister", p: "Mapúa Malayan Colleges Laguna", icon: "list" },
+    { t: "Full Academic Scholar", p: "Mapúa Malayan Colleges Laguna", icon: "cap" },
+    { t: "Student Ambassador", p: "Mapúa Malayan Colleges Laguna · A.Y. 2024–2025", icon: "star",
+      img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa MCL enrollment campaign, A.Y. 2024–2025." }
+  ],
+
+  milestones: [
+    { when: "2023", t: "Started BS Information Technology", p: "Mapúa Malayan Colleges Laguna." },
+    { when: "Feb – Mar 2024", t: "Google Cloud skill badges", p: "My first steps into cloud computing." },
+    { when: "A.Y. 2024 – 2025", t: "President, IT Society (ITSOC)", p: "Worked with four officers and four year-level representatives." },
+    { when: "A.Y. 2024 – 2025", t: "Student Ambassador", p: "Took part in Mapúa MCL's enrollment campaign." },
+    { when: "Oct & Nov 2024", t: "Peer mentoring", p: "Helped classmates review Logic Design and K-maps." },
+    { when: "Dec 2024", t: "Pamaskong Handog", p: "Helped organize a Christmas outreach for kindergarten pupils at Diezmo Integrated School." },
+    { when: "Jul 2025", t: "CCNA: Introduction to Networks", p: "Through the Cisco Networking Academy." },
+    { when: "Mar 2026", t: "Japan technology immersion", p: "Visited Miraikan and saw how technology is used in public transport." },
+    { when: "2027", t: "Graduating (expected)", p: "BS Information Technology." }
   ],
 
   /* --------------------------------------------------------------- PROJECTS */
@@ -155,6 +185,22 @@ window.SITE = {
 
     {
       id: "kusinakode",
+      apk: true,   // visitors can ask me for the Android build
+      /* real app screens for the phone in the deep dive; ch = which chapter shows them */
+      phone: [
+        { src: "assets/img/projects/kusinakode/phone/splash.webp", ch: 0 },
+        { src: "assets/img/projects/kusinakode/phone/welcome.webp", ch: 0 },
+        { src: "assets/img/projects/kusinakode/phone/home.webp", ch: 0 },
+        { src: "assets/img/projects/kusinakode/phone/explore_dishes.webp", ch: 1 },
+        { src: "assets/img/projects/kusinakode/phone/dish.webp", ch: 1 },
+        { src: "assets/img/projects/kusinakode/phone/game.webp", ch: 2 },
+        { src: "assets/img/projects/kusinakode/phone/game_powerups_open.webp", ch: 2 },
+        { src: "assets/img/projects/kusinakode/phone/game_win.webp", ch: 2 },
+        { src: "assets/img/projects/kusinakode/phone/leadership_weekly.webp", ch: 3 },
+        { src: "assets/img/projects/kusinakode/phone/profile_badges.webp", ch: 3 },
+        { src: "assets/img/projects/kusinakode/phone/shop_avatar.webp", ch: 4 },
+        { src: "assets/img/projects/kusinakode/phone/login.webp", ch: 4 }
+      ],
       featured: true,
       rank: "Featured",
       name: "Kusina Kode",
@@ -210,6 +256,15 @@ window.SITE = {
 
     {
       id: "pulsepoint",
+      /* real desktop screens from the Figma file, shown in a laptop; scroll: the page scrolls inside */
+      laptop: [
+        { src: "assets/img/projects/pulsepoint/laptop/01-landing.webp", ch: 0, scroll: true },
+        { src: "assets/img/projects/pulsepoint/laptop/02-login.webp", ch: 1 },
+        { src: "assets/img/projects/pulsepoint/laptop/03-admin-overview.webp", ch: 2 },
+        { src: "assets/img/projects/pulsepoint/laptop/04-admin-users.webp", ch: 2 },
+        { src: "assets/img/projects/pulsepoint/laptop/05-notifications.webp", ch: 3 },
+        { src: "assets/img/projects/pulsepoint/laptop/01-landing.webp", ch: 4, scroll: true }
+      ],
       featured: true,
       rank: "Featured",
       name: "PulsePoint",
@@ -458,6 +513,7 @@ window.SITE = {
 
     {
       id: "ciphers",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Secondary",
       name: "Cipher Demonstration Suite",
       sub: "Classical Cryptography in the Terminal",
@@ -490,6 +546,7 @@ window.SITE = {
 
     {
       id: "hotel",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Secondary",
       name: "Hotel Reservation System",
       sub: "C# WinForms · Machine Problem",
@@ -555,6 +612,21 @@ window.SITE = {
 
     {
       id: "makiride",
+      featured: true,
+      /* real screens from the Figma file (designed as ShuttleCock), shown in a phone */
+      phone: [
+        { src: "assets/img/projects/makiride/phone/01-onboarding.webp", ch: 0 },
+        { src: "assets/img/projects/makiride/phone/02-signup.webp", ch: 0 },
+        { src: "assets/img/projects/makiride/phone/03-trip-scheduling.webp", ch: 1 },
+        { src: "assets/img/projects/makiride/phone/04-shuttle-availability.webp", ch: 1 },
+        { src: "assets/img/projects/makiride/phone/05-tracking.webp", ch: 2 },
+        { src: "assets/img/projects/makiride/phone/06-traffic.webp", ch: 2 },
+        { src: "assets/img/projects/makiride/phone/07-cockpay.webp", ch: 2 },
+        { src: "assets/img/projects/makiride/phone/08-rewards.webp", ch: 3 },
+        { src: "assets/img/projects/makiride/phone/09-ratings.webp", ch: 3 },
+        { src: "assets/img/projects/makiride/phone/10-live-chat.webp", ch: 4 },
+        { src: "assets/img/projects/makiride/phone/11-booking-confirmed.webp", ch: 4 }
+      ],
       rank: "Supporting",
       name: "MakiRide",
       sub: "Carpooling pitch, grown from ShuttleCock",
@@ -616,6 +688,7 @@ window.SITE = {
 
     {
       id: "dsa",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "C++ Data Structures",
       sub: "Lists, Stacks, Queues, Trees, Dijkstra",
@@ -645,6 +718,7 @@ window.SITE = {
 
     {
       id: "networking",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Networking Lab Portfolio",
       sub: "Cisco Packet Tracer: CCNA 1 & 2",
@@ -673,6 +747,7 @@ window.SITE = {
 
     {
       id: "logic",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Digital Logic Design",
       sub: "Logisim Circuits & Karnaugh Maps",
@@ -695,6 +770,7 @@ window.SITE = {
 
     {
       id: "bi",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Data & BI Lab Work",
       sub: "Power BI, Tableau, Oracle SQL",
@@ -717,6 +793,7 @@ window.SITE = {
 
     {
       id: "pygui",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Python GUI Lab Set",
       sub: "Tkinter Applications",
@@ -765,7 +842,7 @@ window.SITE = {
       sub: "Filipino cuisine word puzzle",
       origin: "Android · Kotlin + Jetpack Compose · 2025–2026",
       desc: "Guess the six-letter Filipino dish in six tries. Green means right letter, right place. Then the trivia card tells you where the dish comes from.",
-      art: ["assets/img/game/kusinakode/logo.png"],
+      art: ["assets/img/game/kusinakode/kk-logo.png"],
       tag: "20 real levels"
     },
     {
@@ -944,8 +1021,8 @@ window.SITE = {
   ],
 
   honors: [
-    "President's Lister (consistent)",
-    "Full Academic Scholar (consistent)",
+    "President's Lister",
+    "Full Academic Scholar",
     "President, ITSOC · A.Y. 2024–2025",
     "Student Ambassador · A.Y. 2024–2025"
   ],
@@ -983,14 +1060,14 @@ window.SITE = {
       n: "01",
       k: "IT, systems & build",
       ico: "</>",
-      p: "I write the Android app, the REST layer, and the firmware that talks to both. Then I hold the schedule so the five tiers still agree at demo time.",
+      p: "Android apps, REST APIs, databases and small hardware projects, plus the cloud setup that connects them.",
       tags: ["Kotlin", "PHP", "Arduino", "AWS", "MySQL", "Figma"]
     },
     {
       n: "02",
       k: "Leadership & delivery",
       ico: "★",
-      p: "A year as ITSOC President, plus project manager on every featured build. Mentoring, outreach, and a term-end report with my name on it.",
+      p: "Keeping group work organized: planning, task tracking and documentation. Also a year serving as ITSOC president.",
       tags: ["Project management", "Peer mentoring", "Trello", "Technical documentation"]
     }
   ],

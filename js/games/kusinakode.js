@@ -64,7 +64,7 @@
       function renderSelect() {
         var html = '<div class="kk">' +
           '<div class="kk-head">' +
-            '<img src="' + IMG + 'logo.png" alt="Kusina Kode" class="kk-logo">' +
+            '<img src="' + IMG + 'kk-logo.png" alt="Kusina Kode" class="kk-logo">' +
             '<div><h3>Pick a level</h3><p>Guess the six-letter Filipino dish in six tries. ' +
             unlocked + ' of ' + LEVELS.length + ' unlocked.</p></div>' +
           '</div><div class="kk-levels">';
