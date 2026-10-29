@@ -14,13 +14,17 @@
 <meta property="og:image" content="assets/img/projects/dilig-hardware-prototype.png">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%237C3AED'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-weight='700' font-size='14' fill='white' text-anchor='middle'%3EJM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="assets/brand/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Press+Start+2P&display=swap">
 
-<link rel="stylesheet" href="css/site.css?v=33">
+<link rel="stylesheet" href="css/site.css?v=36">
 <link rel="stylesheet" href="css/games.css?v=9">
 
 <script>
@@ -47,7 +51,7 @@
 <!-- phones: a slim top bar that opens the sidebar -->
 <div class="mbar">
   <a class="nav__brand" href="#home" aria-label="Jhan Maurice De Roxas, back to top">
-    <span class="nav__mark">JM</span><span class="nav__name">JHAN<b>MAURICE</b></span>
+    <img class="nav__mark" src="assets/brand/logo-128.png" alt="" width="44" height="44" decoding="async"><span class="nav__name">JHAN<b>MAURICE</b></span>
   </a>
   <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
     <span></span><span></span><span></span>
@@ -57,7 +61,7 @@
 
 <aside class="side" id="nav">
   <a class="nav__brand side__brand" href="#home" aria-label="Jhan Maurice De Roxas, back to top">
-    <span class="nav__mark">JM</span>
+    <img class="nav__mark" src="assets/brand/logo-128.png" alt="" width="44" height="44" decoding="async">
     <span class="side__who fade"><b>Jhan Maurice</b><small>De Roxas · Portfolio</small></span>
   </a>
 
@@ -203,6 +207,12 @@
       <div class="lead__strip" id="lead-strip"></div>
     </div>
     <ul class="recog reveal" id="recog"></ul>
+
+    <!-- shown only once data.js has real recommendations -->
+    <div class="recs-wrap" id="recs-wrap" hidden>
+      <h3 class="sub reveal">What people say</h3>
+      <div class="recs" id="recs"></div>
+    </div>
   </div>
 </section>
 
@@ -245,11 +255,6 @@
       <div class="pc__progress" aria-hidden="true"><i id="pc-bar"></i></div>
       <span class="pc__count" id="pc-count" aria-hidden="true"></span>
     </div>
-  </div>
-
-  <div class="wrap">
-    <h3 class="sub reveal">More projects</h3>
-    <div class="pc-more" id="pc-more"></div>
   </div>
 </section>
 
@@ -326,7 +331,7 @@
     <div class="foot__top">
       <div class="foot__brand">
         <a class="nav__brand" href="#home" aria-label="Back to top">
-          <span class="nav__mark">JM</span><span class="nav__name">JHAN<b>MAURICE</b></span>
+          <img class="nav__mark" src="assets/brand/logo-128.png" alt="" width="44" height="44" decoding="async"><span class="nav__name">JHAN<b>MAURICE</b></span>
         </a>
         <p>BSIT student from Cabuyao, Laguna.</p>
       </div>
@@ -429,12 +434,12 @@
 </div>
 
 <script src="js/asm-art-data.js?v=4"></script>
-<script src="js/data.js?v=20"></script>
+<script src="js/data.js?v=22"></script>
 <script src="js/games/kusinakode.js?v=4"></script>
 <script src="js/games/facechange.js?v=3"></script>
 <script src="js/games/mines.js?v=3"></script>
 <script src="js/games/pixelplot.js?v=3"></script>
 <script src="js/games/cipher.js?v=3"></script>
-<script src="js/main.js?v=27"></script>
+<script src="js/main.js?v=29"></script>
 </body>
 </html>

@@ -113,6 +113,13 @@ window.SITE = {
     { t: "Curious", p: "I like learning how different pieces of technology fit together." }
   ],
 
+  /* "What people say" under About. Stays hidden while this list is empty.
+     Only add real quotes, with the person's permission. One entry looks like:
+       { quote: "What they wrote, word for word.",
+         name: "Their Name", role: "Their title", relation: "Capstone adviser" }
+     Optional: photo: "assets/img/people/their-photo.jpg" (otherwise initials are shown). */
+  recommendations: [],
+
   /* shown under Leadership & recognition */
   recognition: [
     { t: "President's Lister", p: "Mapúa Malayan Colleges Laguna", icon: "list" },
@@ -180,7 +187,7 @@ window.SITE = {
         { src: "assets/img/gallery/dilig-database-erd.png", cap: "MySQL schema: five tables with cascade rules and indexed foreign keys." },
         { src: "assets/img/gallery/dilig-photo-2.jpg", cap: "The prototype from another angle: pump reservoir, sensor bed and the app in dark mode." }
       ],
-      video: { src: "assets/video/dilig-demo.mp4", cap: "Full system demo: hardware, app and auto-watering." }
+      video: { src: "assets/video-web/dilig-demo.mp4", cap: "Full system demo: hardware, app and auto-watering." }
     },
 
     {
@@ -430,7 +437,7 @@ window.SITE = {
       gallery: [
         { src: "assets/img/projects/shuttlecock-hero.png", cap: "Presentation mockup: home dashboard, account creation and live trip tracking." }
       ],
-      video: { src: "assets/video/shuttlecock-demo.mp4", cap: "Prototype walkthrough." }
+      video: { src: "assets/video-web/shuttlecock-demo.mp4", cap: "Prototype walkthrough." }
     },
 
     {
@@ -479,6 +486,7 @@ window.SITE = {
     /* ------------------------- secondary / supporting ------------------------ */
     {
       id: "cloudshot",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Secondary",
       name: "CloudShot",
       sub: "Scalable Multi-Tenant Media Delivery & Storage",
@@ -581,6 +589,7 @@ window.SITE = {
 
     {
       id: "bookstore",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Bookstore Ordering System",
       sub: "ASP.NET over Oracle",
@@ -658,11 +667,12 @@ window.SITE = {
         { src: "assets/img/gallery/makiride-Rate.png", cap: "Rating a ride." },
         { src: "assets/img/gallery/makiride-Acc-Inmfo--Ver.png", cap: "Account information and verification." }
       ],
-      video: { src: "assets/video/makiride-pitch.mov", cap: "Video pitch." }
+      video: { src: "assets/video-web/makiride-pitch.mp4", cap: "Video pitch." }
     },
 
     {
       id: "gradex",
+      hide: true,   // kept in the archive, not shown on the site
       rank: "Supporting",
       name: "Grade-X",
       sub: "Scalable Cloud Framework for Student Services",

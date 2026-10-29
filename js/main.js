@@ -439,6 +439,21 @@
       b.addEventListener("click", function () { openLightbox([{ type: "img", src: r.img, title: r.t, sub: r.p, cap: r.cap }], 0, r.t); });
     });
 
+    /* what people say: only rendered when data.js has real quotes */
+    var recs = S.recommendations || [];
+    if (recs.length) {
+      $("#recs").innerHTML = recs.map(function (r, i) {
+        var initials = r.name.split(/\s+/).filter(Boolean).map(function (w) { return w[0]; }).slice(0, 2).join("").toUpperCase();
+        return '<figure class="glass rec reveal" style="--d:' + (i % 3) * 80 + 'ms">' +
+          '<blockquote>' + esc(r.quote) + '</blockquote>' +
+          '<figcaption>' +
+            (r.photo ? '<img src="' + esc(r.photo) + '" alt="" loading="lazy">' : '<span class="rec__av" aria-hidden="true">' + esc(initials) + '</span>') +
+            '<span><b>' + esc(r.name) + '</b><small>' + esc([r.role, r.relation].filter(Boolean).join(" · ")) + '</small></span>' +
+          '</figcaption></figure>';
+      }).join("");
+      $("#recs-wrap").hidden = false;
+    }
+
     /* photos already shown on a recognition card stay out of the strip */
     var used = recog.map(function (r) { return r.img; });
     var shots = (S.proofs || []).filter(function (p) { return used.indexOf(p.src) === -1; }).slice(0, 4);
@@ -540,27 +555,6 @@
         cardFace(p) + '</button>';
     }).join("");
     var cards = $$(".pc__card", stage);
-
-    /* a picture only when the project really has one; otherwise a text card */
-    $("#pc-more").innerHTML = ordered.filter(function (p) { return !p.featured; }).map(function (p) {
-      var pic = projPic(p), ph = p.phone || [];
-      var top = ph.length > 1
-        ? '<i class="pc-mini__phones"><span class="mini-phone is-back"><img src="' + esc(ph[Math.min(4, ph.length - 1)].src) + '" alt="" loading="lazy"></span>' +
-          '<span class="mini-phone"><img src="' + esc(ph[1].src) + '" alt="" loading="lazy"></span></i>'
-        : pic ? '<i><img src="' + esc(pic) + '" alt="" loading="lazy"></i>' : "";
-      return '<button class="pc-mini reveal' + (top ? "" : " is-text") + '" type="button" data-id="' + esc(p.id) + '" style="--c:' + projColor(p) + '">' +
-        top +
-        '<span>' +
-          (pic ? "" : '<em aria-hidden="true">' + esc(p.icon || p.name.slice(0, 2)) + '</em>') +
-          '<small>' + esc(p.kicker) + ' · ' + esc(p.year) + '</small>' +
-          '<b>' + esc(p.name) + '</b>' +
-          '<p>' + esc(p.blurb) + '</p>' +
-          '<span class="chips">' + p.tech.slice(0, 3).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join("") + '</span>' +
-        '</span></button>';
-    }).join("");
-    $$(".pc-mini").forEach(function (b) {
-      b.addEventListener("click", function () { openDive(ordered.indexOf(projById(b.dataset.id))); });
-    });
 
     var shown = -1;
     /* f is a fractional index: 2.5 means halfway between project 3 and 4 */
@@ -675,9 +669,6 @@
     add(".lead__strip img", function (el, sp) {
       el.style.translate = "0 " + (sp * 30).toFixed(1) + "px";
       el.style.scale = "1.15";
-    });
-    add(".pc-mini", function (el, sp, i) {
-      el.style.translate = "0 " + (sp * (i % 3 === 1 ? 60 : 25)).toFixed(1) + "px";
     });
     add(".contact__card", function (el, sp) {
       el.style.rotate = "y " + (sp * 25).toFixed(2) + "deg";
@@ -830,8 +821,13 @@
     $("#pf-buttons").innerHTML =
       '<button class="btn btn--glass" type="button" data-full>Full case study</button>' +
       (p.playable ? '<button class="btn btn--play" type="button" data-play="' + esc(p.playable) + '">▶ PLAY</button>' : "") +
+      (p.video ? '<button class="btn btn--glass" type="button" data-watch>▶ Watch demo</button>' : "") +
       apkButton(p);
     $("[data-full]", pf).addEventListener("click", function () { openProject(p.id); });
+    var watch = $("[data-watch]", pf);
+    if (watch) watch.addEventListener("click", function () {
+      openLightbox([{ type: "video", src: p.video.src, poster: p.hero, title: p.name, sub: "Demo video", cap: p.video.cap }], 0, p.name);
+    });
     var play = $("[data-play]", pf);
     if (play) play.addEventListener("click", function () { openGame(play.dataset.play); });
     phoneFill(p);
@@ -914,6 +910,11 @@
             '<img src="' + esc(g.src) + '" alt="' + esc(g.cap) + '" loading="lazy"' + (g.pixel ? ' class="pixelated"' : "") + '>' +
             '<figcaption>' + esc(g.cap) + '</figcaption></figure>';
         }).join("") + '</div></div></div>';
+    }
+    if (p.video) {
+      h += '<div class="pm__cols"><div class="pm__block" style="grid-column:1/-1"><h4>Demo video</h4>' +
+        '<video class="pm__video" controls preload="metadata" playsinline src="' + esc(p.video.src) + '"' + (p.hero ? ' poster="' + esc(p.hero) + '"' : "") + '></video>' +
+        (p.video.cap ? '<p class="pm__fine">' + esc(p.video.cap) + '</p>' : "") + '</div></div>';
     }
     if (p.note) h += '<div class="note" style="margin-top:22px"><span>' + esc(p.note) + '</span></div>';
 
@@ -1019,6 +1020,7 @@
     $("#lb-close").focus();
   }
   function closeLightbox() {
+    $$("video", lbStage).forEach(function (v) { v.pause(); });
     lb.classList.remove("is-open");
     setTimeout(function () { if (!lb.classList.contains("is-open")) { lb.hidden = true; lbStage.innerHTML = ""; } }, 260);
     if (modal.hidden && pf.hidden) document.body.style.overflow = "";
@@ -1028,7 +1030,9 @@
     var it = lbItems[lbIdx];
     $("#lb-title").textContent = it.title || lbLabel;
     $("#lb-meta").textContent = (lbItems.length > 1 ? (lbIdx + 1) + " of " + lbItems.length : "") + (it.sub ? " · " + it.sub : "");
-    lbStage.innerHTML = it.type === "pdf"
+    lbStage.innerHTML = it.type === "video"
+      ? '<video src="' + esc(it.src) + '" controls autoplay playsinline' + (it.poster ? ' poster="' + esc(it.poster) + '"' : "") + '></video>'
+      : it.type === "pdf"
       ? '<iframe src="' + esc(it.src) + '#view=FitH" title="' + esc(it.title || "Document") + '"></iframe>'
       : '<img src="' + esc(it.src) + '" alt="' + esc(it.cap || "") + '"' + (it.pixel ? ' class="pixelated"' : "") + '>';
     var foot = it.cap ? '<span>' + esc(it.cap) + '</span>' : "";
