@@ -1,5 +1,5 @@
 /* ==========================================================================
-   main.js — laptop intro, night sky, hero, sections, overlays and games.
+   main.js — brand intro, night sky, hero, sections, overlays and games.
    No framework, no build step. Everything reads from window.SITE.
    ========================================================================== */
 (function () {
@@ -67,52 +67,29 @@
     setTimeout(function () { host.remove(); }, 2400);
   }
 
-  /* ============================================================ INTRO
-     Laptop opens, boots, launches the whoami app, then zooms into the card.
-     Each stage is a class on .intro; the timings live here, the look in CSS. */
-  function intro(done) {
-    var box = $("#hero-intro");
+  /* ============================================================ SPLASH
+     The brand intro (the look is all CSS). A click, "Skip intro",
+     Esc/Enter/Space or the auto timer ends it, then the hero rises in. */
+  function splash(done) {
+    var box = $("#splash");
     if (!root.classList.contains("is-intro") || !box) {
       if (box) box.remove();
       done();
       return;
     }
-    var log = $("#intro-log");
-    var lines = [
-      ["> booting portfolio…", ""],
-      ["> loading " + S.projects.length + " projects", ""],
-      ["> verifying " + S.certs.length + " certificates", ""],
-      ["> mounting " + S.playable.length + " playable demos", ""],
-      ["✓ ready", "ok"]
-    ];
-    var timers = [], finished = false;
-    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
-    function stage(cls) { box.classList.add(cls); }
-
-    at(60, function () { stage("is-on"); });
-    at(500, function () { stage("is-open"); });
-    at(1550, function () { stage("is-power"); });
-    lines.forEach(function (l, n) {
-      at(1800 + n * 170, function () { log.appendChild(el("span", l[1], esc(l[0]) + "\n")); });
-    });
-    at(2750, function () { stage("is-dock"); });
-    at(3150, function () { stage("is-launch"); });
-    at(3650, function () { stage("is-app"); });
-    at(4500, finish);
-
+    var finished = false, timer = setTimeout(finish, 3700);
     function finish() {
       if (finished) return;
       finished = true;
-      timers.forEach(clearTimeout);
-      try { sessionStorage.setItem("jm-intro", "1"); } catch (e) {}
-      ["is-on", "is-open", "is-power", "is-dock", "is-launch", "is-app"].forEach(stage);
-      stage("is-zoom");
-      root.classList.remove("is-intro");   /* the card scales up out of the screen */
-      setTimeout(function () { box.remove(); }, 900);
+      clearTimeout(timer);
       document.removeEventListener("keydown", onKey);
+      try { sessionStorage.setItem("jm-intro", "1"); } catch (e) {}
+      box.classList.add("is-out");
+      root.classList.remove("is-intro");
+      setTimeout(function () { box.remove(); }, 650);
       done();
     }
-    function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " ") finish(); }
+    function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " ") { e.preventDefault(); finish(); } }
     box.addEventListener("click", finish);
     document.addEventListener("keydown", onKey);
   }
@@ -271,7 +248,6 @@
       ['<span class="k">name</span>:   <span class="n">' + esc(P.name.replace(" C.", "")) + '</span>', 1],
       ['<span class="k">role</span>:   Full-stack &amp; Android dev', 1],
       ['<span class="k">school</span>: Mapúa MCL · BSIT', 1],
-      ['<span class="k">motto</span>:  "I build things that talk to each other."', 1],
       ['<span class="k">stack</span>:', 1],
       ['  - Kotlin + Jetpack Compose', 1],
       ['  - PHP / REST · MySQL', 1],
@@ -436,7 +412,10 @@
     }).join("");
     $$("[data-r]").forEach(function (b) {
       var r = recog[+b.dataset.r];
-      b.addEventListener("click", function () { openLightbox([{ type: "img", src: r.img, title: r.t, sub: r.p, cap: r.cap }], 0, r.t); });
+      var shots = [{ type: "img", src: r.img, title: r.t, sub: r.p, cap: r.cap }].concat((r.more || []).map(function (x) {
+        return { type: "img", src: x.src, title: r.t, sub: r.p, cap: x.cap };
+      }));
+      b.addEventListener("click", function () { openLightbox(shots, 0, r.t); });
     });
 
     /* what people say: only rendered when data.js has real quotes */
@@ -512,14 +491,7 @@
     for (var i = 0; i < S.projects.length; i++) if (S.projects[i].id === id) return S.projects[i];
     return null;
   }
-  function slug(p) { return p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
-  /* One colour per project, used for the carousel glow and the deep dive. */
-  var PROJECT_COLORS = ["#E11D74", "#7C3AED", "#0EA5E9", "#F97316", "#10B981", "#EAB308",
-                        "#EC4899", "#6366F1", "#14B8A6", "#EF4444", "#A855F7", "#22C55E"];
-  function projColor(p) { return PROJECT_COLORS[ordered.indexOf(p) % PROJECT_COLORS.length]; }
-  /* the project's cover, or its first gallery shot, or nothing */
-  function projPic(p) { return p.hero || (p.gallery && p.gallery[0] && p.gallery[0].src) || ""; }
   /* "ask me for the APK": a prefilled email, for projects flagged apk: true */
   function apkMail(p) {
     var subject = p.name + " APK request";
@@ -531,112 +503,199 @@
       '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Request the APK</a>' : "";
   }
 
-  /* The featured projects turn on a pinned arc as the page scrolls through
-     #pc-scroll; the rest sit in a plain grid underneath. */
+  /* The picture for a project: a laptop for websites, two phones for apps
+     with real screens, otherwise its cover image. */
+  function projFace(p) {
+    if (p.laptop && p.face !== "phone") {
+      return '<span class="card-dev card-dev--laptop"><span class="mini-lap"><span><img src="' + esc(p.laptop[0].src) + '" alt="" draggable="false"></span></span></span>';
+    }
+    if (p.phone) {
+      var n = p.phone.length, c = p.cover || [Math.min(2, n - 1), n > 4 ? 4 : 0];   /* [front, back] */
+      return '<span class="card-dev"><span class="mini-phone is-back"><img src="' + esc(p.phone[c[1]].src) + '" alt="" draggable="false"></span>' +
+        '<span class="mini-phone"><img src="' + esc(p.phone[c[0]].src) + '" alt="" draggable="false"></span></span>';
+    }
+    return p.hero ? '<img src="' + esc(p.hero) + '" alt="" draggable="false"' + (p.heroPixel ? ' class="pixelated"' : "") + '>' : "";
+  }
+  function chipsHTML(list, cls) {
+    return '<div class="chips">' + list.map(function (t) { return '<span class="chip' + (cls ? " " + cls : "") + '">' + esc(t) + '</span>'; }).join("") + '</div>';
+  }
+  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  /* Selected work: one card per featured project, opening its case study. */
+  var work = ordered.filter(function (p) { return p.featured; });
   function renderProjects() {
-    var track = $("#pc-scroll"), box = $("#pc"), stage = $("#pc-stage");
-    var feat = ordered.filter(function (p) { return p.featured; });
-    var n = feat.length;
-    track.style.setProperty("--n", n);
-
-    /* websites show in a mini laptop, phone apps without a cover in mini phones */
-    function cardFace(p) {
-      if (p.laptop) {
-        return '<span class="card-dev card-dev--laptop"><span class="mini-lap"><span><img src="' + esc(p.laptop[0].src) + '" alt="" draggable="false"></span></span></span>';
-      }
-      if (p.phone && !p.hero) {
-        return '<span class="card-dev"><span class="mini-phone is-back"><img src="' + esc(p.phone[Math.min(4, p.phone.length - 1)].src) + '" alt="" draggable="false"></span>' +
-          '<span class="mini-phone"><img src="' + esc(p.phone[1].src) + '" alt="" draggable="false"></span></span>';
-      }
-      return p.hero ? '<img src="' + esc(p.hero) + '" alt="" draggable="false"' + (p.heroPixel ? ' class="pixelated"' : "") + '>' : "";
-    }
-    stage.innerHTML = feat.map(function (p, i) {
-      return '<button class="pc__card' + (p.heroFit === "contain" ? " is-contain" : "") + '" type="button" data-i="' + i + '" aria-label="' + esc(p.name) + '" style="--c:' + projColor(p) + '">' +
-        cardFace(p) + '</button>';
+    $("#work").innerHTML = work.map(function (p, i) {
+      var num = (i + 1 < 10 ? "0" : "") + (i + 1);
+      return '<article class="work__item reveal">' +
+        '<button class="work__media' + (p.heroFit === "contain" && !p.phone && !p.laptop ? " is-contain" : "") + '" type="button" data-open="' + esc(p.id) + '" aria-label="Open the ' + esc(p.name) + ' case study">' +
+          projFace(p) + '<span class="work__num">' + num + '</span><span class="work__open">View case study</span></button>' +
+        '<div class="work__copy">' +
+          '<span class="work__kicker">' + esc(p.kicker) + ' · ' + esc(p.year) + '</span>' +
+          '<h3>' + esc(p.name) + '</h3>' +
+          (p.sub ? '<p class="work__sub">' + esc(p.sub) + '</p>' : "") +
+          '<p class="work__blurb">' + esc(p.blurb || p.tagline) + '</p>' +
+          (p.role ? '<p class="work__role"><b>My role:</b> ' + esc(p.role) + '</p>' : "") +
+          chipsHTML(p.tech.slice(0, 6)) +
+          '<div class="work__actions">' +
+            '<button class="btn btn--primary" type="button" data-open="' + esc(p.id) + '">View case study ' + ARROW + '</button>' +
+            (p.live ? '<a class="btn btn--glass" href="' + esc(p.live) + '" target="_blank" rel="noopener noreferrer">' + esc(p.liveLabel || "Visit live site") + ' ↗</a>' : "") +
+            (p.playable ? '<button class="btn btn--play" type="button" data-play="' + esc(p.playable) + '">▶ PLAY</button>' : "") +
+            apkButton(p) +
+          '</div>' +
+        '</div></article>';
     }).join("");
-    var cards = $$(".pc__card", stage);
-
-    var shown = -1;
-    /* f is a fractional index: 2.5 means halfway between project 3 and 4 */
-    function layout(f) {
-      cards.forEach(function (c, i) {
-        var d = i - f, a = Math.abs(d), k = Math.max(0, 1 - a);       /* k = how "centre" it is */
-        var x = d * 1.05, z = -Math.min(a, 4) * 130 + k * 90;
-        var y = Math.min(a, 4) * 4 - k * 3;
-        var ry = Math.max(-55, Math.min(55, -d * 18)) * (1 - k);
-        var rz = d * 5 * (1 - k) - 8 * k;
-        var s = 1 - Math.min(a, 4) * .06 + k * .28;
-        c.style.setProperty("--t", "translate3d(calc(var(--w) * " + x.toFixed(3) + "), " + y.toFixed(2) + "%, " + z.toFixed(1) + "px) " +
-          "rotateY(" + ry.toFixed(2) + "deg) rotateZ(" + rz.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")");
-        c.style.setProperty("--o", a > 3.6 ? "0" : "1");
-        c.style.setProperty("--b", (.55 + .45 * k).toFixed(2));
-        c.style.zIndex = String(50 - Math.round(a * 4));
-        c.classList.toggle("is-center", a < .5);
-      });
-      var i = Math.max(0, Math.min(n - 1, Math.round(f)));
-      $("#pc-bar").style.width = (n > 1 ? f / (n - 1) * 100 : 100).toFixed(1) + "%";
-      if (i !== shown) {
-        shown = i;
-        var p = feat[i];
-        box.style.setProperty("--pc-c", projColor(p));
-        var name = $("#pc-name"), kick = $("#pc-kicker");
-        name.textContent = p.name;
-        kick.textContent = p.kicker + " · " + p.year;
-        $("#pc-count").textContent = (i + 1) + " / " + n;
-        if (!calm) [name, kick].forEach(function (x) { x.classList.remove("is-swap"); void x.offsetWidth; x.classList.add("is-swap"); });
-      }
-    }
-
-    function progress() {
-      var r = track.getBoundingClientRect();
-      var span = r.height - window.innerHeight;
-      var t = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 0;
-      return t * (n - 1);
-    }
-    function go(i) {
-      i = Math.max(0, Math.min(n - 1, i));
-      var top = track.getBoundingClientRect().top + window.scrollY;
-      var span = track.offsetHeight - window.innerHeight;
-      window.scrollTo({ top: top + span * (n > 1 ? i / (n - 1) : 0) + 1, behavior: calm ? "auto" : "smooth" });
-    }
-
-    var ticking = false;
-    window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { layout(progress()); ticking = false; });
-    }, { passive: true });
-    window.addEventListener("resize", function () { layout(progress()); });
-    layout(progress());
-
-    $("#pc-prev").addEventListener("click", function () { go(shown - 1); });
-    $("#pc-next").addEventListener("click", function () { go(shown + 1); });
-    $("#pc-dive").addEventListener("click", function () { openDive(ordered.indexOf(feat[shown])); });
-
-    /* drag sideways to turn; a short tap selects, a tap on the middle dives in */
-    var downX = null, moved = 0;
-    stage.addEventListener("pointerdown", function (e) { downX = e.clientX; moved = 0; stage.classList.add("is-drag"); });
-    window.addEventListener("pointermove", function (e) { if (downX != null) moved = Math.max(moved, Math.abs(e.clientX - downX)); });
-    window.addEventListener("pointerup", function (e) {
-      if (downX == null) return;
-      var dx = e.clientX - downX;
-      downX = null;
-      stage.classList.remove("is-drag");
-      if (Math.abs(dx) > 40) go(shown + (dx < 0 ? 1 : -1) * Math.max(1, Math.round(Math.abs(dx) / 160)));
+    $$("#work [data-open]").forEach(function (b) {
+      b.addEventListener("click", function () { openProject(b.dataset.open); });
     });
-    cards.forEach(function (c) {
-      c.addEventListener("click", function () {
-        if (moved > 8) return;
-        var i = +c.dataset.i;
-        if (i === shown) openDive(ordered.indexOf(feat[i]));
-        else go(i);
-      });
-    });
-    box.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(shown - 1); }
-      if (e.key === "ArrowRight") { e.preventDefault(); go(shown + 1); }
+    $$("#work [data-play]").forEach(function (b) {
+      b.addEventListener("click", function () { openGame(b.dataset.play); });
     });
   }
+
+  /* ============================================================ CASE STUDY
+     One page per project over the site. Prev/next and the "next project"
+     card walk through the featured work; Esc or the back button closes. */
+  var cs = $("#cs"), csPage = $("#cs-page"), csAt = 0, csLastFocus = null;
+
+  function caseHTML(p) {
+    var n = 0;
+    function sec(title, body) { return body ? '<section class="cs__sec"><h3><span>' + (++n < 10 ? "0" : "") + n + '</span>' + title + '</h3>' + body + '</section>' : ""; }
+    function para(t) { return t ? '<p>' + esc(t) + '</p>' : ""; }
+    function list(a, cls) { return a && a.length ? '<ul class="' + (cls || "cs__list") + '">' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : ""; }
+    var vids = p.videos || (p.video ? [p.video] : []);
+    var pic = p.phone || p.laptop ? projFace(p) : (p.hero ? '<img src="' + esc(p.hero) + '" alt="' + esc(p.name) + '" data-shot="0"' + (p.heroPixel ? ' class="pixelated"' : "") + '>' : "");
+
+    var h = '<header class="cs__hero"><div>' +
+      '<p class="cs__kicker">' + esc(p.kicker) + ' · ' + esc(p.year) + '</p>' +
+      '<h2 id="cs-title" tabindex="-1">' + esc(p.name) + '</h2>' +
+      (p.sub ? '<p class="cs__sub">' + esc(p.sub) + '</p>' : "") +
+      '<p class="cs__lead">' + esc(p.tagline || p.blurb) + '</p>' +
+      '<div class="cs__actions">' +
+        (p.live ? '<a class="btn btn--primary" href="' + esc(p.live) + '" target="_blank" rel="noopener noreferrer">' + esc(p.liveLabel || "Visit live site") + ' ↗</a>' : "") +
+        (vids.length ? '<button class="btn ' + (p.live ? "btn--glass" : "btn--primary") + '" type="button" data-watch>▶ Watch ' + (vids.length > 1 ? "walkthroughs" : "demo") + '</button>' : "") +
+        (p.playable ? '<button class="btn btn--play" type="button" data-play="' + esc(p.playable) + '">▶ PLAY IT</button>' : "") +
+        apkButton(p) +
+        (p.figma ? '<a class="btn btn--glass" href="' + esc(p.figma) + '" target="_blank" rel="noopener noreferrer">Open in Figma</a>' : "") +
+        (p.repo ? '<a class="btn btn--glass" href="' + esc(p.repo) + '" target="_blank" rel="noopener noreferrer">GitHub</a>' :
+          p.githubSoon ? '<span class="btn btn--glass" aria-disabled="true">GitHub (soon)</span>' : "") +
+      '</div></div>' +
+      (pic ? '<figure class="cs__media' + (p.heroFit === "contain" && !p.phone && !p.laptop ? " is-contain" : "") + '">' + pic + '</figure>' : "") +
+      '</header>';
+
+    var facts = [["My role", p.role], ["Year", p.year], ["Team", p.team], ["Course", p.course]].filter(function (f) { return f[1]; });
+    h += '<dl class="cs__facts">' + facts.map(function (f) { return '<div><dt>' + f[0] + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join("") + '</dl>';
+
+    if (p.problem || p.solution) {
+      h += sec("Overview", '<div class="cs__two">' +
+        (p.problem ? '<div><h4>The problem</h4>' + para(p.problem) + '</div>' : "") +
+        (p.solution ? '<div><h4>What we built</h4>' + para(p.solution) + '</div>' : "") + '</div>');
+    }
+    if (p.phone) {
+      h += sec(p.phoneTitle || "The app", '<div class="cs__screens">' + p.phone.map(function (s, j) {
+        return '<figure class="cs__phone" role="button" tabindex="0" data-phone="' + j + '">' +
+          '<div class="phone"><div class="phone__screen"><img src="' + esc(s.src) + '" alt="' + esc(s.cap || p.name + " screen " + (j + 1)) + '" loading="lazy"></div><i class="phone__island" aria-hidden="true"></i></div>' +
+          (s.cap ? '<figcaption>' + esc(s.cap) + '</figcaption>' : "") + '</figure>';
+      }).join("") + '</div>');
+    }
+    if (p.laptop) {
+      h += sec(p.laptopTitle || "The website", '<div class="cs__screens">' + p.laptop.map(function (s, j) {
+        return '<figure class="cs__lap" role="button" tabindex="0" data-lap="' + j + '">' +
+          '<div class="lap"><div class="lap__lid"><div class="lap__screen"><img src="' + esc(s.src) + '" alt="' + esc(s.cap || p.name + " page " + (j + 1)) + '" loading="lazy"' + (s.scroll ? ' class="is-scroll"' : "") + '></div></div><div class="lap__base"></div></div>' +
+          (s.cap ? '<figcaption>' + esc(s.cap) + '</figcaption>' : "") + '</figure>';
+      }).join("") + '</div>');
+    }
+    h += sec("My role", (p.role ? '<p class="cs__role">' + esc(p.role) + '</p>' : "") + list(p.contribution));
+    h += sec("Key features", list(p.features, "cs__feats"));
+    if (p.process || p.outcome) {
+      h += sec("How it came together", para(p.process) +
+        (p.outcome ? '<div class="cs__outcome"><b>Outcome</b>' + para(p.outcome) + '</div>' : ""));
+    }
+    h += sec("Built with", '<div class="cs__tech"><div><h4>Technologies</h4>' + chipsHTML(p.tech) + '</div>' +
+      (p.skills ? '<div><h4>Skills</h4>' + chipsHTML(p.skills, "chip--alt") + '</div>' : "") + '</div>');
+    if (p.gallery && p.gallery.length) {
+      h += sec("Gallery", '<div class="cs__gallery' + (p.heroFit === "contain" ? " is-contain" : "") + '">' + p.gallery.map(function (g, i) {
+        return '<figure class="cs__shot" role="button" tabindex="0" data-shot="' + i + '">' +
+          '<img src="' + esc(g.src) + '" alt="' + esc(g.cap) + '" loading="lazy"' + (g.pixel ? ' class="pixelated"' : "") + '>' +
+          '<figcaption>' + esc(g.cap) + '</figcaption></figure>';
+      }).join("") + '</div>');
+    }
+    if (vids.length) {
+      h += sec(vids.length > 1 ? "Walkthrough videos" : "Demo video", '<div class="cs__videos">' + vids.map(function (v) {
+        return '<div>' + (v.title ? '<h4>' + esc(v.title) + '</h4>' : "") +
+          '<video class="cs__video" controls preload="metadata" playsinline src="' + esc(v.src) + '"' + (v.poster || p.hero ? ' poster="' + esc(v.poster || p.hero) + '"' : "") + '></video>' +
+          (v.cap ? '<p class="cs__fine">' + esc(v.cap) + '</p>' : "") + '</div>';
+      }).join("") + '</div>');
+    }
+    if (p.note) h += '<div class="note cs__note"><span>' + esc(p.note) + '</span></div>';
+
+    var next = work[(work.indexOf(p) + 1) % work.length];
+    h += '<button class="cs__next" type="button" data-next><span><small>Next project</small><b>' + esc(next.name) + '</b></span>' + ARROW + '</button>';
+    h += '<p class="cs__fine">Source files and full documentation are in my academic archive and can be shared on request.</p>';
+    return h;
+  }
+
+  function csFill(i) {
+    csAt = ((i % work.length) + work.length) % work.length;
+    var p = work[csAt];
+    csPage.innerHTML = caseHTML(p);
+    $("#cs-path").textContent = "~/projects/" + p.id;
+    cs.scrollTop = 0;
+    var shots = (p.gallery || []).map(function (g) { return { type: "img", src: g.src, cap: g.cap, pixel: g.pixel }; });
+    $$("[data-shot]", csPage).forEach(function (el) {
+      function go() { if (shots.length) openLightbox(shots, +el.dataset.shot, p.name); }
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+    var screens = (p.phone || []).map(function (s) { return { type: "img", src: s.src, cap: s.cap }; });
+    $$("[data-phone]", csPage).forEach(function (el) {
+      function go() { openLightbox(screens, +el.dataset.phone, p.name); }
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+    var pages = (p.laptop || []).map(function (s) { return { type: "img", src: s.src, cap: s.cap }; });
+    $$("[data-lap]", csPage).forEach(function (el) {
+      function go() { openLightbox(pages, +el.dataset.lap, p.name); }
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+    var vids = p.videos || (p.video ? [p.video] : []);
+    var watch = $("[data-watch]", csPage);
+    if (watch) watch.addEventListener("click", function () {
+      openLightbox(vids.map(function (v) {
+        return { type: "video", src: v.src, poster: v.poster || p.hero, title: p.name, sub: v.title || "Demo video", cap: v.cap };
+      }), 0, p.name);
+    });
+    var play = $("[data-play]", csPage);
+    if (play) play.addEventListener("click", function () { openGame(play.dataset.play); });
+    $("[data-next]", csPage).addEventListener("click", function () { csFill(csAt + 1); csFocus(); });
+    /* the cover replays its entrance on every project */
+    cs.classList.remove("is-open"); void cs.offsetWidth; cs.classList.add("is-open");
+  }
+  function csFocus() { var t = $("#cs-title"); if (t) t.focus({ preventScroll: true }); }
+
+  function openProject(id) {
+    var p = projById(id);
+    if (!p || work.indexOf(p) < 0) return;
+    csLastFocus = document.activeElement;
+    cs.hidden = false;
+    csFill(work.indexOf(p));
+    document.body.style.overflow = "hidden";
+    csFocus();
+  }
+  function closeProject() {
+    cs.classList.remove("is-open");
+    document.body.style.overflow = "";
+    $$("video", csPage).forEach(function (v) { v.pause(); });
+    setTimeout(function () { if (!cs.classList.contains("is-open")) { cs.hidden = true; csPage.innerHTML = ""; } }, 400);
+    if (csLastFocus && csLastFocus.focus) csLastFocus.focus({ preventScroll: true });
+  }
+  $("#cs-close").addEventListener("click", closeProject);
+  $("#cs-prev").addEventListener("click", function () { csFill(csAt - 1); csFocus(); });
+  $("#cs-next").addEventListener("click", function () { csFill(csAt + 1); csFocus(); });
+  document.addEventListener("keydown", function (e) {
+    if (cs.hidden || !modal.hidden || !lb.hidden) return;
+    if (e.key === "Escape") closeProject();
+  });
 
   /* ============================================================ SCROLL FX
      Motion tied to scroll position, not just a one-off fade: each target gets
@@ -700,235 +759,6 @@
     frame();
   }
 
-  /* ---------------- the deep dive ----------------
-     Scrolling the overlay moves through chapters; the big card turns and
-     slides a little for each one, the copy on the left swaps. */
-  var pf = $("#pf"), pfTrack = $("#pf-track"), pfCard = $("#pf-card");
-  var pfIndex = 0, pfChapters = [], pfLastFocus = null;
-  var PF_POSES = [
-    { x: 0,   y: 0,  rz: -10, ry: -8,  s: 1 },
-    { x: -6,  y: 4,  rz: 8,   ry: 18,  s: .92 },
-    { x: 4,   y: -3, rz: -16, ry: -22, s: 1.05 },
-    { x: -2,  y: 6,  rz: 4,   ry: 12,  s: .95 },
-    { x: 3,   y: 0,  rz: -6,  ry: -14, s: 1.02 },
-    { x: 0,   y: 2,  rz: 0,   ry: 0,   s: .98 }
-  ];
-
-  function chaptersFor(p) {
-    var c = [{ t: "Overview", h: '<p>' + esc(p.tagline || p.blurb) + '</p>' }];
-    if (p.problem)  c.push({ t: "The problem", h: '<p>' + esc(p.problem) + '</p>' });
-    if (p.solution) c.push({ t: "What we built", h: '<p>' + esc(p.solution) + '</p>' });
-    if (p.role || p.contribution) {
-      c.push({ t: "My role", h: (p.role ? '<p><strong>' + esc(p.role) + '</strong></p>' : "") +
-        (p.contribution ? '<ul>' + p.contribution.slice(0, 4).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : "") });
-    }
-    c.push({ t: "Built with", h: '<div class="chips">' + p.tech.map(function (x) { return '<span class="chip">' + esc(x) + '</span>'; }).join("") + '</div>' });
-    return c;
-  }
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function pfPose(f) {
-    var i = Math.min(Math.floor(f), PF_POSES.length - 1), t = f - i;
-    var A = PF_POSES[i], B = PF_POSES[Math.min(i + 1, PF_POSES.length - 1)];
-    t = t * t * (3 - 2 * t);
-    pfCard.style.setProperty("--t",
-      "translate(" + lerp(A.x, B.x, t) + "vw, " + lerp(A.y, B.y, t) + "vh) perspective(1200px) rotateY(" + lerp(A.ry, B.ry, t) + "deg) rotateZ(" + lerp(A.rz, B.rz, t) + "deg) scale(" + lerp(A.s, B.s, t) + ")");
-    /* devices follow the same path, a little calmer so the screen stays readable */
-    var dev = "translate(" + lerp(A.x, B.x, t) / 2 + "vw, " + lerp(A.y, B.y, t) / 2 + "vh) perspective(1400px) rotateY(" + lerp(A.ry, B.ry, t) * .6 + "deg) rotateZ(" + lerp(A.rz, B.rz, t) * .35 + "deg)";
-    phone.style.setProperty("--t", dev);
-    laptop.style.setProperty("--t", dev.replace(/rotateZ\([^)]*\)/, "rotateZ(0deg)"));
-  }
-
-  /* ---------------- devices: real screens in a phone or a laptop ----------------
-     Projects with phone: [...] get a phone, laptop: [...] a laptop. Screens are
-     grouped by chapter (ch); within a chapter they step forward on their own. */
-  var phone = $("#pf-phone"), laptop = $("#pf-laptop");
-  var devShots = [], devAt = -1, devTimer = 0, devKind = "";
-  function devImgs() { return devKind ? $$("#" + devKind + "-screen img") : []; }
-  function phoneTo(i) {
-    devAt = i;
-    devImgs().forEach(function (im, j) {
-      im.classList.toggle("is-on", j === i);
-      im.classList.toggle("is-past", j < i);
-    });
-    $$("#" + devKind + "-dots button").forEach(function (b, j) { b.setAttribute("aria-current", String(j === i)); });
-  }
-  function phoneStop() { clearInterval(devTimer); }
-  function phonePlay() {
-    phoneStop();
-    if (calm || devShots.length < 2) return;
-    devTimer = setInterval(function () {
-      var ch = devShots[devAt].ch, same = [];
-      devShots.forEach(function (s, j) { if (s.ch === ch) same.push(j); });
-      if (same.length > 1) phoneTo(same[(same.indexOf(devAt) + 1) % same.length]);
-    }, devKind === "laptop" ? 3600 : 2600);
-  }
-  function phoneFill(p) {
-    devKind = p.phone ? "phone" : p.laptop ? "laptop" : "";
-    devShots = p.phone || p.laptop || [];
-    pf.classList.toggle("has-phone", devKind === "phone");
-    pf.classList.toggle("has-laptop", devKind === "laptop");
-    ["phone", "laptop"].forEach(function (k) {
-      if (k === devKind) return;
-      $("#" + k + "-screen").innerHTML = ""; $("#" + k + "-dots").innerHTML = "";
-    });
-    if (!devKind) { phoneStop(); return; }
-    $("#" + devKind + "-screen").innerHTML = devShots.map(function (s, j) {
-      return '<img src="' + esc(s.src) + '" alt="' + esc(p.name) + ' screen ' + (j + 1) + '"' +
-        (s.scroll ? ' class="is-scroll"' : "") + (j > 2 ? ' loading="lazy"' : "") + '>';
-    }).join("");
-    $("#" + devKind + "-dots").innerHTML = devShots.map(function (s, j) {
-      return '<button type="button" data-s="' + j + '" aria-label="Screen ' + (j + 1) + '"></button>';
-    }).join("");
-    $$("#" + devKind + "-dots button").forEach(function (b) {
-      b.addEventListener("click", function () { phoneTo(+b.dataset.s); phonePlay(); });
-    });
-    phoneTo(0); phonePlay();
-  }
-  function pfShowChapter(k) {
-    var ch = pfChapters[k];
-    if (!ch) return;
-    var box = $("#pf-chapter");
-    box.innerHTML = '<h4>' + (k + 1) + ' · ' + esc(ch.t) + '</h4>' + ch.h;
-    box.classList.remove("is-swap"); void box.offsetWidth; box.classList.add("is-swap");
-    $$("#pf-dots button").forEach(function (b, i) { b.setAttribute("aria-current", String(i === k)); });
-    for (var j = 0; j < devShots.length; j++) {
-      if (devShots[j].ch === k) { phoneTo(j); phonePlay(); break; }
-    }
-  }
-
-  function pfFill(i) {
-    pfIndex = ((i % ordered.length) + ordered.length) % ordered.length;
-    var p = ordered[pfIndex];
-    pfChapters = chaptersFor(p);
-    pf.style.setProperty("--pf-c", projColor(p));
-    pfTrack.style.setProperty("--steps", pfChapters.length);
-    $("#pf-kicker").textContent = p.kicker + " · " + p.year;
-    $("#pf-name").textContent = p.name;
-    var img = $("#pf-img"), pic = projPic(p);
-    pf.classList.toggle("no-pic", !pic);   /* no picture: the copy takes the whole stage */
-    if (pic) img.src = pic; else img.removeAttribute("src");
-    img.className = p.heroPixel ? "pixelated" : "";
-    pfCard.classList.toggle("is-contain", p.heroFit === "contain");
-    $("#pf-dots").innerHTML = pfChapters.map(function (c, k) {
-      return '<button type="button" data-k="' + k + '" aria-label="' + esc(c.t) + '">' + (k + 1) + '</button>';
-    }).join("");
-    $$("#pf-dots button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        pf.scrollTo({ top: +b.dataset.k * window.innerHeight, behavior: calm ? "auto" : "smooth" });
-      });
-    });
-    $("#pf-buttons").innerHTML =
-      '<button class="btn btn--glass" type="button" data-full>Full case study</button>' +
-      (p.playable ? '<button class="btn btn--play" type="button" data-play="' + esc(p.playable) + '">▶ PLAY</button>' : "") +
-      (p.video ? '<button class="btn btn--glass" type="button" data-watch>▶ Watch demo</button>' : "") +
-      apkButton(p);
-    $("[data-full]", pf).addEventListener("click", function () { openProject(p.id); });
-    var watch = $("[data-watch]", pf);
-    if (watch) watch.addEventListener("click", function () {
-      openLightbox([{ type: "video", src: p.video.src, poster: p.hero, title: p.name, sub: "Demo video", cap: p.video.cap }], 0, p.name);
-    });
-    var play = $("[data-play]", pf);
-    if (play) play.addEventListener("click", function () { openGame(play.dataset.play); });
-    phoneFill(p);
-    pf.scrollTop = 0;
-    pf.classList.remove("is-scrolled");
-    pfShowChapter(0);
-    pfPose(0);
-  }
-
-  var pfShown = 0;
-  pf.addEventListener("scroll", function () {
-    var f = pf.scrollTop / window.innerHeight;
-    var max = pfChapters.length - 1;
-    f = Math.max(0, Math.min(max, f));
-    if (!calm) pfPose(f);
-    var k = Math.round(f);
-    if (k !== pfShown) { pfShown = k; pfShowChapter(k); }
-    pf.classList.toggle("is-scrolled", pf.scrollTop > 20);
-  }, { passive: true });
-
-  function openDive(i) {
-    pfLastFocus = document.activeElement;
-    pfShown = 0;
-    pfFill(i);
-    pf.hidden = false;
-    void pf.offsetWidth;
-    pf.classList.add("is-open");
-    document.body.style.overflow = "hidden";
-    $("#pf-name").focus({ preventScroll: true });
-  }
-  function closeDive() {
-    phoneStop();
-    pf.classList.remove("is-open");
-    document.body.style.overflow = "";
-    setTimeout(function () { if (!pf.classList.contains("is-open")) pf.hidden = true; }, 450);
-    if (pfLastFocus && pfLastFocus.focus) pfLastFocus.focus({ preventScroll: true });
-  }
-  $("#pf-close").addEventListener("click", closeDive);
-  $("#pf-prev").addEventListener("click", function () { pfShown = 0; pfFill(pfIndex - 1); });
-  $("#pf-next").addEventListener("click", function () { pfShown = 0; pfFill(pfIndex + 1); });
-  document.addEventListener("keydown", function (e) {
-    if (pf.hidden || !modal.hidden || !lb.hidden) return;
-    if (e.key === "Escape") closeDive();
-    if (e.key === "ArrowRight") { pfShown = 0; pfFill(pfIndex + 1); }
-    if (e.key === "ArrowLeft") { pfShown = 0; pfFill(pfIndex - 1); }
-  });
-
-  function projectHTML(p) {
-    var h = '<div class="win__bar"><i></i><i></i><i></i><span>~/projects/' + esc(slug(p)) + '</span></div>';
-    if (p.hero) {
-      h += '<div class="pm__hero"><img src="' + esc(p.hero) + '" alt=""' +
-        (p.heroFit === "contain" ? ' style="object-fit:contain;padding:3%;background:var(--bg-3)"' : "") +
-        (p.heroPixel ? ' class="pixelated"' : "") + '></div>';
-    }
-    h += '<div class="modal__body">';
-    h += '<div class="pm__head"><div><span class="pm__kicker">' + esc(p.kicker) + '</span>' +
-      '<h3 id="modal-title" tabindex="-1">' + esc(p.name) + '</h3>' +
-      (p.sub ? '<span class="pm__sub">' + esc(p.sub) + '</span>' : "") + '</div>' +
-      '<div class="pm__meta">' + esc(p.year) + '<br>' + esc(p.course || "") + '<br>' + esc(p.team || "") + '</div></div>';
-    h += '<p class="pm__tagline">' + esc(p.tagline || p.blurb) + '</p>';
-
-    function block(title, body) { return body ? '<div class="pm__block"><h4>' + title + '</h4>' + body + '</div>' : ""; }
-    function para(t) { return t ? '<p>' + esc(t) + '</p>' : ""; }
-    function list(a) { return a && a.length ? '<ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : ""; }
-
-    h += '<div class="pm__cols">' + block("The problem", para(p.problem)) + block("What we built", para(p.solution)) + '</div>';
-    h += '<div class="pm__cols">' +
-      block("My role", (p.role ? '<p style="color:#fff;font-weight:500">' + esc(p.role) + '</p>' : "") + list(p.contribution)) +
-      block("Key features", list(p.features)) + '</div>';
-    h += '<div class="pm__cols">' + block("How it was built", para(p.process)) + block("Outcome", para(p.outcome)) + '</div>';
-    h += '<div class="pm__cols">' +
-      block("Technologies", '<div class="chips">' + p.tech.map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join("") + '</div>') +
-      block("Skills demonstrated", p.skills ? '<div class="chips">' + p.skills.map(function (t) { return '<span class="chip chip--alt">' + esc(t) + '</span>'; }).join("") + '</div>' : "") +
-      '</div>';
-
-    if (p.gallery && p.gallery.length) {
-      h += '<div class="pm__cols"><div class="pm__block" style="grid-column:1/-1"><h4>Gallery</h4><div class="pm__gallery">' +
-        p.gallery.map(function (g, i) {
-          return '<figure class="pm__shot" role="button" tabindex="0" data-i="' + i + '">' +
-            '<img src="' + esc(g.src) + '" alt="' + esc(g.cap) + '" loading="lazy"' + (g.pixel ? ' class="pixelated"' : "") + '>' +
-            '<figcaption>' + esc(g.cap) + '</figcaption></figure>';
-        }).join("") + '</div></div></div>';
-    }
-    if (p.video) {
-      h += '<div class="pm__cols"><div class="pm__block" style="grid-column:1/-1"><h4>Demo video</h4>' +
-        '<video class="pm__video" controls preload="metadata" playsinline src="' + esc(p.video.src) + '"' + (p.hero ? ' poster="' + esc(p.hero) + '"' : "") + '></video>' +
-        (p.video.cap ? '<p class="pm__fine">' + esc(p.video.cap) + '</p>' : "") + '</div></div>';
-    }
-    if (p.note) h += '<div class="note" style="margin-top:22px"><span>' + esc(p.note) + '</span></div>';
-
-    h += '<div class="pm__links">';
-    if (p.playable) h += '<button class="btn btn--play" type="button" data-play="' + esc(p.playable) + '">▶ PLAY IT</button>';
-    h += apkButton(p);
-    if (p.figma) h += '<a class="btn btn--glass" href="' + esc(p.figma) + '" target="_blank" rel="noopener noreferrer">Open in Figma</a>';
-    if (p.repo) h += '<a class="btn btn--glass" href="' + esc(p.repo) + '" target="_blank" rel="noopener noreferrer">GitHub</a>';
-    else if (p.githubSoon) h += '<span class="btn btn--glass" aria-disabled="true">GitHub (soon)</span>';
-    h += '</div>';
-    h += '<p class="pm__fine">Source files and full documentation are in my academic archive and can be shared on request.</p>';
-    return h + '</div>';
-  }
-
   /* ============================================================ MODAL */
   var modal = $("#modal"), panel = $("#modal-panel");
   var lastFocus = null, gameCleanup = null;
@@ -950,27 +780,12 @@
   function closeModal() {
     if (gameCleanup) { try { gameCleanup(); } catch (e) {} gameCleanup = null; }
     modal.classList.remove("is-open");
-    document.body.style.overflow = pf.hidden ? "" : "hidden";
+    document.body.style.overflow = cs.hidden ? "" : "hidden";
     setTimeout(function () { if (!modal.classList.contains("is-open")) { modal.hidden = true; panel.innerHTML = ""; } }, 280);
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
     lastFocus = null;
   }
   modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
-
-  function openProject(id) {
-    var p = projById(id);
-    if (!p) return;
-    openModal(projectHTML(p), p.name);
-    $$(".pm__shot", panel).forEach(function (fig) {
-      function go() {
-        openLightbox(p.gallery.map(function (g) { return { type: "img", src: g.src, cap: g.cap, pixel: g.pixel }; }), +fig.dataset.i, p.name);
-      }
-      fig.addEventListener("click", go);
-      fig.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
-    });
-    var pb = $("[data-play]", panel);
-    if (pb) pb.addEventListener("click", function () { openGame(pb.dataset.play); });
-  }
 
   /* ============================================================ GAMES */
   function renderGames() {
@@ -979,6 +794,7 @@
         ? (g.art.length > 1
             ? '<span class="stack2">' + g.art.map(function (a) { return '<img class="pixelated" src="' + esc(a) + '" alt="" loading="lazy">'; }).join("") + '</span>'
             : '<img class="pixelated" src="' + esc(g.art[0]) + '" alt="" loading="lazy">')
+        : g.glyph ? '<span class="glyph glyph--emoji">' + esc(g.glyph) + '</span>'
         : '<span class="glyph">' + (g.id === "mines" ? "💎" : "&lt;/&gt;") + '</span>';
       return '<button class="game reveal" type="button" data-game="' + esc(g.id) + '" style="--d:' + (i % 4) * 70 + 'ms" aria-label="Play ' + esc(g.title) + '">' +
         '<span class="game__art">' + art + '</span>' +
@@ -996,13 +812,13 @@
     openModal(
       '<div class="win__bar"><i></i><i></i><i></i><span>~/play/' + esc(id) + '</span></div>' +
       '<div class="modal__body">' +
-        '<div class="pm__head"><div><span class="pm__kicker">Web recreation</span>' +
+        '<div class="pm__head"><div><span class="pm__kicker">' + (g.mini ? "Mini game" : "Web recreation") + '</span>' +
           '<h3 id="modal-title" tabindex="-1">' + esc(g.title) + '</h3><span class="pm__sub">' + esc(g.subtitle) + '</span></div>' +
           '<div class="pm__meta">' + esc(g.origin) + '</div></div>' +
         '<div class="game-shell"><div class="game-stage" id="game-stage"></div>' +
           '<p class="game-help">' + esc(g.help || "") + '</p>' +
-          '<div class="note"><span>A browser recreation of my college project: same rules and assets, rebuilt in JavaScript. Not the original ' +
-            esc(meta && meta.origin ? meta.origin.split(" · ")[0] : "") + ' build.</span></div>' +
+          (g.mini ? "" : '<div class="note"><span>A browser recreation of my college project: same rules and assets, rebuilt in JavaScript. Not the original ' +
+            esc(meta && meta.origin ? meta.origin.split(" · ")[0] : "") + ' build.</span></div>') +
         '</div></div>', g.title);
     gameCleanup = g.mount($("#game-stage"), { toast: toast, confetti: confetti }) || null;
   }
@@ -1023,7 +839,7 @@
     $$("video", lbStage).forEach(function (v) { v.pause(); });
     lb.classList.remove("is-open");
     setTimeout(function () { if (!lb.classList.contains("is-open")) { lb.hidden = true; lbStage.innerHTML = ""; } }, 260);
-    if (modal.hidden && pf.hidden) document.body.style.overflow = "";
+    if (modal.hidden && cs.hidden) document.body.style.overflow = "";
     if (lbFocus && lbFocus.focus) lbFocus.focus({ preventScroll: true });
   }
   function paintLightbox() {
@@ -1176,9 +992,6 @@
 
   /* ============================================================ CONTACT */
   function renderContact() {
-    var kk = projById("kusinakode"), req = $("#apk-request");
-    if (req && kk) req.setAttribute("href", apkMail(kk));
-
     var P = S.profile;
     var rows = [
       { t: "Email", v: P.email, href: "mailto:" + P.email, i: ICON.mail },
@@ -1216,10 +1029,11 @@
     var box = $("#guide"), text = $("#guide-text"), prompt = $("#guide-prompt");
     var able = window.matchMedia && window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)").matches;
     var steps = [
-      { el: ".profile__photo", at: "right", say: "Hi! I'm Jhan, welcome to my portfolio! 👋" },
+      { el: ".profile__photo", at: "right", say: "Hi! I'm Jhan, welcome to my portfolio!" },
       { el: "#hero-social", say: "These are my socials." },
       { el: ".profile__actions .btn--primary", say: "Start here to see my projects." },
-      { el: ".profile__actions .btn--glass", say: "Or download my résumé." },
+      { el: ".profile__actions .btn--glass", say: "Have a project in mind? Start here." },
+      { el: ".profile__cv", say: "My résumé is right here too." },
       { el: '#nav-links a[href="#about"]', say: "Hover the sidebar to jump to any section." },
       { el: "#theme-toggle", say: "Prefer light mode? Switch it here." },
       { el: ".hero__scroll", say: "Scroll down, the page moves with you." },
@@ -1330,7 +1144,7 @@
   });
 
   var tour = guideTour();
-  intro(function () {
+  splash(function () {
     document.body.classList.add("is-ready");
     setTimeout(typeWhoami, calm ? 0 : 500);
     tour.auto();

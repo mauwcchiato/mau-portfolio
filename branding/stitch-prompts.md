@@ -130,8 +130,8 @@ Poses to make:
 > label above it (e.g. "ANDROID · CAPSTONE · 2026"). Bottom-right corner: a tiny version of the chibi
 > mascot peeking in, as a signature. Consistent margins so every cover in the set lines up.
 
-Projects to make covers for: D.I.L.I.G., Kusina Kode, PulsePoint, AWS-ome Tech, BNK WMS,
-ShuttleCock, Pixels of Meaning, MakiRide.
+Projects to make covers for: D.I.L.I.G., Kusina Kode, PulsePoint, Cloud Architecture Diagrams, BNK WMS,
+Pixels of Meaning, MakiRide.
 
 ## 10. Résumé layout (A4)
 

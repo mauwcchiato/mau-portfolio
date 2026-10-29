@@ -11,8 +11,13 @@
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jhan Maurice De Roxas · Portfolio">
 <meta property="og:description" content="Android, IoT, cloud and full-stack projects, with playable browser recreations of my college games.">
-<meta property="og:image" content="assets/img/projects/dilig-hardware-prototype.png">
+<meta property="og:url" content="https://mau-jhan-portfolio.vercel.app/">
+<meta property="og:image" content="https://mau-jhan-portfolio.vercel.app/assets/brand/social/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jhan Maurice De Roxas, BSIT student, full-stack and Android, with the Mauwcchiato logo">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://mau-jhan-portfolio.vercel.app/assets/brand/social/og-image.png">
 
 <link rel="icon" href="assets/brand/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
@@ -24,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Press+Start+2P&display=swap">
 
-<link rel="stylesheet" href="css/site.css?v=36">
-<link rel="stylesheet" href="css/games.css?v=9">
+<link rel="stylesheet" href="css/site.css?v=53">
+<link rel="stylesheet" href="css/games.css?v=11">
 
 <script>
   /* Apply the saved theme before first paint, so light mode never flashes dark. */
@@ -42,6 +47,24 @@
 </script>
 </head>
 <body>
+
+<!-- brand intro: shooting stars cross the night sky, one lands in the middle, then the logo and wordmark appear -->
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash__sky"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b class="splash__star"></b></div>
+  <div class="splash__glow"></div>
+  <div class="splash__brand">
+    <img class="splash__logo" src="assets/brand/logo-256.png" alt="" width="256" height="256">
+    <div class="splash__text">
+      <p class="splash__word"><span>M</span><span>a</span><span>u</span><svg class="splash__w" viewBox="0 0 100 48" aria-hidden="true">
+          <path class="splash__smile" d="M26 6V26A12 12 0 0 0 50 26V16V26A12 12 0 0 0 74 26V6"/>
+          <g class="splash__whisk splash__whisk--l"><path d="M17 19L4 15"/><path d="M17 26L4 29"/></g>
+          <g class="splash__whisk splash__whisk--r"><path d="M83 19L96 15"/><path d="M83 26L96 29"/></g>
+        </svg><span>c</span><span>c</span><span>h</span><span>i</span><span>a</span><span>t</span><span>o</span></p>
+      <p class="splash__tag">Jhan Maurice De Roxas</p>
+    </div>
+  </div>
+  <button class="splash__skip" type="button">Skip intro</button>
+</div>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -73,6 +96,7 @@
     <a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg><span class="fade">Projects</span></a>
     <a href="#play"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 11v3M5.5 12.5h3M16 12h.01M18 14h.01"/></svg><span class="fade">Play</span></a>
     <a href="#certs"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5"/><path d="M8.5 13l-1.5 8 5-3 5 3-1.5-8"/></svg><span class="fade">Certificates</span></a>
+    <a href="#journey"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><span class="fade">Milestones</span></a>
     <a href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span class="fade">Contact</span></a>
   </nav>
 
@@ -82,7 +106,7 @@
       <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       <span class="fade" id="theme-label">Light mode</span>
     </button>
-    <a class="btn btn--primary btn--sm side__cv" href="assets/docs/resume.pdf?v=2" download aria-label="Download résumé"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="fade">Download résumé</span></a>
+    <a class="btn btn--primary btn--sm side__cv" href="assets/docs/resume.pdf?v=3" download aria-label="Download résumé"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="fade">Download résumé</span></a>
     <div class="side__social fade" id="side-social"></div>
     <p class="side__status fade"><i></i>Cabuyao, Laguna</p>
   </div>
@@ -101,31 +125,32 @@
   </div>
 
   <div class="wrap hero__solo">
-    <div class="intro" id="hero-intro" aria-hidden="true">
-      <div class="laptop">
-        <div class="laptop__lid">
-          <div class="laptop__screen">
-            <div class="laptop__wall"></div>
-            <pre class="laptop__log" id="intro-log"></pre>
-            <div class="laptop__app">
-              <div class="laptop__appbar"><i></i><i></i><i></i><span>~/whoami</span></div>
-              <div class="laptop__appbody">
-                <img src="assets/img/profile.jpg?v=2" alt="">
-                <div><b></b><b></b><b></b><b></b><b></b><b></b></div>
-              </div>
-            </div>
-            <div class="laptop__dock"><i></i><i></i><i class="is-app">&gt;_</i><i></i><i></i></div>
-          </div>
-        </div>
-        <div class="laptop__base"></div>
-      </div>
-      <p class="intro__skip">click to skip</p>
-    </div>
-
     <h1 class="sr-only">Jhan Maurice De Roxas · Full-stack &amp; Android developer, BSIT at Mapúa Malayan Colleges Laguna</h1>
 
     <div class="hero__visual" id="hero-visual">
+      <!-- left: what I do, in plain words; right: the whoami card -->
+      <div class="hero__copy">
+        <p class="hero__hi">Hi, I'm Jhan Maurice</p>
+        <p class="hero__title" aria-hidden="true">I build apps that <em>talk to each other.</em></p>
+        <p class="hero__lead">
+          Android apps, web systems and small IoT devices, from the first sketch to the working build.
+          BSIT student at Mapúa MCL, based in Cabuyao, Laguna.
+        </p>
+        <div class="profile__actions">
+          <a class="btn btn--primary" href="#projects">View projects
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--glass" href="#contact">Work with me</a>
+        </div>
+        <ul class="hero__facts">
+          <li><b>Android</b><span>Kotlin · Compose</span></li>
+          <li><b>Web</b><span>PHP · MySQL</span></li>
+          <li><b>IoT &amp; cloud</b><span>Arduino · AWS</span></li>
+        </ul>
+      </div>
+
       <div class="profile">
+        <img class="profile__peek" src="assets/brand/mascot/wave.webp" alt="" width="436" height="640" decoding="async">
         <div class="win profile__win">
           <div class="win__bar"><i></i><i></i><i></i><span>~/whoami</span></div>
           <div class="profile__body">
@@ -135,12 +160,9 @@
             </figure>
             <div class="profile__main">
               <pre class="hero__out" id="hero-out" aria-hidden="true"></pre>
-              <div class="profile__actions">
-                <a class="btn btn--primary" href="#projects">View projects
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </a>
-                <a class="btn btn--glass" href="assets/docs/resume.pdf?v=2" download>Download résumé</a>
-              </div>
+              <a class="profile__cv" href="assets/docs/resume.pdf?v=3" download>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>résumé.pdf
+              </a>
             </div>
           </div>
           <div class="profile__status">
@@ -197,22 +219,6 @@
         <ul class="traits__list" id="traits"></ul>
       </div>
     </div>
-
-    <h3 class="sub reveal">Milestones</h3>
-    <ol class="miles" id="timeline"></ol>
-
-    <h3 class="sub reveal">Leadership &amp; recognition</h3>
-    <div class="lead reveal">
-      <div class="glass lead__card" id="lead-card"></div>
-      <div class="lead__strip" id="lead-strip"></div>
-    </div>
-    <ul class="recog reveal" id="recog"></ul>
-
-    <!-- shown only once data.js has real recommendations -->
-    <div class="recs-wrap" id="recs-wrap" hidden>
-      <h3 class="sub reveal">What people say</h3>
-      <div class="recs" id="recs"></div>
-    </div>
   </div>
 </section>
 
@@ -232,29 +238,11 @@
 <section class="sec" id="projects">
   <div class="wrap">
     <header class="sec__head">
-      <p class="sec__kicker">03 · what I built</p>
+      <p class="sec__kicker">03 · selected work</p>
       <h2 class="sec__title" data-title>Projects</h2>
-      <p class="sec__lede">Keep scrolling to turn through my featured work. Click the project in the middle to dive in.</p>
+      <p class="sec__lede">Things I've built in class and for real users: IoT, Android apps, web systems and cloud designs. Open one to see how it was made.</p>
     </header>
-  </div>
-
-  <!-- a tall track with a pinned stage: page scroll turns the arc -->
-  <div class="pc-scroll" id="pc-scroll">
-    <div class="pc" id="pc">
-      <div class="pc__bg" aria-hidden="true"></div>
-      <div class="pc__stage" id="pc-stage" role="group" aria-roledescription="carousel" aria-label="Featured projects"></div>
-      <div class="pc__pedestal" aria-live="polite">
-        <span class="pc__kicker" id="pc-kicker"></span>
-        <b class="pc__name" id="pc-name"></b>
-        <button class="btn btn--primary btn--sm" type="button" id="pc-dive">Dive in
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </div>
-      <button class="pc__arrow pc__arrow--prev" id="pc-prev" type="button" aria-label="Previous project">‹</button>
-      <button class="pc__arrow pc__arrow--next" id="pc-next" type="button" aria-label="Next project">›</button>
-      <div class="pc__progress" aria-hidden="true"><i id="pc-bar"></i></div>
-      <span class="pc__count" id="pc-count" aria-hidden="true"></span>
-    </div>
+    <div class="work" id="work"></div>
   </div>
 </section>
 
@@ -266,7 +254,7 @@
     <header class="sec__head">
       <p class="sec__kicker">04 · press start</p>
       <h2 class="sec__title" data-title>Play My Games</h2>
-      <p class="sec__lede">College projects rebuilt in JavaScript so they run right here. Same rules, same artwork. No install.</p>
+      <p class="sec__lede">College projects rebuilt in JavaScript so they run right here, plus a few quick mini games. No install.</p>
     </header>
     <div class="games" id="games"></div>
   </div>
@@ -293,11 +281,37 @@
   </div>
 </section>
 
+<!-- ===================================================== JOURNEY -->
+<section class="sec" id="journey">
+  <div class="wrap">
+    <header class="sec__head">
+      <p class="sec__kicker">06 · along the way</p>
+      <h2 class="sec__title" data-title>Milestones &amp; Recognition</h2>
+    </header>
+
+    <h3 class="sub reveal">Milestones</h3>
+    <ol class="miles" id="timeline"></ol>
+
+    <h3 class="sub reveal">Leadership &amp; recognition</h3>
+    <div class="lead reveal">
+      <div class="glass lead__card" id="lead-card"></div>
+      <div class="lead__strip" id="lead-strip"></div>
+    </div>
+    <ul class="recog reveal" id="recog"></ul>
+
+    <!-- shown only once data.js has real recommendations -->
+    <div class="recs-wrap" id="recs-wrap" hidden>
+      <h3 class="sub reveal">What people say</h3>
+      <div class="recs" id="recs"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================================================== CONTACT -->
 <section class="sec" id="contact">
   <div class="wrap">
     <header class="sec__head">
-      <p class="sec__kicker">06 · say hello</p>
+      <p class="sec__kicker">07 · say hello</p>
       <h2 class="sec__title" data-title>Contact</h2>
     </header>
 
@@ -307,19 +321,14 @@
         <p>Have a question or want to work on something together? Email is the best way to reach me.</p>
         <div class="contact__list" id="contact-list"></div>
 
-        <div class="apk reveal">
-          <img src="assets/img/game/kusinakode/kk-logo.png" alt="" width="72" height="72" loading="lazy">
-          <div class="apk__copy">
-            <b>Want to try Kusina Kode?</b>
-            <p>It's an Android word game about Filipino dishes. Ask me and I'll send you the APK (about 115 MB, Android 8.0 or newer).</p>
-          </div>
-          <a class="btn btn--primary btn--sm" id="apk-request" href="#">Request the APK</a>
-        </div>
       </div>
       <aside class="glass contact__card reveal" style="--d:100ms">
-        <img src="assets/img/profile.jpg?v=2" alt="" width="96" height="96" loading="lazy">
-        <p>Thanks for stopping by. Feel free to say hi.</p>
-        <a class="btn btn--primary" href="assets/docs/resume.pdf?v=2" download>Download résumé</a>
+        <img class="contact__mascot" src="assets/brand/mascot/coffee.webp" alt="" width="345" height="640" loading="lazy">
+        <p>Thanks for stopping by. Send me a hello, or take my résumé with you.</p>
+        <div class="contact__actions">
+          <a class="btn btn--primary" href="mailto:jhanmauricederoxas@gmail.com?subject=Hi%20from%20your%20portfolio">Say hi</a>
+          <a class="btn btn--glass" href="assets/docs/resume.pdf?v=3" download>Download résumé</a>
+        </div>
       </aside>
     </div>
   </div>
@@ -334,6 +343,10 @@
           <img class="nav__mark" src="assets/brand/logo-128.png" alt="" width="44" height="44" decoding="async"><span class="nav__name">JHAN<b>MAURICE</b></span>
         </a>
         <p>BSIT student from Cabuyao, Laguna.</p>
+        <div class="foot__bye">
+          <img src="assets/brand/mascot/wave.webp" alt="" width="436" height="640" loading="lazy">
+          <span>Thanks for visiting!</span>
+        </div>
       </div>
 
       <div class="foot__col">
@@ -349,6 +362,7 @@
           <li><a href="#projects">Projects</a></li>
           <li><a href="#play">Play</a></li>
           <li><a href="#certs">Certificates</a></li>
+          <li><a href="#journey">Milestones</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -365,42 +379,19 @@
 
 <!-- ===================================================== OVERLAYS -->
 <!-- the scroll-driven deep dive into one project -->
-<div class="pf" id="pf" role="dialog" aria-modal="true" aria-labelledby="pf-name" hidden>
-  <div class="pf__track" id="pf-track">
-    <div class="pf__stage">
-      <div class="pf__bg" aria-hidden="true"></div>
-      <div class="pf__copy">
-        <span class="pf__kicker" id="pf-kicker"></span>
-        <h3 class="pf__name" id="pf-name" tabindex="-1"></h3>
-        <div class="pf__chapter" id="pf-chapter" aria-live="polite"></div>
-        <div class="pf__buttons" id="pf-buttons"></div>
-      </div>
-      <figure class="pf__card" id="pf-card"><img id="pf-img" alt=""></figure>
-      <!-- apps with real screens get a phone instead of the card -->
-      <figure class="pf__phone" id="pf-phone">
-        <div class="phone">
-          <div class="phone__screen" id="phone-screen"></div>
-          <i class="phone__island" aria-hidden="true"></i>
-        </div>
-        <div class="phone__dots" id="phone-dots" aria-label="App screens"></div>
-      </figure>
-      <!-- websites get a laptop -->
-      <figure class="pf__laptop" id="pf-laptop">
-        <div class="lap">
-          <div class="lap__lid"><div class="lap__screen" id="laptop-screen"></div></div>
-          <div class="lap__base"></div>
-        </div>
-        <div class="phone__dots" id="laptop-dots" aria-label="Website screens"></div>
-      </figure>
-      <nav class="pf__dots" id="pf-dots" aria-label="Project sections"></nav>
-      <div class="pf__top">
-        <button class="icon-btn" id="pf-prev" type="button" aria-label="Previous project">‹</button>
-        <button class="icon-btn" id="pf-next" type="button" aria-label="Next project">›</button>
-        <button class="icon-btn" id="pf-close" type="button" aria-label="Close">✕</button>
-      </div>
-      <p class="pf__hint" aria-hidden="true">scroll ↓</p>
+<!-- case study: one full page per project -->
+<div class="cs" id="cs" role="dialog" aria-modal="true" aria-labelledby="cs-title" hidden>
+  <div class="cs__bar">
+    <button class="cs__back" id="cs-close" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>All projects
+    </button>
+    <span class="cs__path" id="cs-path"></span>
+    <div class="cs__nav">
+      <button class="icon-btn" id="cs-prev" type="button" aria-label="Previous project">‹</button>
+      <button class="icon-btn" id="cs-next" type="button" aria-label="Next project">›</button>
     </div>
   </div>
+  <article class="cs__page" id="cs-page"></article>
 </div>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
@@ -434,12 +425,15 @@
 </div>
 
 <script src="js/asm-art-data.js?v=4"></script>
-<script src="js/data.js?v=22"></script>
-<script src="js/games/kusinakode.js?v=4"></script>
+<script src="js/data.js?v=34"></script>
+<script src="js/games/kusinakode.js?v=5"></script>
 <script src="js/games/facechange.js?v=3"></script>
 <script src="js/games/mines.js?v=3"></script>
-<script src="js/games/pixelplot.js?v=3"></script>
+<script src="js/games/pixelplot.js?v=4"></script>
 <script src="js/games/cipher.js?v=3"></script>
-<script src="js/main.js?v=29"></script>
+<script src="js/games/beancatcher.js?v=1"></script>
+<script src="js/games/memory.js?v=1"></script>
+<script src="js/games/bugsquash.js?v=1"></script>
+<script src="js/main.js?v=45"></script>
 </body>
 </html>

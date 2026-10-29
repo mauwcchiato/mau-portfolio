@@ -240,6 +240,7 @@
         root.innerHTML =
           '<div class="kk kk-win">' +
             '<img class="kk-win__img" src="' + imgFor(level) + '" alt="' + esc(d[2]) + '">' +
+            '<img class="kk-win__mascot" src="assets/brand/mascot/celebrate.webp" alt="">' +
             '<span class="kk-win__badge">Level ' + (level + 1) + ' cleared · ' + secs + 's · ' + rows.length + '/' + ROWS + ' tries</span>' +
             '<h3>' + esc(d[2].toUpperCase()) + '</h3>' +
             '<p class="kk-win__trivia">' + esc(d[1]) + '</p>' +

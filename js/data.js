@@ -50,10 +50,10 @@ window.SITE = {
       title: "Building",
       years: "2024 – 2025",
       lede: "Second year. Real clients, real requirements. The hard part is not the code.",
-      body: "PulsePoint started as a Figma mockup, then I built the system after a countersigned letter from St. Luke's Global City. ShuttleCock began as a campus booking design and later became MakiRide. Scope written down is scope that survives.",
+      body: "PulsePoint started as a Figma mockup, then I built the system after a countersigned letter from St. Luke's Global City. MakiRide began as a campus shuttle booking design and grew into a carpooling app. Scope written down is scope that survives.",
       items: [
         { t: "PulsePoint", s: "CS103P · Jan 2025", p: "Clinic scheduling. Mockup first, then the ASP.NET build. I was the project manager." },
-        { t: "ShuttleCock → MakiRide", s: "CS110P · 2024", p: "Campus shuttle booking in Figma. The design later evolved into MakiRide." },
+        { t: "MakiRide", s: "CS110P · 2024", p: "Campus ride booking in Figma. It later grew into a carpooling app." },
         { t: "Hotel Reservation System", s: "IT111L · 2024", p: "C# WinForms with an abstract permissions model. Three iterations after feedback." },
         { t: "Web & database labs", s: "IT114 / IT115L · 2025", p: "ASP.NET, Oracle SQL, Power BI, Tableau, Access." }
       ]
@@ -69,7 +69,7 @@ window.SITE = {
         { t: "President, ITSOC", s: "A.Y. 2024–2025", p: "Four officers plus four year-level representatives at Mapúa MCL's IT Society." },
         { t: "Peer mentoring × 2", s: "Oct & Nov 2024", p: "Logic Design, then K-maps. Tinkercad and Logisim. Feedback via MS Forms." },
         { t: "Pamaskong Handog", s: "Dec 2024", p: "Outreach at Diezmo Integrated School. Gifts and supplies for kindergarten. I coordinated it." },
-        { t: "Project manager, repeatedly", s: "2024 – 2026", p: "PulsePoint, Kusina Kode, D.I.L.I.G., BNK WMS. Someone has to hold the schedule." }
+        { t: "Project manager, repeatedly", s: "2024 – 2026", p: "PulsePoint, Kusina Kode and D.I.L.I.G. Someone has to hold the schedule." }
       ]
     },
     {
@@ -82,7 +82,7 @@ window.SITE = {
       items: [
         { t: "D.I.L.I.G.", s: "IT145 / IT155P · 2026", p: "Five-tier IoT irrigation. Arduino to ESP8266 to PHP REST to MySQL to Kotlin." },
         { t: "Kusina Kode", s: "IT123P → IT140P → capstone", p: "Filipino-cuisine word puzzle. Three iterations. Now the capstone, with a blockchain layer." },
-        { t: "BNK WMS", s: "2026", p: "278-file PHP system for a pet boarding business. Three roles, RFID check-in, PDF reports." },
+        { t: "BNK WMS", s: "2026", p: "A live web system for a pet grooming and boarding shop. I led the prototype and co-authored the build." },
         { t: "Pixels of Meaning", s: "CS125 · Nov 2025", p: "Three pixel-art pieces in x86 assembly through INT 10h. Solo. Every block is a register write." }
       ]
     },
@@ -124,15 +124,16 @@ window.SITE = {
   recognition: [
     { t: "President's Lister", p: "Mapúa Malayan Colleges Laguna", icon: "list" },
     { t: "Full Academic Scholar", p: "Mapúa Malayan Colleges Laguna", icon: "cap" },
-    { t: "Student Ambassador", p: "Mapúa Malayan Colleges Laguna · A.Y. 2024–2025", icon: "star",
-      img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa MCL enrollment campaign, A.Y. 2024–2025." }
+    { t: "Student Ambassador", p: "Mapúa Malayan Colleges Laguna · A.Y. 2023–2025", icon: "star",
+      img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa MCL enrollment campaign, A.Y. 2024–2025.",
+      more: [{ src: "assets/img/leadership/ambassador-bscs.jpg", cap: "On Mapúa MCL's website: the photo for the BS Computer Science program. I'm on the left." }] }
   ],
 
   milestones: [
     { when: "2023", t: "Started BS Information Technology", p: "Mapúa Malayan Colleges Laguna." },
+    { when: "A.Y. 2023 – 2025", t: "Student Ambassador", p: "Took part in Mapúa MCL's enrollment campaign." },
     { when: "Feb – Mar 2024", t: "Google Cloud skill badges", p: "My first steps into cloud computing." },
     { when: "A.Y. 2024 – 2025", t: "President, IT Society (ITSOC)", p: "Worked with four officers and four year-level representatives." },
-    { when: "A.Y. 2024 – 2025", t: "Student Ambassador", p: "Took part in Mapúa MCL's enrollment campaign." },
     { when: "Oct & Nov 2024", t: "Peer mentoring", p: "Helped classmates review Logic Design and K-maps." },
     { when: "Dec 2024", t: "Pamaskong Handog", p: "Helped organize a Christmas outreach for kindergarten pupils at Diezmo Integrated School." },
     { when: "Jul 2025", t: "CCNA: Introduction to Networks", p: "Through the Cisco Networking Academy." },
@@ -145,6 +146,12 @@ window.SITE = {
     {
       id: "dilig",
       featured: true,
+      /* real app screens, shown in phones on the card and in the case study */
+      phone: [
+        { src: "assets/img/projects/dilig/phone/welcome.webp" },
+        { src: "assets/img/projects/dilig/phone/members.webp" },
+        { src: "assets/img/projects/dilig/phone/dashboard.webp" }
+      ],
       rank: "Featured",
       name: "D.I.L.I.G.",
       sub: "Digital Irrigation and Lifeform Information Gathering",
@@ -193,22 +200,47 @@ window.SITE = {
     {
       id: "kusinakode",
       apk: true,   // visitors can ask me for the Android build
-      /* real app screens for the phone in the deep dive; ch = which chapter shows them */
+      /* real app screens (latest build): phones on the card and in the case study */
       phone: [
-        { src: "assets/img/projects/kusinakode/phone/splash.webp", ch: 0 },
-        { src: "assets/img/projects/kusinakode/phone/welcome.webp", ch: 0 },
-        { src: "assets/img/projects/kusinakode/phone/home.webp", ch: 0 },
-        { src: "assets/img/projects/kusinakode/phone/explore_dishes.webp", ch: 1 },
-        { src: "assets/img/projects/kusinakode/phone/dish.webp", ch: 1 },
-        { src: "assets/img/projects/kusinakode/phone/game.webp", ch: 2 },
-        { src: "assets/img/projects/kusinakode/phone/game_powerups_open.webp", ch: 2 },
-        { src: "assets/img/projects/kusinakode/phone/game_win.webp", ch: 2 },
-        { src: "assets/img/projects/kusinakode/phone/leadership_weekly.webp", ch: 3 },
-        { src: "assets/img/projects/kusinakode/phone/profile_badges.webp", ch: 3 },
-        { src: "assets/img/projects/kusinakode/phone/shop_avatar.webp", ch: 4 },
-        { src: "assets/img/projects/kusinakode/phone/login.webp", ch: 4 }
+        { src: "assets/img/projects/kusinakode/v2/onboarding.webp", cap: "Onboarding: welcome to the kusina, guess the dish, then taste the story behind it." },
+        { src: "assets/img/projects/kusinakode/v2/welcome.webp", cap: "Landing: the puzzle-tile logo, the chef mascot, log in or create an account." },
+        { src: "assets/img/projects/kusinakode/v2/home.webp", cap: "Home: the daily challenge, foods, regions, coins and badges at a glance." },
+        { src: "assets/img/projects/kusinakode/v2/puzzle.webp", cap: "The guess grid with the timer, power-ups and the on-screen keyboard." },
+        { src: "assets/img/projects/kusinakode/v2/map.webp", cap: "Game map: three islands, each with its own set of dishes to unlock." },
+        { src: "assets/img/projects/kusinakode/v2/island.webp", cap: "Visayas: dish pins on the island map, with progress per region." },
+        { src: "assets/img/projects/kusinakode/v2/dish.webp", cap: "Dish page: rating, time and difficulty, then the origin story behind it." },
+        { src: "assets/img/projects/kusinakode/v2/kodex.webp", cap: "Kodex: featured ingredients, dishes and the pantry to learn from." },
+        { src: "assets/img/projects/kusinakode/v2/reels.webp", cap: "Kusina Reel: short heritage films unlocked with coins." },
+        { src: "assets/img/projects/kusinakode/v2/pantry.webp", cap: "Kodex Pantry: ingredients collected from the dishes you've won." },
+        { src: "assets/img/projects/kusinakode/v2/vault.webp", cap: "Chef's Vault: food documentaries, the pantry and the avatar market." },
+        { src: "assets/img/projects/kusinakode/v2/atelier.webp", cap: "Chef's Atelier: chefs and frames to wear, bought with coins." },
+        { src: "assets/img/projects/kusinakode/v2/rewards.webp", cap: "Rewards: daily login streaks and adventure goals that earn tokens." },
+        { src: "assets/img/projects/kusinakode/v2/profile.webp", cap: "Profile: puzzles solved, regions, XP and digital badges." },
+        { src: "assets/img/projects/kusinakode/v2/leaderboard.webp", cap: "Kusina Masters: today, weekly and all-time rankings." },
+        { src: "assets/img/projects/kusinakode/v2/login.webp", cap: "Sign-in with email or Google. Passwords are hashed on the server." }
       ],
       featured: true,
+      /* the admin site: the public sign-in, then the dashboard pages; shown in laptops */
+      face: "phone",
+      laptopTitle: "The admin site",
+      laptop: [
+        { src: "assets/img/projects/kusinakode/admin/01-sign-in.webp", cap: "Admin sign-in at admin.kusinakode.com." },
+        { src: "assets/img/projects/kusinakode/admin/02-dashboard.webp", cap: "Dashboard: players, active players, playtime, top players by XP and the most-solved dishes." },
+        { src: "assets/img/projects/kusinakode/admin/03-levels.webp", cap: "Levels: the dishes players guess, with their region and category." },
+        { src: "assets/img/projects/kusinakode/admin/04-ingredients.webp", cap: "Ingredients: what players collect and cook with." },
+        { src: "assets/img/projects/kusinakode/admin/05-equipment.webp", cap: "Equipment: the cooking tools shown in the game." },
+        { src: "assets/img/projects/kusinakode/admin/06-reels.webp", cap: "Reels: the heritage films players unlock with coins." },
+        { src: "assets/img/projects/kusinakode/admin/07-pantry.webp", cap: "Pantry Kodex: every ingredient players have collected." },
+        { src: "assets/img/projects/kusinakode/admin/08-coins.webp", cap: "KK Coins: where coins were earned and spent." },
+        { src: "assets/img/projects/kusinakode/admin/09-audit.webp", cap: "Blockchain audit: rewards and badges, each recorded and verified." },
+        { src: "assets/img/projects/kusinakode/admin/10-settings.webp", cap: "Settings: appearance, notifications and preferences." }
+      ],
+      live: "https://admin.kusinakode.com/",
+      liveLabel: "Open the admin site",
+      videos: [
+        { src: "assets/video-web/kusinakode-app-walkthrough.mp4", poster: "assets/video-web/kusinakode-app-walkthrough.jpg", title: "The app", cap: "Walkthrough of the Android app: sign-up, the game, Kodex pages, KK coins and rewards." },
+        { src: "assets/video-web/kusinakode-admin-walkthrough.mp4", poster: "assets/video-web/kusinakode-admin-walkthrough.jpg", title: "The admin site", cap: "Walkthrough of the admin site: the dashboard, Pantry Kodex, coins and the blockchain audit." }
+      ],
       rank: "Featured",
       name: "Kusina Kode",
       sub: "Filipino Cuisine Word Puzzle App",
@@ -217,7 +249,7 @@ window.SITE = {
       course: "IT123P → IT140P → IT200-1D Capstone",
       team: "Group project · capstone",
       role: "Project Leader / Developer · Game Systems & Cloud Integration",
-      hero: "assets/img/projects/kusinakode/welcome.png",
+      hero: "assets/img/projects/kusinakode/v2/welcome.webp",
       blurb: "A Wordle built out of Filipino food. Guess the dish in six tries; get its history and regional origin back as the reward. Three iterations, now my capstone.",
       tagline: "Filipino cuisine as the vocabulary, and the trivia card as the prize. It works as a game first: the cultural content is what the logic is wrapped around, not decoration on top of it.",
       problem: "Cultural knowledge doesn't survive by being assigned. Younger Filipinos grow up more connected to global content than to the regional food traditions around them, and traditional instruction doesn't compete for that attention.",
@@ -243,20 +275,6 @@ window.SITE = {
       ],
       process: "Defence in depth on every input: client-side validation for instant feedback and reduced server load, server-side validation as the final authority, and debouncing plus rate limiting against spam. PDO prepared statements eliminate the injection surface entirely.",
       outcome: "User survey with 6 respondents returned an average rating of about 4.8 out of 5, with no critical bugs or crashes identified. The most requested additions were more levels, sound, and a broader dish database.",
-      gallery: [
-        { src: "assets/img/projects/kusinakode/welcome.png", cap: "Landing: the puzzle-tile logo, chef mascot, and log in / create account." },
-        { src: "assets/img/projects/kusinakode/splash.png", cap: "Splash screen before the first session." },
-        { src: "assets/img/projects/kusinakode/login.png", cap: "Sign-in. Credentials are hashed with BCrypt on the server." },
-        { src: "assets/img/projects/kusinakode/home.png", cap: "Home: continue the current level, region progress, and the bottom nav." },
-        { src: "assets/img/projects/kusinakode/game.png", cap: "The 6-letter guess grid, timer, and on-screen keyboard. Philippines, level 1." },
-        { src: "assets/img/projects/kusinakode/game_powerups_open.png", cap: "Power-ups (bomb, reveal, skip) spend coins earned from solved dishes." },
-        { src: "assets/img/projects/kusinakode/game_win.png", cap: "Win card: the dish, points, and a trivia line on where it comes from." },
-        { src: "assets/img/projects/kusinakode/explore_dishes.png", cap: "Explore the Philippines. Luzon selected, 8 dishes solved, pixel map." },
-        { src: "assets/img/projects/kusinakode/dish.png", cap: "Dish page: history, region, and the recipe steps behind the puzzle." },
-        { src: "assets/img/projects/kusinakode/leadership_weekly.png", cap: "Kusina Masters leaderboard: today, weekly, and all-time ranks." },
-        { src: "assets/img/projects/kusinakode/profile_badges.png", cap: "Profile badges earned from solved dishes and streak play." },
-        { src: "assets/img/projects/kusinakode/shop_avatar.png", cap: "Avatar shop. Coins from gameplay unlock cosmetic items." }
-      ],
       playable: "kusinakode",
       note: "The playable demo on this page is a browser recreation of the Android original, using the same 20-dish dataset and the same artwork."
     },
@@ -315,135 +333,121 @@ window.SITE = {
     },
 
     {
-      id: "awsome",
+      id: "cloud",
       featured: true,
       rank: "Featured",
-      name: "AWS-ome Tech",
-      sub: "Cloud Infrastructure for ABC Retail Corporation",
-      kicker: "Cloud Architecture",
-      year: "2026",
-      course: "IT191-4P Cloud Computing: Final Exam",
-      team: "Group project",
-      role: "Project Manager · Cloud Infrastructure & Documentation",
-      hero: "assets/img/projects/aws-cloud-architecture.png",
+      name: "Cloud Architecture Diagrams",
+      sub: "Diagramming cloud systems on AWS and Azure",
+      kicker: "Cloud · Diagramming",
+      year: "2025 – 2026",
+      course: "IT191 Cloud Computing · Capstone",
+      team: "Group projects",
+      role: "Cloud Architecture & Diagramming",
+      hero: "assets/img/projects/cloud/aws-architecture.png",
       heroFit: "contain",
-      blurb: "A complete target-state AWS environment for a retail client with zero existing cloud footprint: plus the runbook, KT document and handover checklist that make it someone else's to operate.",
-      tagline: "Designing the architecture is half the job. The other half is the paperwork that lets a client's own IT staff run it after you leave.",
-      problem: "ABC Retail Corporation operates nationwide with no cloud infrastructure at all. They need a platform that supports store expansion without re-architecture, keeps customer and payment data protected, and stays cost-predictable as it scales.",
-      solution: "A single VPC (10.0.0.0/16) spanning two Availability Zones. Public subnets host the internet-facing web tier and NAT gateway; private subnets isolate the application and database tiers. EC2 for compute, Multi-AZ-capable RDS MySQL in a private DB subnet group, S3 with SSE-S3 encryption, versioning and lifecycle rules, and CloudWatch alarms feeding SNS notifications.",
+      blurb: "Cloud diagrams I drew for class and capstone systems: AWS and Azure environments, network layouts and security layers, each showing how the parts connect and why.",
+      tagline: "A diagram is the quickest way to explain a system. These map compute, data, networking and security so someone else can build it or run it.",
+      problem: "A cloud system is hard to talk about until everyone can see it: which tier talks to which, what's public and what's private, where the data lives, and what protects it.",
+      solution: "Each diagram answers one of those questions. The AWS architecture maps every service across compute, database, storage, security and monitoring. The AWS network diagram lays out the VPC, subnets across two Availability Zones, gateways, route tables and security groups. The Azure architecture shows an app's admin console, API, database, file storage and supporting services. The security diagram splits protection into confidentiality, integrity and access control, and the tier diagram separates client, middleware and data.",
       contribution: [
-        "Owned the cloud infrastructure design and coordinated the full deliverable set",
-        "Cloud infrastructure design against the AWS Well-Architected Framework",
-        "Network and security design: subnet tiering, security group segmentation, least-privilege IAM",
-        "Contributed to the full professional document set: design, deployment, admin, KT, runbook, cost report"
+        "Drew the cloud architecture and network diagrams in draw.io",
+        "Mapped each requirement to the cloud service that meets it",
+        "Designed the network and security layout: subnet tiers, security groups, least-privilege access",
+        "Wrote the documents that go with the diagrams: design, deployment, admin and runbook"
       ],
-      tech: ["AWS VPC", "EC2", "RDS MySQL", "Amazon S3", "IAM", "CloudWatch", "SNS", "AWS Backup", "draw.io"],
-      skills: ["Cloud architecture", "Network design", "Security posture", "Cost optimisation", "Technical documentation", "Knowledge transfer"],
+      tech: ["draw.io", "AWS VPC", "EC2", "RDS MySQL", "Amazon S3", "IAM", "CloudWatch", "Azure App Service", "Azure SQL", "Blob Storage", "Key Vault", "Microsoft Entra ID"],
+      skills: ["Cloud architecture", "Network design", "Security design", "Diagramming", "Technical documentation"],
       features: [
-        "Two-AZ VPC with public/private subnet tiering for high availability",
-        "Web-SG / DB-SG segmentation: database reachable on 3306 from the app tier only",
-        "S3 with SSE-S3 encryption, versioning and automated lifecycle rules",
-        "CloudWatch CPU/RAM alarms wired to SNS for email and SMS alerting",
-        "Scheduled AWS Backup plans covering both EC2 and RDS",
-        "Cost estimation and optimisation report built on the AWS Pricing Calculator"
+        "Two-AZ AWS VPC with public and private subnet tiers for high availability",
+        "Security groups that let the database talk only to the app tier",
+        "Encrypted, versioned storage with lifecycle rules",
+        "Monitoring and alerts wired to email and SMS",
+        "Azure app layout: web console, API, SQL database, Blob Storage, Key Vault and Monitor",
+        "Security in three layers: data in transit and at rest, tamper evidence, and access control"
       ],
-      process: "Every client and rubric requirement was mapped explicitly to the AWS service that satisfies it, and the whole design was checked against all five pillars of the Well-Architected Framework: operational excellence, security, reliability, performance efficiency and cost optimisation.",
-      outcome: "Delivered as a complete handover package: Infrastructure Design Document, Deployment Guide, Administrator Guide, Knowledge Transfer document, Operations Runbook, Cost Estimation & Optimisation Report and Handover Checklists.",
+      process: "Requirements first: each one was matched to the service that satisfies it. The designs were then checked against the five pillars of the AWS Well-Architected Framework: operational excellence, security, reliability, performance and cost.",
+      outcome: "Diagrams that come with their documents: design and deployment guides, an admin guide, a runbook and a cost report.",
       gallery: [
-        { src: "assets/img/projects/aws-cloud-architecture.png", cap: "Cloud architecture diagram: the full service map across compute, database, storage, security and management tiers." },
-        { src: "assets/img/projects/aws-network-diagram.png", cap: "Network diagram: VPC, subnets, gateways, route tables and security group boundaries." }
+        { src: "assets/img/projects/cloud/aws-architecture.png", cap: "AWS architecture: users to the internet gateway, a load-balanced web tier over two zones, private app and database subnets, and the managed services around them." },
+        { src: "assets/img/projects/cloud/aws-network.png", cap: "AWS network: one VPC, public and private subnets in two Availability Zones, NAT gateways, route tables and security groups." },
+        { src: "assets/img/projects/cloud/azure-architecture.webp", cap: "Azure architecture: the web admin console, the API on a VM, SQL Database, Blob Storage, Key Vault, Monitor and Entra ID." },
+        { src: "assets/img/projects/cloud/security-layers.webp", cap: "Security in three layers: confidentiality, integrity and access control, from the request to the response." },
+        { src: "assets/img/projects/cloud/tiers.webp", cap: "System tiers: client, middleware and cloud services, and the data layer." }
       ],
-      note: "AWS console screenshots exist in the project documentation but are not published here: they expose account identifiers."
+      note: "Cloud console screenshots stay in the project documents and aren't published here, since they show account details."
     },
 
     {
       id: "bnkwms",
       featured: true,
+      /* the Figma prototype I led, shown in phones before the live site */
+      phoneTitle: "The prototype",
+      phone: [
+        { src: "assets/img/projects/bnk/prototype/01-splash.webp", cap: "Splash: grooming, hotel and supplies." },
+        { src: "assets/img/projects/bnk/prototype/02-sign-in.webp", cap: "Sign in." },
+        { src: "assets/img/projects/bnk/prototype/03-sign-up.webp", cap: "Sign up." },
+        { src: "assets/img/projects/bnk/prototype/04-home.webp", cap: "Home: upcoming appointments and the shop's services." },
+        { src: "assets/img/projects/bnk/prototype/05-grooming.webp", cap: "Booking a groom: pick the pet, the services, the date and time." },
+        { src: "assets/img/projects/bnk/prototype/06-hotel.webp", cap: "Booking a hotel stay: check-in and check-out dates and times." },
+        { src: "assets/img/projects/bnk/prototype/07-confirmed.webp", cap: "Booking confirmed." },
+        { src: "assets/img/projects/bnk/prototype/08-pets.webp", cap: "My Pets: each pet's recent grooms." },
+        { src: "assets/img/projects/bnk/prototype/09-vaccines.webp", cap: "My Pets: vaccination history." },
+        { src: "assets/img/projects/bnk/prototype/10-loyalty.webp", cap: "Loyalty: visits counted toward rewards." },
+        { src: "assets/img/projects/bnk/prototype/11-challenge.webp", cap: "A loyalty challenge: refer a friend for a discount." },
+        { src: "assets/img/projects/bnk/prototype/12-rewards.webp", cap: "Rewards: a birthday treat or 50% off." },
+        { src: "assets/img/projects/bnk/prototype/13-profile.webp", cap: "Owner profile." },
+        { src: "assets/img/projects/bnk/prototype/14-admin-home.webp", cap: "Admin home: totals, pending bookings, dashboard and history." },
+        { src: "assets/img/projects/bnk/prototype/15-kennels.webp", cap: "Admin dashboard: kennel status and reservations." },
+        { src: "assets/img/projects/bnk/prototype/16-history.webp", cap: "Admin history: upcoming, completed and cancelled bookings." }
+      ],
+      /* the live public pages, shown in a laptop; scroll: the page scrolls inside */
+      laptop: [
+        { src: "assets/img/projects/bnk/laptop/01-home.webp", scroll: true },
+        { src: "assets/img/projects/bnk/laptop/02-rates.webp", scroll: true },
+        { src: "assets/img/projects/bnk/laptop/03-guide.webp", scroll: true },
+        { src: "assets/img/projects/bnk/laptop/04-login.webp" },
+        { src: "assets/img/projects/bnk/laptop/05-register.webp" }
+      ],
       rank: "Featured",
       name: "BNK WMS",
-      sub: "Pet Boarding & Grooming Management System",
-      kicker: "PHP · RFID",
+      sub: "Pet Grooming & Boarding Management System",
+      kicker: "PHP · RFID · Live",
       year: "2026",
       course: "Systems project",
       team: "Team project",
-      role: "Team Lead / Project Manager · Full-stack Developer · RFID Integration",
+      /* credit as it was: I led the prototype; the build and the writing were co-authored */
+      role: "Team Lead (Prototype) · Co-author (Build & Docs)",
+      live: "https://bnkpets.infinityfreeapp.com/",
       hero: "assets/img/projects/bnk-figma-splash.png",
       figma: "https://www.figma.com/design/1NkfF3bOM25bIijGVtZPI1/Untitled?node-id=0-1",
-      blurb: "A 278-file PHP system for a real grooming and boarding business. Customers book online, staff run RFID check-in at the shop, admins configure everything and pull PDF reports.",
-      tagline: "Three roles, one database, and an RFID reader on the counter. Built for BNK Grooming & Boarding.",
+      blurb: "A web system for a real pet grooming and boarding shop in Cabuyao, now live. I led the team through the prototype; the build and the documentation were a team effort I co-authored.",
+      tagline: "Customers book a bath, a groom or an overnight stay online; staff check pets in with RFID; admins run the shop and pull reports. Built for BNK Pet Supplies, Grooming, and Boarding.",
       problem: "A pet grooming and boarding business running on paper: bookings taken by phone, boarding check-in tracked by memory, and no way for an owner to see their pet's status without calling.",
-      solution: "A role-routed web application. Customers register, add pet profiles, compare rates and kennels, book a service and track it. Staff confirm bookings, run RFID-based boarding check-in and send updates. Admins manage services, staff accounts, kennels, customers and pets, and generate PDF reports through Dompdf.",
+      solution: "A role-based web app. Customers register, add pet profiles, compare rates and kennels, book a service and track it. Staff confirm bookings, run RFID boarding check-in and send updates. Admins manage services, staff accounts, kennels, customers and pets, and generate PDF reports.",
       contribution: [
-        "Led the project and owned the system architecture",
-        "Built all three role areas (customer, staff and admin) across 278 PHP files",
-        "Designed the MySQL schema covering users, pets, bookings, kennels and activity logging",
-        "Integrated the RFID reader through a dedicated API layer for scan, lookup and last-scan",
-        "Implemented authentication, password reset, file uploads and PDF report generation"
+        "Led the team during prototyping: the Figma screens and the booking flow",
+        "Co-authored the implementation with the team: the PHP and MySQL web system",
+        "Co-authored the project documentation and write-up"
       ],
-      tech: ["PHP", "MySQL", "JavaScript", "Dompdf", "Composer", "XAMPP", "RFID", "Figma"],
-      skills: ["Role-based access control", "Session authentication", "CRUD at scale", "Hardware/API bridging", "Reporting", "File upload handling"],
+      tech: ["PHP", "MySQL", "JavaScript", "Dompdf", "Composer", "RFID", "Figma"],
+      skills: ["Prototyping", "Team leadership", "Role-based access", "Web development", "Technical writing", "Teamwork"],
       features: [
-        "Three routed roles (customer, staff, administrator) from one login",
+        "Three roles (customer, staff, administrator) from one login",
         "Online booking with pet profiles, rate comparison and kennel availability",
-        "RFID boarding check-in through a dedicated scan / lookup / last-scan API",
-        "Boarding update messages and a notification system",
-        "PDF reports via Dompdf, plus an activity log for auditability",
-        "Password reset flow and avatar / pet photo uploads"
+        "RFID boarding check-in at the shop counter",
+        "Boarding updates and notifications for pet owners",
+        "PDF reports and an activity log",
+        "A step-by-step user guide, password reset and sign-in with Google"
       ],
-      process: "Documented as a system-design storyboard: user goal, user action and thought, system response. Scene by scene from the public landing page through to admin sign-out.",
-      outcome: "Ships with a full database export, a restore procedure and a click-by-click defence walkthrough. Hierarchical IPO charts and Mermaid manuscript diagrams are included in the docs folder.",
-      gallery: [
-        { src: "assets/img/projects/bnk-figma-splash.png", cap: "Figma splash: grooming, hotel, supplies. Get Started. The mobile mockup, not the PHP build." }
-      ],
-      note: "The splash is Figma-only. The live system is the PHP + RFID web app."
-    },
-
-    {
-      id: "shuttlecock",
-      featured: true,
-      rank: "Featured",
-      name: "ShuttleCock",
-      sub: "Campus shuttle booking, later MakiRide",
-      kicker: "UI / UX Design",
-      year: "2024 – 2025",
-      course: "CS110P → IT133 Technopreneurship",
-      team: "Group project",
-      role: "Designer · User Journey Documentation",
-      hero: "assets/img/projects/shuttlecock-hero.png",
-      figma: "https://www.figma.com/design/Z10KqWuDcUq7BKV1ggtcAn/SHUTTLECOCK--Copy-?node-id=239-1917",
-      blurb: "A campus shuttle booking app designed in Figma, then evolved into MakiRide. Over a hundred screens, a working prototype, and a design system that holds across the whole flow.",
-      tagline: "ShuttleCock was the booking product: onboarding, ride selection, live tracking, wallet, ratings. That design later became MakiRide.",
-      problem: "Getting to and from campus meant guessing. No visibility into shuttle schedules, no way to reserve a seat, no record of a trip once it ended.",
-      solution: "An end-to-end app design covering the whole journey: account creation and email verification, ride selection between Reserve a Ride, Ride Now and the Mapúa shuttle, map-based trip tracking with driver profile and plate number, fare estimation and payment through an in-app wallet, ratings, support and an e-copy receipt.",
-      contribution: [
-        "Contributed to the design across the full screen set",
-        "Wrote the User Journey Document mapping the flow end to end",
-        "Filed individual progress reports through the project's lifecycle",
-        "Worked in a shared Figma file covering the full screen set"
-      ],
-      tech: ["Figma", "Interactive prototyping", "Design systems", "User journey mapping"],
-      skills: ["UI/UX", "Wireframing", "Hi-fidelity mockups", "Design systems", "Accessibility screens", "Teamwork"],
-      features: [
-        "Onboarding, sign-up and email verification flow",
-        "Three ride modes: Reserve a Ride, Ride Now, and campus shuttle",
-        "Map-based live tracking with driver profile, rating and plate number",
-        "Fare estimate, ride journey summary and cancellation flow",
-        "CockPay in-app wallet with QR payment and e-copy receipts",
-        "Full settings tree: account, privacy, notifications, and accessibility (mobility, visual, hearing)",
-        "Support: livechat, lost-and-found, feedback survey and thank-you states"
-      ],
-      process: "Wireframes first, then hi-fidelity screens on a shared design system, then a clickable prototype. The same file later grew into MakiRide.",
-      outcome: "A working Figma prototype for ShuttleCock, then a second life as MakiRide. Open the Figma file for the full screen set.",
-      gallery: [
-        { src: "assets/img/projects/shuttlecock-hero.png", cap: "Presentation mockup: home dashboard, account creation and live trip tracking." }
-      ],
-      video: { src: "assets/video-web/shuttlecock-demo.mp4", cap: "Prototype walkthrough." }
+      process: "The prototype came first in Figma, then the team built the PHP system from it. The system was documented as a storyboard: the user's goal, what they do, and how the system responds, scene by scene.",
+      outcome: "Live online for the shop's customers, with a public home page, rates and services, a user guide, and customer sign-up.",
+      gallery: []
     },
 
     {
       id: "pixels",
-      featured: true,
-      rank: "Featured",
+      featured: false,   // lives in Play (the "pixelplot" game), not in Projects
+      rank: "Supporting",
       name: "Pixels of Meaning",
       sub: "A Journey Through Food, Pets and Mentorship in Assembly Art",
       kicker: "x86 Assembly · Solo",
@@ -622,43 +626,59 @@ window.SITE = {
     {
       id: "makiride",
       featured: true,
-      /* real screens from the Figma file (designed as ShuttleCock), shown in a phone */
+      /* real screens from the Figma file, shown in phones; cover = [front, back] on the card */
+      cover: [0, 8],
       phone: [
-        { src: "assets/img/projects/makiride/phone/01-onboarding.webp", ch: 0 },
-        { src: "assets/img/projects/makiride/phone/02-signup.webp", ch: 0 },
-        { src: "assets/img/projects/makiride/phone/03-trip-scheduling.webp", ch: 1 },
-        { src: "assets/img/projects/makiride/phone/04-shuttle-availability.webp", ch: 1 },
-        { src: "assets/img/projects/makiride/phone/05-tracking.webp", ch: 2 },
-        { src: "assets/img/projects/makiride/phone/06-traffic.webp", ch: 2 },
-        { src: "assets/img/projects/makiride/phone/07-cockpay.webp", ch: 2 },
-        { src: "assets/img/projects/makiride/phone/08-rewards.webp", ch: 3 },
-        { src: "assets/img/projects/makiride/phone/09-ratings.webp", ch: 3 },
-        { src: "assets/img/projects/makiride/phone/10-live-chat.webp", ch: 4 },
-        { src: "assets/img/projects/makiride/phone/11-booking-confirmed.webp", ch: 4 }
+        { src: "assets/img/projects/makiride/phone/01-home.webp", cap: "Home: a greeting, campus news and your latest ride." },
+        { src: "assets/img/projects/makiride/phone/02-service-type.webp", cap: "Pick a role: ride as a passenger or offer seats as a driver." },
+        { src: "assets/img/projects/makiride/phone/03-location.webp", cap: "Where to: from and to, with frequent routes and recent places." },
+        { src: "assets/img/projects/makiride/phone/04-schedule.webp", cap: "Schedule a trip, with an option for a round trip." },
+        { src: "assets/img/projects/makiride/phone/05-fare.webp", cap: "Fare estimate before booking: base fare, VAT and total." },
+        { src: "assets/img/projects/makiride/phone/06-searching.webp", cap: "Searching for a ride on the same route." },
+        { src: "assets/img/projects/makiride/phone/07-found.webp", cap: "A match: the driver who'll take you." },
+        { src: "assets/img/projects/makiride/phone/08-payment.webp", cap: "Heading to your destination: the driver, the vehicle, its plate number and the payment method." },
+        { src: "assets/img/projects/makiride/phone/09-tracking.webp", cap: "Live tracking: the driver is on the way, arriving in 4 minutes." },
+        { src: "assets/img/projects/makiride/phone/10-call.webp", cap: "In-app call with the driver." },
+        { src: "assets/img/projects/makiride/phone/11-driver-details.webp", cap: "Driver side: seats, plate number, car colour and contact number." },
+        { src: "assets/img/projects/makiride/phone/12-passengers.webp", cap: "Driver side: the passengers riding along, then Complete." },
+        { src: "assets/img/projects/makiride/phone/13-history.webp", cap: "Ride history: upcoming, completed and cancelled trips." },
+        { src: "assets/img/projects/makiride/phone/14-lost-found.webp", cap: "Lost and found: report an item left in a ride." }
       ],
-      rank: "Supporting",
+      rank: "Featured",
       name: "MakiRide",
-      sub: "Carpooling pitch, grown from ShuttleCock",
-      kicker: "Technopreneurship",
-      year: "2025",
-      course: "IT133 Technopreneurship",
+      sub: "Campus ride booking and carpooling app",
+      kicker: "UI / UX · Technopreneurship",
+      year: "2024 – 2025",
+      course: "CS110P → IT133 Technopreneurship",
       team: "Group project",
-      role: "Pitch & product",
-      icon: "MR",
-      figma: "https://www.figma.com/design/Z10KqWuDcUq7BKV1ggtcAn/SHUTTLECOCK--Copy-?node-id=239-1917",
-      blurb: "A ride-matching concept for students, grown out of the ShuttleCock design. Pitched with a quantified problem: 1.5 to 2 hour commutes, 90% peak parking occupancy, ₱500 to 700 a week on fuel.",
-      tagline: "Sharing rides, saving lives. Market framing, personas, objection handling, and a deck that has to survive questions.",
-      problem: "Students commuting alone in single-passenger vehicles, campus parking at 90% during peak, and fuel costs of ₱500–700 weekly per student: with transportation contributing roughly 30% of CO₂ emissions.",
-      solution: "Match drivers and passengers travelling the same routes, with real-time scheduling, verified profiles and ride cost sharing.",
+      role: "Designer · User Journey & Pitch",
+      figma: "https://www.figma.com/design/3PnKf2Ea6cd8FHMabxEb5n/MakiRide?node-id=0-1",
+      blurb: "A ride app for students getting to and from campus: book a seat, share a ride, track the trip and pay in the app. Designed in Figma, then pitched as a product.",
+      tagline: "Getting to campus shouldn't be a guess. MakiRide lets students reserve a seat, share rides on the same route, and see where their ride is.",
+      problem: "Students commute 1.5 to 2 hours, mostly alone in single-passenger vehicles. Campus parking runs at 90% during peak hours, fuel costs ₱500 to 700 a week per student, and there's no way to see shuttle schedules, reserve a seat, or keep a record of a trip.",
+      solution: "An end-to-end ride app: sign-up and email verification, three ride modes (reserve a ride, ride now, and the campus shuttle), drivers and passengers matched on the same routes, map-based live tracking with the driver's profile and plate number, fare estimates, an in-app wallet with QR payment, ratings and support.",
       contribution: [
+        "Designed screens across the full flow in a shared Figma file",
+        "Wrote the User Journey Document mapping the flow end to end",
         "Contributed to the pitch deck, write-up and implementation plan",
-        "Filed weekly individual progress reports across the project"
+        "Filed individual progress reports through the project"
       ],
-      tech: ["Trello", "Figma-style mockups", "Pitch decks", "Video production"],
-      skills: ["Market framing", "Persona development", "Product goals", "Objection handling", "Project management"],
-      features: ["Route matching between drivers and passengers", "Real-time scheduling", "Verified profiles", "Ride cost sharing", "Driver mode and route setting", "In-app payment and rating"],
+      tech: ["Figma", "Interactive prototyping", "Design systems", "User journey mapping", "Trello", "Pitch decks"],
+      skills: ["UI/UX", "Wireframing", "Hi-fidelity mockups", "Design systems", "Accessibility screens", "Market framing", "Persona development"],
+      features: [
+        "Onboarding, sign-up and email verification",
+        "Three ride modes: reserve a ride, ride now, and the campus shuttle",
+        "Carpooling: drivers and passengers matched on the same route and schedule",
+        "Map-based live tracking with the driver's profile, rating and plate number",
+        "Fare estimate, trip summary and cancellation flow",
+        "In-app wallet with QR payment and e-copy receipts",
+        "Settings for account, privacy, notifications and accessibility (mobility, visual, hearing)",
+        "Support: live chat, lost and found, feedback and ratings"
+      ],
+      process: "Wireframes first, then hi-fidelity screens on a shared design system, then a clickable prototype. The design grew from a campus shuttle booking app into a carpooling product for the technopreneurship pitch.",
+      outcome: "A working Figma prototype covering the whole trip, and a pitch built on a quantified problem: commute time, peak parking and weekly fuel cost.",
       gallery: [
-        { src: "assets/img/gallery/makiride-Dashboard-+-Home-Page.png", cap: "Dashboard and home page concept." },
+        { src: "assets/img/gallery/makiride-Dashboard-+-Home-Page.png", cap: "Dashboard and home page." },
         { src: "assets/img/gallery/makiride-Pool-a-Car.png", cap: "Pool a car: the core matching flow." },
         { src: "assets/img/gallery/makiride-Driving-Mode.png", cap: "Driving mode." },
         { src: "assets/img/gallery/makiride-Set-Drivinbg-Route.png", cap: "Setting a driving route." },
@@ -839,8 +859,8 @@ window.SITE = {
     { src: "assets/img/gallery/dilig-database-erd.png", cap: "MySQL schema: five tables, cascade rules, indexed keys.", title: "D.I.L.I.G.", sub: "ERD", cat: "Data" },
     { src: "assets/img/projects/dilig-app-onboarding.png", cap: "Onboarding, household sign-up, and the live dashboard offline.", title: "D.I.L.I.G.", sub: "Android UI", cat: "Mobile UI" },
     { src: "assets/img/gallery/dilig-app-calendar-log.png", cap: "Watering calendar, member gate, live dashboard, activity log.", title: "D.I.L.I.G.", sub: "Android UI", cat: "Mobile UI" },
-    { src: "assets/img/projects/aws-cloud-architecture.png", cap: "Target-state AWS map for a retail client with no existing cloud footprint.", title: "AWS-ome Tech", sub: "Cloud architecture", cat: "Architecture", wide: true },
-    { src: "assets/img/projects/aws-network-diagram.png", cap: "VPC, subnets, gateways, route tables, security-group boundaries.", title: "AWS-ome Tech", sub: "Network diagram", cat: "Architecture" },
+    { src: "assets/img/projects/cloud/aws-architecture.png", cap: "AWS architecture across compute, database, storage, security and monitoring.", title: "Cloud Architecture Diagrams", sub: "AWS architecture", cat: "Architecture", wide: true },
+    { src: "assets/img/projects/cloud/aws-network.png", cap: "VPC, subnets, gateways, route tables, security-group boundaries.", title: "Cloud Architecture Diagrams", sub: "AWS network", cat: "Architecture" },
     { src: "assets/img/projects/pulsepoint-architecture.png", cap: "Clinic appointment system architecture.", title: "PulsePoint", sub: "System architecture", cat: "Architecture" }
   ],
 
@@ -875,10 +895,10 @@ window.SITE = {
     },
     {
       id: "pixelplot",
-      title: "Assembly Plotter",
-      sub: "Watch the code draw",
+      title: "Pixels of Meaning",
+      sub: "Assembly art, drawn live",
       origin: "x86 Assembly · emu8086 · 2025",
-      desc: "Replays the actual INT 10h draw calls from my assembly source files, one rectangle at a time, exactly in the order the CPU would execute them.",
+      desc: "Three pixel-art pieces I drew entirely in x86 assembly: food, pets and mentorship. Watch the original INT 10h calls redraw each one, block by block, in the order the CPU runs them.",
       art: ["assets/img/pixel/cat.png"],
       tag: "Parsed from .asm"
     },
@@ -890,6 +910,33 @@ window.SITE = {
       desc: "The paired-substitution cipher I wrote for Information Assurance. Encryption and decryption are the same operation: run it twice and you get your text back.",
       art: [],
       tag: "Same algorithm"
+    },
+    {
+      id: "beancatcher",
+      title: "Bean Catcher",
+      sub: "Catch the coffee",
+      origin: "Mini game · made for this site",
+      desc: "Slide the mug to catch falling coffee beans. Golden beans are worth five. Catch a bug and you lose a life, and it keeps getting faster.",
+      glyph: "☕",
+      tag: "Mini game"
+    },
+    {
+      id: "memory",
+      title: "Memory Match",
+      sub: "Find the pairs",
+      origin: "Mini game · made for this site",
+      desc: "Sixteen cards, eight pairs of coffee, cats, laptops and bugs. Flip two at a time and clear the board in as few moves as you can.",
+      glyph: "🃏",
+      tag: "Mini game"
+    },
+    {
+      id: "bugsquash",
+      title: "Bug Squash",
+      sub: "Fix them before they ship",
+      origin: "Mini game · made for this site",
+      desc: "Bugs pop out of the code for a moment. Tap them before they escape, but leave the cat alone. Thirty seconds a round.",
+      glyph: "🐞",
+      tag: "Mini game"
     }
   ],
 
@@ -1024,7 +1071,7 @@ window.SITE = {
 
   /* -------------------------------------------------------------- EDUCATION */
   education: [
-    { k: "Ambassador", t: "Mapúa MCL Student Ambassador", p: "Official face of the A.Y. 2024–2025 enrollment campaign. This is the photograph the college published.", m: "A.Y. 2024–2025", img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa Malayan Colleges Laguna ambassador campaign, A.Y. 2024–2025. I'm on the left." },
+    { k: "Ambassador", t: "Mapúa MCL Student Ambassador", p: "Official face of the A.Y. 2024–2025 enrollment campaign. This is the photograph the college published.", m: "A.Y. 2023–2025", img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa Malayan Colleges Laguna ambassador campaign, A.Y. 2024–2025. I'm on the left." },
     { k: "Degree", t: "BS Information Technology", p: "Mapúa Malayan Colleges Laguna. Full academic scholar and President's Lister. Expected graduation 2027.", m: "2023 – 2027 (expected)", mark: "BSIT" },
     { k: "Capstone", t: "Kusina Kode: Integrating Blockchain Incentives in Gamified Filipino Culinary Education", p: "Project Manager, with ownership of the game systems and cloud integration modules.", m: "Adviser: Khristian G. Kikuchi" },
     { k: "Immersion", t: "Japan Technology Exposure Tour", p: "Miraikan robotics and AI, DiverCity Tokyo, and how Japan puts technology into public transport and services.", m: "7 – 11 March 2026" }
@@ -1034,7 +1081,7 @@ window.SITE = {
     "President's Lister",
     "Full Academic Scholar",
     "President, ITSOC · A.Y. 2024–2025",
-    "Student Ambassador · A.Y. 2024–2025"
+    "Student Ambassador · A.Y. 2023–2025"
   ],
 
   techIcons: [
@@ -1083,7 +1130,7 @@ window.SITE = {
   ],
 
   softSkills: [
-    { t: "Organized", p: "Someone has to hold the schedule. On PulsePoint, Kusina Kode, D.I.L.I.G. and BNK, that was me." },
+    { t: "Organized", p: "Someone has to hold the schedule. On PulsePoint, Kusina Kode and D.I.L.I.G., that was me." },
     { t: "Hands-on", p: "I don't step back from the code. The Kotlin, the PHP, and the Arduino are mine." },
     { t: "Mentoring", p: "K-maps session: 8 of the 9 mentees who came passed their exam." },
     { t: "Accountable", p: "ITSOC term-end report: officer roster, activities, partnerships, money. My name on it." },
@@ -1091,7 +1138,8 @@ window.SITE = {
   ],
 
   proofs: [
-    { src: "assets/img/leadership/ambassador.jpg", title: "Student Ambassador", sub: "A.Y. 2024–2025", cap: "Mapúa MCL enrollment campaign. I'm on the left.", wide: true },
+    { src: "assets/img/leadership/ambassador.jpg", title: "Student Ambassador", sub: "A.Y. 2023–2025", cap: "Mapúa MCL enrollment campaign. I'm on the left.", wide: true },
+    { src: "assets/img/leadership/ambassador-bscs.jpg", title: "Mapúa MCL website", sub: "BS Computer Science program", cap: "On Mapúa MCL's website: the photo for the BS Computer Science program. I'm on the left." },
     { src: "assets/img/leadership/campaign.jpg", title: "ITSOC President", sub: "Candidate poster", cap: "Official candidate poster: Information Technology Society.", tall: true },
     { src: "assets/img/leadership/general-assembly.jpg", title: "IT General Assembly", sub: "On stage", cap: "Hosting the IT General Assembly as ITSOC President.", wide: true },
     { src: "assets/img/leadership/pamaskong-handog.jpg", title: "Pamaskong Handog", sub: "Dec 2024", cap: "Outreach at Diezmo Integrated School. I coordinated it." },

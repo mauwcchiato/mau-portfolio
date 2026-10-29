@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Assembly Plotter — replays "Pixels of Meaning" (CS125, Nov 2025).
+   Pixels of Meaning — replays my assembly art (CS125, Nov 2025).
    The draw calls in asm-art-data.js were parsed straight out of my original
    .asm files: every entry is one INT 10h / AH=06h call, in execution order.
    ========================================================================== */
@@ -100,8 +100,8 @@
   window.ASM_RENDERER = makeRenderer;
 
   window.GAMES.pixelplot = {
-    title: "Assembly Plotter",
-    subtitle: "Watch the code draw · replay of my original source",
+    title: "Pixels of Meaning",
+    subtitle: "Assembly art, drawn live · replay of my original source",
     origin: "Original: x86 Assembly, emu8086 (Nov 2025)",
 
     mount: function (root) {
