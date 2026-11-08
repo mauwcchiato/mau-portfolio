@@ -1,10 +1,12 @@
 /* ==========================================================================
-   data.js: the single source of truth for everything the page renders.
+   site.ts: the single source of truth for everything the page renders.
    Every entry here traces back to a real file in the school archive.
    Nothing is invented. Where something is unverified it says so.
    ========================================================================== */
 
-window.SITE = {
+import type { Site } from "./types";
+
+const data: Site = {
 
   profile: {
     name: "Jhan Maurice C. De Roxas",
@@ -1146,3 +1148,6 @@ window.SITE = {
     { src: "assets/img/leadership/python-competition.jpg", title: "CCIS Week", sub: "Jun 2025", cap: "Python Programming Competition. I was there as President." }
   ]
 };
+
+/* projects flagged hide: true stay here but never reach the page */
+export const SITE: Site = { ...data, projects: data.projects.filter((p) => !p.hide) };

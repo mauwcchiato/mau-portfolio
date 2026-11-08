@@ -5,4 +5,7 @@ Thumbs.db
 .DS_Store
 *.log
 _legacy_index.html
-assets/video
+public/assets/video
+node_modules
+dist
+*.tsbuildinfo
