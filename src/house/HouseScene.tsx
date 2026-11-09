@@ -63,27 +63,33 @@ function webShots(p: Project): [string, string] {
   const all = [...(p.laptop || []).map((s) => s.src), ...(p.gallery || []).map((s) => s.src), p.hero].filter(Boolean) as string[];
   return [all[0], all[1] || all[0]];
 }
-const STATION_LED = ["#22d3ee", "#e879f9", "#8b5cf6"];
+/* where the desks stand: [x, z, quarter turns]. Three along the back wall,
+   one against the east wall facing into the room. */
+const DESKS: [number, number, number][] = [[-7.0, -4.97, 0], [-5.5, -4.97, 0], [-4.0, -4.97, 0], [-2.95, -1.05, -1]];
+const STATION_LED = ["#fbbf24", "#22d3ee", "#e879f9", "#8b5cf6"];
 
 /* one workstation: a desk, two monitors on a web project, keyboard and
    mouse, an RGB PC tower, LED strip and bias light, and a chair turned
    aside so the screens stay in view */
-function Station({ x, p, led, open, hover }: { x: number; p: Project; led: string; open: Open; hover: OnHover }) {
+function Station({ at: [x, z, q], p, led, open, hover }: { at: [number, number, number]; p: Project; led: string; open: Open; hover: OnHover }) {
   const [a, b] = webShots(p);
   const strip = useLed(led, 2.4);
   const go = () => open(projectTarget(p));
+  /* a spot on the desk (across, up, toward the chair) placed in the room */
+  const t = q * Math.PI / 2, c = Math.cos(t), s = Math.sin(t);
+  const put = (lx: number, y: number, lz: number): [number, number, number] => [x + lx * c + lz * s, y, z - lx * s + lz * c];
   return (
     <group>
-      <Wash position={[x, 1.18, -5.355]} size={[2.1, 1.05]} color={led} opacity={.6} />
-      <Item name="desk" position={[x, 0, -4.97]} label={p.name} hint="Click to open the project" onClick={go} onHover={hover} />
+      <Wash position={put(0, 1.18, -.385)} turn={q} size={[2.1, 1.05]} color={led} opacity={.6} />
+      <Item name="desk" position={put(0, 0, 0)} turn={q} label={p.name} hint="Click to open the project" onClick={go} onHover={hover} />
       {/* two monitors, angled in a little toward the chair */}
-      <Monitor position={[x - .345, .77, -5.08]} turn={.1} src={a} label={p.name} onClick={go} onHover={hover} />
-      <Monitor position={[x + .345, .77, -5.08]} turn={-.1} src={b} label={p.name} onClick={go} onHover={hover} />
-      <Item name="computerKeyboard" position={[x - .05, .77, -4.74]} />
-      <Item name="computerMouse" position={[x + .38, .77, -4.74]} />
-      <mesh position={[x, .735, -4.59]}><boxGeometry args={[1.42, .012, .012]} /><meshBasicMaterial color={strip} toneMapped={false} /></mesh>
-      <PcTower position={[x + .48, 0, -5.02]} color={led} />
-      <Item name="chairDesk" position={[x - .5, 0, -4.2]} turn={2.45} />
+      <Monitor position={put(-.345, .77, -.11)} turn={t + .1} src={a} label={p.name} onClick={go} onHover={hover} />
+      <Monitor position={put(.345, .77, -.11)} turn={t - .1} src={b} label={p.name} onClick={go} onHover={hover} />
+      <Item name="computerKeyboard" position={put(-.05, .77, .23)} turn={q} />
+      <Item name="computerMouse" position={put(.38, .77, .23)} turn={q} />
+      <mesh position={put(0, .735, .38)} rotation-y={t}><boxGeometry args={[1.42, .012, .012]} /><meshBasicMaterial color={strip} toneMapped={false} /></mesh>
+      <PcTower position={put(.48, 0, -.05)} turn={q} color={led} />
+      <Item name="chairDesk" position={put(-.5, 0, .77)} turn={q + 2.45} />
     </group>
   );
 }
@@ -100,8 +106,8 @@ function Office({ open, hover }: { open: Open; hover: OnHover }) {
       <mesh position={[-5.25, H - .14, -5.33]}><boxGeometry args={[5.4, .02, .02]} /><meshBasicMaterial color={cove} toneMapped={false} /></mesh>
       <Item name="rugRectangle" position={[-5.3, 0, -2.5]} size={1.15} />
 
-      {/* three workstations, one web project each */}
-      {[-7.0, -5.5, -4.0].map((x, k) => WEB[k] && <Station key={x} x={x} p={WEB[k]} led={STATION_LED[k]} open={open} hover={hover} />)}
+      {/* the workstations, one web project each */}
+      {DESKS.map((at, k) => WEB[k] && <Station key={k} at={at} p={WEB[k]} led={STATION_LED[k]} open={open} hover={hover} />)}
 
       {/* the mobile apps, each on a big phone on the wall by the door */}
       {MOBILE.slice(0, 3).map((p, k) => {
@@ -111,13 +117,14 @@ function Office({ open, hover }: { open: Open; hover: OnHover }) {
           color={["#4ade80", "#fb923c", "#38bdf8"][k]} label={p.name} onClick={() => open(projectTarget(p))} onHover={hover} />;
       })}
 
-      <ServerRack position={[-2.92, 0, -.62]} turn={-1} />
-      <Item name="bookcaseOpen" position={[-2.9, 0, -4.35]} turn={-1} />
-      <Item name="books" position={[-2.92, .26, -4.55]} turn={-1} />
-      <Item name="books" position={[-2.92, .74, -4.15]} turn={-1} />
-      <Item name="books" position={[-2.92, 1.22, -4.55]} turn={-1} />
-      <Lamp name="lampRoundTable" position={[-2.9, 1.76, -4.35]} hover={hover} />
-      <Item name="pottedPlant" position={[-7.5, 0, -1.2]} />
+      <ServerRack position={[-2.92, 0, -4.35]} turn={-1} />
+      {/* the bookcase and its lamp, on the west wall by the door */}
+      <Item name="bookcaseOpen" position={[-7.6, 0, -.95]} turn={1} />
+      <Item name="books" position={[-7.58, .26, -.75]} turn={1} />
+      <Item name="books" position={[-7.58, .74, -1.15]} turn={1} />
+      <Item name="books" position={[-7.58, 1.22, -.75]} turn={1} />
+      <Lamp name="lampRoundTable" position={[-7.6, 1.76, -.95]} hover={hover} />
+      <Item name="pottedPlant" position={[-7.45, 0, -1.72]} />
 
       {/* Toshi, asleep in the cat bed under the window */}
       <CatBed position={[-7.35, 0, -2.75]} />

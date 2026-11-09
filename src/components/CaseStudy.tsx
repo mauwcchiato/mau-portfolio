@@ -71,7 +71,7 @@ function Page({ p, onNext }: { p: Project; onNext: () => void }) {
       {(p.problem || p.solution) && sec("Overview", (
         <div className="cs__two">
           {p.problem && <div><h4>The problem</h4>{para(p.problem)}</div>}
-          {p.solution && <div><h4>What we built</h4>{para(p.solution)}</div>}
+          {p.solution && <div><h4>{/^(Solo|Personal)/.test(p.team || "") ? "What I built" : "What we built"}</h4>{para(p.solution)}</div>}
         </div>
       ))}
       {p.phone && sec(p.phoneTitle || "The app", (

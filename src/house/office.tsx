@@ -24,10 +24,10 @@ export function useLed(hex: string, k = 2.2) {
 }
 
 /* a soft coloured wash on the wall behind something (bias lighting) */
-export function Wash({ position, size, color, opacity = .55 }: { position: [number, number, number]; size: [number, number]; color: string; opacity?: number }) {
+export function Wash({ position, size, color, opacity = .55, turn = 0 }: { position: [number, number, number]; size: [number, number]; color: string; opacity?: number; turn?: number }) {
   const halo = useMemo(glowTexture, []);
   return (
-    <mesh position={position}>
+    <mesh position={position} rotation-y={turn * Math.PI / 2}>
       <planeGeometry args={size} />
       <meshBasicMaterial map={halo} color={color} transparent opacity={opacity} blending={AdditiveBlending} depthWrite={false} toneMapped={false} />
     </mesh>

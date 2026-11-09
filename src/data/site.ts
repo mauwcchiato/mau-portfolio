@@ -151,6 +151,52 @@ const data: Site = {
   /* --------------------------------------------------------------- PROJECTS */
   projects: [
     {
+      id: "barkadaral",
+      featured: true,
+      /* screens from the live site, shown in a laptop; the summary page scrolls */
+      laptop: [
+        { src: "assets/img/projects/barkadaral/laptop/01-home.webp", cap: "Home: paste notes or upload a PDF, pick the difficulty and how many questions." },
+        { src: "assets/img/projects/barkadaral/laptop/02-summary.webp", cap: "Summary: the key points and key terms on one review sheet.", scroll: true },
+        { src: "assets/img/projects/barkadaral/laptop/03-flashcards.webp", cap: "Flashcards: flip, shuffle, mark what you know, export to CSV." },
+        { src: "assets/img/projects/barkadaral/laptop/04-quiz.webp", cap: "Practice quiz: multiple choice, with an explanation for every answer." }
+      ],
+      rank: "New",
+      name: "BarkadAral",
+      sub: "AI study buddy",
+      kicker: "Next.js · Generative AI",
+      year: "2026",
+      team: "Personal project",
+      role: "Design and development",
+      hero: "assets/img/projects/barkadaral/laptop/01-home.webp",
+      live: "https://barkadaral.vercel.app",
+      liveLabel: "Try BarkadAral",
+      repo: "https://github.com/mauwcchiato/barkadaral",
+      blurb: "Barkada + aral: paste your lecture notes or upload a PDF and get a summary, flashcards and a practice quiz. Built with Next.js and the Gemini API.",
+      tagline: "A study tool that turns notes into a review sheet, flashcards and a quiz, so you can start reviewing right away.",
+      problem: "Making flashcards and practice questions from lecture notes takes time, and that time comes out of actually reviewing.",
+      solution: "Paste notes or upload a PDF, choose a difficulty and how many questions, and the app returns a summary with key terms, a flashcard deck and a multiple-choice quiz. A Next.js API route calls Gemini with a JSON schema made from Zod, so the answer comes back in a fixed shape, and the server checks it again before the page shows it. The API key stays on the server.",
+      contribution: [
+        "Designed and built the app: the interface, the API route and the prompt",
+        "Defined the study set with Zod and used it as Gemini's response schema",
+        "Added PDF upload, difficulty levels, a per-visitor rate limit and saved history",
+        "Deployed it on Vercel"
+      ],
+      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Gemini API", "Zod", "Vercel"],
+      skills: ["Prompt design", "Structured outputs", "API design", "Responsive UI"],
+      features: [
+        "Summary with key points and key terms",
+        "Flashcards: flip with a click or Space, shuffle, mark as known, export to CSV",
+        "Practice quiz with a score and an explanation for each answer",
+        "PDF upload: Gemini reads the file directly, slides and diagrams included",
+        "Easy, medium and hard: recall, understanding and application",
+        "Answers in the language of your notes, Filipino included",
+        "Study sets saved in the browser, dark mode, works on phones"
+      ],
+      process: "The browser sends the notes (or the PDF) to one API route. The route validates the input, applies the rate limit, calls Gemini with a tutor prompt and the schema, then validates the result before returning it.",
+      note: "Runs on Gemini's free tier, so there are request limits. Don't upload private documents."
+    },
+
+    {
       id: "dilig",
       featured: true,
       /* real app screens, shown in phones on the card and in the case study */

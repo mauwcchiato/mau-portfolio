@@ -54,7 +54,7 @@ export default function Projects() {
         <header className="sec__head">
           <p className="sec__kicker">03 · selected work</p>
           <h2 className="sec__title" data-title>Projects</h2>
-          <p className="sec__lede">Things I've built in class and for real users: IoT, Android apps, web systems and cloud designs. Open one to see how it was made.</p>
+          <p className="sec__lede">Things I've built in class, on my own and for real users: IoT, Android apps, web systems, an AI study tool and cloud designs. Open one to see how it was made.</p>
         </header>
 
         <div className="work" id="work">

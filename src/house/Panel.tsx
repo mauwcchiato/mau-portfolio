@@ -76,7 +76,7 @@ function ProjectBody({ p }: { p: Project }) {
         {facts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
       </dl>
       {p.problem && <><h3>The problem</h3><p>{p.problem}</p></>}
-      {p.solution && <><h3>What we built</h3><p>{p.solution}</p></>}
+      {p.solution && <><h3>{/^(Solo|Personal)/.test(p.team || "") ? "What I built" : "What we built"}</h3><p>{p.solution}</p></>}
       <h3>Built with</h3>
       <Chips list={p.tech} />
     </>
