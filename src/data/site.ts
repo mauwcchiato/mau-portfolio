@@ -128,7 +128,12 @@ const data: Site = {
     { t: "Full Academic Scholar", p: "Mapúa Malayan Colleges Laguna", icon: "cap" },
     { t: "Student Ambassador", p: "Mapúa Malayan Colleges Laguna · A.Y. 2023–2025", icon: "star",
       img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa MCL enrollment campaign, A.Y. 2024–2025.",
-      more: [{ src: "assets/img/leadership/ambassador-bscs.jpg", cap: "On Mapúa MCL's website: the photo for the BS Computer Science program. I'm on the left." }] }
+      more: [
+        { src: "assets/img/leadership/ambassador-bscs.jpg", cap: "On Mapúa MCL's website: the photo for the BS Computer Science program. I'm on the left." },
+        { src: "assets/img/leadership/ccis-wall.webp", cap: "The ambassador photos on the hallway wall of the College of Computer and Information Science at Mapúa MCL." },
+        { src: "assets/img/leadership/ccis-wall-close.webp", cap: "A closer look at the CCIS hallway wall." },
+        { src: "assets/img/leadership/ccis-wall-side.webp", cap: "The wall from down the CCIS hallway, beside the student organisation flags." }
+      ] }
   ],
 
   milestones: [
@@ -1142,6 +1147,7 @@ const data: Site = {
   proofs: [
     { src: "assets/img/leadership/ambassador.jpg", title: "Student Ambassador", sub: "A.Y. 2023–2025", cap: "Mapúa MCL enrollment campaign. I'm on the left.", wide: true },
     { src: "assets/img/leadership/ambassador-bscs.jpg", title: "Mapúa MCL website", sub: "BS Computer Science program", cap: "On Mapúa MCL's website: the photo for the BS Computer Science program. I'm on the left." },
+    { src: "assets/img/leadership/ccis-wall.webp", title: "CCIS hallway wall", sub: "Student Ambassador", cap: "The ambassador photos on the hallway wall of the College of Computer and Information Science at Mapúa MCL." },
     { src: "assets/img/leadership/campaign.jpg", title: "ITSOC President", sub: "Candidate poster", cap: "Official candidate poster: Information Technology Society.", tall: true },
     { src: "assets/img/leadership/general-assembly.jpg", title: "IT General Assembly", sub: "On stage", cap: "Hosting the IT General Assembly as ITSOC President.", wide: true },
     { src: "assets/img/leadership/pamaskong-handog.jpg", title: "Pamaskong Handog", sub: "Dec 2024", cap: "Outreach at Diezmo Integrated School. I coordinated it." },

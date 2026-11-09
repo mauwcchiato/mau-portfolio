@@ -294,3 +294,26 @@ export const sideArtTexture = (color: string) => make("side:" + color, 256, 512,
   l.addColorStop(0, "rgba(20,12,38,0)"); l.addColorStop(1, "rgba(20,12,38,.85)");
   g.fillStyle = l; g.fillRect(0, 0, 256, 512);
 }, true);
+
+/* vertical wood boards for the outside cladding */
+export const boardTexture = () => make("boards", 256, 256, (g) => {
+  const rnd = rand(53);
+  for (let x = 0; x < 256; x += 32) {
+    const k = .85 + rnd() * .3;
+    g.fillStyle = `rgb(${Math.round(132 * k)},${Math.round(88 * k)},${Math.round(58 * k)})`;
+    g.fillRect(x, 0, 32, 256);
+    g.fillStyle = "rgba(0,0,0,.45)";
+    g.fillRect(x, 0, 2, 256);
+    for (let i = 0; i < 40; i++) { g.fillStyle = `rgba(0,0,0,${rnd() * .1})`; g.fillRect(x + 3 + rnd() * 26, rnd() * 256, 1, 10 + rnd() * 40); }
+  }
+}, true);
+
+/* a solar panel: dark blue cells on a silver grid */
+export const solarTexture = () => make("solar", 256, 128, (g) => {
+  g.fillStyle = "#c9cbd6"; g.fillRect(0, 0, 256, 128);
+  for (let y = 0; y < 4; y++) for (let x = 0; x < 8; x++) {
+    const l = g.createLinearGradient(0, y * 32, 0, y * 32 + 30);
+    l.addColorStop(0, "#1e3a8a"); l.addColorStop(1, "#14234f");
+    g.fillStyle = l; g.fillRect(x * 32 + 2, y * 32 + 2, 28, 28);
+  }
+}, true);

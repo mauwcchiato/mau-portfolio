@@ -26,7 +26,9 @@ export interface Room {
 
 export const WALL_H = 2.1;      /* walls are cut at this height, like an architect's model */
 export const FULL_H = 2.75;     /* ...and stand full height when you walk around inside */
-export const HEAD_H = 2.2;      /* top of doors and windows */
+export const HEAD_H = 2.2;      /* top of doors */
+export const WIN_H = 2.45;      /* top of the tall modern windows */
+export const SILL = .35;        /* windows start low, nearly floor to ceiling */
 export const OUTER = .26;
 export const INNER = .16;
 
@@ -44,16 +46,17 @@ export const center = (r: Room): [number, number] => [(r.x0 + r.x1) / 2, (r.z0 +
 
 /* An opening in a wall run: a door (a gap) or a window (a low wall with
    glass above). at is the distance along the run to its centre. */
-export interface Opening { at: number; w: number; kind: "door" | "window" }
+/* sill: how high the glass starts (defaults to SILL; the kitchen window sits above the counter) */
+export interface Opening { at: number; w: number; kind: "door" | "window"; sill?: number }
 /* A straight wall from a to b (axis-aligned), with its openings. */
 export interface Run { a: [number, number]; b: [number, number]; t: number; open?: Opening[] }
 
 export const WALLS: Run[] = [
   /* outside */
   { a: [-8, -5.5], b: [8, -5.5], t: OUTER, open: [{ at: 13.3, w: 1.6, kind: "window" }] },
-  { a: [-8, 5.5], b: [8, 5.5], t: OUTER, open: [{ at: 2, w: 1.4, kind: "window" }, { at: 4.6, w: 1.1, kind: "door" }, { at: 13, w: 2, kind: "window" }] },
+  { a: [-8, 5.5], b: [8, 5.5], t: OUTER, open: [{ at: 2, w: 1.6, kind: "window" }, { at: 4.6, w: 1.6, kind: "window" }, { at: 8.5, w: 1.1, kind: "door" }, { at: 13, w: 2.4, kind: "window" }] },
   { a: [-8, -5.5], b: [-8, 5.5], t: OUTER, open: [{ at: 2.75, w: 1.6, kind: "window" }] },
-  { a: [8, -5.5], b: [8, 5.5], t: OUTER, open: [{ at: 2.75, w: 1.6, kind: "window" }, { at: 7.36, w: 1.2, kind: "window" }] },
+  { a: [8, -5.5], b: [8, 5.5], t: OUTER, open: [{ at: 2.75, w: 1.6, kind: "window" }, { at: 7.36, w: 1.2, kind: "window", sill: 1 }] },
   /* between the rows */
   { a: [-8, 0], b: [8, 0], t: INNER, open: [{ at: 3.3, w: 1, kind: "door" }, { at: 8.5, w: 1, kind: "door" }, { at: 13, w: 1, kind: "door" }] },
   /* back row dividers */
@@ -72,9 +75,16 @@ export const SPAWN: Record<string, { x: number; z: number; yaw: number }> = {
   office: { x: -5.2, z: -1.4, yaw: 0 },
   arcade: { x: .4, z: -1.1, yaw: 0 },
   library: { x: 4.7, z: -.9, yaw: 0 },
-  hall: { x: .5, z: 4.6, yaw: 0 },
+  hall: { x: .5, z: 4.3, yaw: 0 },
   kitchen: { x: 4.9, z: 4.7, yaw: 0 }
 };
+
+/* Trees in the yard: [x, z, size, kind]. Kept clear of the front path. */
+export const TREES: [number, number, number, "round" | "pine"][] = [
+  [-11.2, -6.8, 1.1, "round"], [-12.4, -1.5, .9, "pine"], [-11.6, 3.6, 1.2, "round"], [-10.4, 8.6, .95, "pine"],
+  [11.1, -7.2, 1.15, "pine"], [12.6, -2.2, 1, "round"], [11.4, 3.2, .9, "pine"], [10.6, 8.4, 1.2, "round"],
+  [-6.5, -9.6, 1, "pine"], [-.6, -10.2, 1.25, "round"], [5.6, -9.4, .95, "pine"], [3.5, 9.8, 1.05, "round"], [-8.2, 10.2, .9, "round"]
+];
 
 /* the room containing a point on the floor, if any */
 export const roomAt = (x: number, z: number) => ROOMS.find((r) => x >= r.x0 && x <= r.x1 && z >= r.z0 && z <= r.z1) || null;

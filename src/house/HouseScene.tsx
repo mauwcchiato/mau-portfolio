@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, type ReactNode } from "react";
 import { CameraControls, Html, useTexture } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Bloom, EffectComposer, N8AO, Vignette } from "@react-three/postprocessing";
 import { Color, MathUtils, SRGBColorSpace, Vector3, type PerspectiveCamera, type Texture } from "three";
 import { SITE } from "../data/site";
@@ -14,15 +14,18 @@ import { glyphTexture, menuTexture, pressStartTexture, signTexture, tvTexture } 
 import { CeilingLights, Panel, Pendants, SlatWall, Trim, Wainscot, Windows } from "./details";
 import { Cabinet } from "./arcade";
 import { Bowls, Cat, CatBed, COATS } from "./cats";
-import { PcTower, ServerRack, ShelfFrame, useLed, WallPhone, Wash } from "./office";
+import { Monitor, PcTower, ServerRack, ShelfFrame, useLed, WallPhone, Wash } from "./office";
 import { DayContext, useDay } from "./daylight";
 import { WalkRig } from "./walk";
+import { Outside, Roof } from "./roof";
 
 type Open = (t: Target) => void;
 type OnHover = (h: Hover | null) => void;
 
 /* where the camera sits for the whole house, and for each room */
 const OVERVIEW: [number, number, number, number, number, number] = [10.5, 15, 16.5, 0, 0, .4];
+/* the first view: the whole house with its roof on, from out on the lawn */
+const INTRO: [number, number, number, number, number, number] = [15, 11, 30, 0, 1.2, .5];
 function roomView(id: string): [number, number, number, number, number, number] {
   const [cx, cz] = center(roomById(id));
   /* high and fairly steep, so the cut walls never block the room */
@@ -33,8 +36,8 @@ const projectTarget = (p: Project): Target => ({ id: p.id, kind: "project", labe
 
 /* a white dot like the reel's: the main thing to click in a room */
 function Dot({ room, at, label, onOpen }: { room: string; at: [number, number, number]; label: string; onOpen: () => void }) {
-  const { walk, here } = useDay();
-  if (walk && here !== room) return null;
+  const { walk, here, tall } = useDay();
+  if (walk ? here !== room : tall) return null;
   return (
     <Html position={at} zIndexRange={[30, 0]}>
       <button className="g-pin g-dot" type="button" aria-label={label} onClick={onOpen}><span /></button>
@@ -73,10 +76,9 @@ function Station({ x, p, led, open, hover }: { x: number; p: Project; led: strin
     <group>
       <Wash position={[x, 1.18, -5.355]} size={[2.1, 1.05]} color={led} opacity={.6} />
       <Item name="desk" position={[x, 0, -4.97]} label={p.name} hint="Click to open the project" onClick={go} onHover={hover} />
-      <Item name="computerScreen" position={[x - .37, .77, -5.07]} label={p.name} hint="Click to open the project" onClick={go} onHover={hover} />
-      <Item name="computerScreen" position={[x + .37, .77, -5.07]} label={p.name} hint="Click to open the project" onClick={go} onHover={hover} />
-      <Screen src={a} w={.66} h={.4} position={[x - .37, 1.15, -4.95]} />
-      <Screen src={b} w={.66} h={.4} position={[x + .37, 1.15, -4.95]} />
+      {/* two monitors, angled in a little toward the chair */}
+      <Monitor position={[x - .345, .77, -5.08]} turn={.1} src={a} label={p.name} onClick={go} onHover={hover} />
+      <Monitor position={[x + .345, .77, -5.08]} turn={-.1} src={b} label={p.name} onClick={go} onHover={hover} />
       <Item name="computerKeyboard" position={[x - .05, .77, -4.74]} />
       <Item name="computerMouse" position={[x + .38, .77, -4.74]} />
       <mesh position={[x, .735, -4.59]}><boxGeometry args={[1.42, .012, .012]} /><meshBasicMaterial color={strip} toneMapped={false} /></mesh>
@@ -87,9 +89,9 @@ function Station({ x, p, led, open, hover }: { x: number; p: Project; led: strin
 }
 
 function Office({ open, hover }: { open: Open; hover: OnHover }) {
-  const { walk } = useDay();
+  const { tall } = useDay();
   const { toast } = useUI();
-  const H = walk ? FULL_H : WALL_H;
+  const H = tall ? FULL_H : WALL_H;
   const cove = useLed("#8b5cf6", 2);
   return (
     <group>
@@ -129,8 +131,8 @@ function Office({ open, hover }: { open: Open; hover: OnHover }) {
 
 function GameRoom({ open, hover }: { open: Open; hover: OnHover }) {
   const { openGame } = useUI();
-  const { walk, day } = useDay();
-  const H = walk ? FULL_H : WALL_H;
+  const { tall, day } = useDay();
+  const H = tall ? FULL_H : WALL_H;
   const games = SITE.playable;
   const arcade: Target = { id: "arcade", kind: "arcade", label: "Arcade" };
   const poster = useMemo(pressStartTexture, []);
@@ -286,8 +288,6 @@ function Living({ open, hover }: { open: Open; hover: OnHover }) {
       <Lamp name="lampRoundFloor" position={[-7.45, 0, .6]} hover={hover} />
       <Item name="pottedPlant" position={[-7.45, 0, 5]} />
       <Item name="pottedPlant" position={[-1.5, 0, .6]} />
-      <Item name="rugDoormat" position={[-3.4, 0, 5.05]} />
-      <Item name="coatRackStanding" position={[-1.5, 0, 5.05]} />
       {walk && <Item name="ceilingFan" position={[-5.6, FULL_H - .27, 2.9]} />}
       <Pic src="assets/img/profile.jpg?v=2" maxW={.8} maxH={1.02} position={[-6.6, 1.4, .09]} glow label="About me" onClick={() => open(about)} onHover={hover} />
       <Pic src="assets/img/leadership/ambassador.jpg" maxW={.95} maxH={.7} position={[-2.6, 1.45, .09]} label="About me" onClick={() => open(about)} onHover={hover} />
@@ -302,8 +302,7 @@ function Hall({ open, hover }: { open: Open; hover: OnHover }) {
   const journey: Target = { id: "journey", kind: "journey", label: "Milestones" };
   const photos = SITE.leadership.photos;
   const spots: { pos: [number, number, number]; turn: number }[] = [
-    { pos: [-.91, 1.6, 1.05], turn: 1 }, { pos: [-.91, 1.6, 4.3], turn: 1 },
-    { pos: [1.91, 1.6, 1.05], turn: -1 }, { pos: [1.91, 1.6, 4.3], turn: -1 }
+    { pos: [-.91, 1.6, 1.05], turn: 1 }, { pos: [-.91, 1.6, 4.3], turn: 1 }, { pos: [1.91, 1.6, 1.05], turn: -1 }
   ];
   return (
     <group>
@@ -311,15 +310,19 @@ function Hall({ open, hover }: { open: Open; hover: OnHover }) {
       <Wainscot x={-.92} z0={3.15} z1={5.37} side={1} />
       <Wainscot x={1.92} z0={.08} z1={2.05} side={-1} />
       <Wainscot x={1.92} z0={3.15} z1={5.37} side={-1} />
-      <Item name="rugRectangle" position={[.5, 0, 2.7]} turn={1} size={.85} />
-      {photos.slice(0, 4).map((p, k) => (
+      <Item name="rugRectangle" position={[.5, 0, 2.6]} turn={1} size={.85} />
+      <Item name="rugDoormat" position={[.5, 0, 4.95]} />
+      {photos.slice(0, 3).map((p, k) => (
         <Pic key={p.src} src={p.src} maxW={.8} maxH={.7} position={spots[k].pos} turn={spots[k].turn}
           label={p.title} onClick={() => open(journey)} onHover={hover} />
       ))}
-      <Item name="benchCushion" position={[.5, 0, 5.05]} />
-      <Item name="pottedPlant" position={[-.6, 0, 5.1]} />
+      {/* the CCIS hallway wall from my ambassador years, over a bench by the door */}
+      <Pic src="assets/img/leadership/ccis-wall.webp" maxW={1.15} maxH={.85} position={[1.91, 1.6, 4.25]} turn={-1} glow
+        label="Student Ambassador" onClick={() => open(journey)} onHover={hover} />
+      <Item name="benchCushion" position={[1.68, 0, 4.25]} turn={-1} />
+      <Item name="coatRackStanding" position={[-.55, 0, 5.05]} />
       <Item name="plantSmall1" position={[1.6, 0, .45]} size={1.6} />
-      <Dot room="hall" at={[.5, 1.5, 4.9]} label="Milestones" onOpen={() => open(journey)} />
+      <Dot room="hall" at={[1.6, 2.15, 4.25]} label="Milestones" onOpen={() => open(journey)} />
     </group>
   );
 }
@@ -393,22 +396,33 @@ function Lights({ hi }: { hi: boolean }) {
 }
 
 /* ============================================================ SCENE */
-export default function HouseScene({ room, hi, open, pick, hover, hovered, day, toggleDay, walk, spawn, walkRoom, onWalkRoom }: {
+/* roof: "on" for the intro, "lifting" while it floats away, "off" once the floor plan shows */
+export type RoofState = "on" | "lifting" | "off";
+
+export default function HouseScene({ room, hi, open, pick, hover, hovered, day, toggleDay, walk, spawn, walkRoom, onWalkRoom, roof, onRoofClick, onRoofGone }: {
   room: string | null; hi: boolean; open: Open; pick: (id: string) => void; hover: OnHover; hovered: Hover | null;
   day: boolean; toggleDay: () => void;
   walk: boolean; spawn: { id: string; n: number }; walkRoom: string | null; onWalkRoom: (id: string | null) => void;
+  roof: RoofState; onRoofClick: () => void; onRoofGone: () => void;
 }) {
-  const daylight = useMemo(() => ({ day, toggle: toggleDay, walk, here: walkRoom }), [day, toggleDay, walk, walkRoom]);
+  /* walls stand full height while walking, or while the roof is still on */
+  const tall = walk || roof !== "off";
+  const daylight = useMemo(() => ({ day, toggle: toggleDay, walk, here: walkRoom, tall }), [day, toggleDay, walk, walkRoom, tall]);
   const { camera } = useThree();
   const sky = day ? "#bcd6f2" : "#0a0716";
   const controls = useRef<CameraControls>(null);
 
-  /* fly to the room (or back out to the whole house) */
+  /* fly to the room (or back out to the whole house, or the intro view) */
   useEffect(() => {
     if (walk) return;
-    const v = room ? roomView(room) : OVERVIEW;
+    const v = roof === "on" ? INTRO : room ? roomView(room) : OVERVIEW;
     controls.current?.setLookAt(...v, true);
-  }, [room, walk]);
+  }, [room, walk, roof]);
+
+  /* while the roof is on, the camera drifts slowly round the house */
+  useFrame((_, dt) => {
+    if (roof === "on" && !walk) controls.current?.rotate(dt * .05, 0, false);
+  });
 
   /* walking uses a wider lens; stepping out hands the camera back to the
      orbit controls from wherever you stood, then pulls up to the model */
@@ -419,7 +433,7 @@ export default function HouseScene({ room, hi, open, pick, hover, hovered, day, 
     if (!walk && controls.current) {
       const ahead = new Vector3(0, 0, -3).applyQuaternion(cam.quaternion).add(cam.position);
       controls.current.setLookAt(cam.position.x, cam.position.y, cam.position.z, ahead.x, ahead.y, ahead.z, false);
-      const v = room ? roomView(room) : OVERVIEW;
+      const v = roof === "on" ? INTRO : room ? roomView(room) : OVERVIEW;
       controls.current.setLookAt(...v, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -446,6 +460,8 @@ export default function HouseScene({ room, hi, open, pick, hover, hovered, day, 
         truckSpeed={0} />
       <Lights hi={hi} />
       <Building onPick={pick} />
+      <Outside />
+      {roof !== "off" && !walk && <Roof lifted={roof === "lifting"} onClick={onRoofClick} onGone={onRoofGone} onHover={hover} />}
       <Trim />
       <Windows />
       <CeilingLights />
@@ -455,7 +471,7 @@ export default function HouseScene({ room, hi, open, pick, hover, hovered, day, 
       <Living open={open} hover={hover} />
       <Hall open={open} hover={hover} />
       <Kitchen open={open} hover={hover} />
-      {!room && !walk && labels}
+      {!room && !walk && roof === "off" && labels}
       {hovered && (
         <Html position={hovered.at} zIndexRange={[40, 0]}>
           <div className="g-pin g-tip">{hovered.label}<span>{hovered.hint || "Click to open"}</span></div>

@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 import { Color, RepeatWrapping, type Texture } from "three";
 import { useDay } from "./daylight";
-import { FULL_H, HEAD_H, WALLS, WALL_H, type Run } from "./plan";
+import { FULL_H, HEAD_H, SILL, WALLS, WALL_H, WIN_H, type Run } from "./plan";
 import { fabricTexture, subwayTexture } from "./textures";
 
 const TRIM = "#f7f4fb";
-const SILL = .9;
+/* slim black window frames, as on a modern house */
+const FRAME = "#1b1824";
 
 /* ---------------------------------------------------------------- helpers */
 const alongX = (r: Run) => r.a[1] === r.b[1];
@@ -53,8 +54,8 @@ function spans(r: Run, skipWindows: boolean) {
    Baseboards along every wall, crown moulding at the ceiling while
    walking, and a frame around every doorway. */
 export function Trim() {
-  const { walk } = useDay();
-  const H = walk ? FULL_H : WALL_H;
+  const { walk, tall } = useDay();
+  const H = tall ? FULL_H : WALL_H;
   const parts: JSX.Element[] = [];
   WALLS.forEach((r, i) => {
     faces(r).forEach((side) => {
@@ -67,7 +68,7 @@ export function Trim() {
         const s = o.at - o.w / 2, e = o.at + o.w / 2, top = Math.min(HEAD_H, H);
         parts.push(<Along key={`dl${i}${side}${k}`} r={r} s={s - .07} e={s} y0={0} y1={top} off={face + side * .015} d={.03} />);
         parts.push(<Along key={`dr${i}${side}${k}`} r={r} s={e} e={e + .07} y0={0} y1={top} off={face + side * .015} d={.03} />);
-        if (walk) parts.push(<Along key={`dt${i}${side}${k}`} r={r} s={s - .07} e={e + .07} y0={HEAD_H} y1={HEAD_H + .08} off={face + side * .015} d={.03} />);
+        if (tall) parts.push(<Along key={`dt${i}${side}${k}`} r={r} s={s - .07} e={e + .07} y0={HEAD_H} y1={HEAD_H + .08} off={face + side * .015} d={.03} />);
         /* a light switch beside each doorway */
         if (side === faces(r)[0]) parts.push(<Along key={`sw${i}${k}`} r={r} s={e + .2} e={e + .28} y0={1.15} y1={1.27} off={face + side * .008} d={.016} color="#ffffff" />);
       });
@@ -80,8 +81,8 @@ export function Trim() {
    A frame, a centre mullion and a deep sill on the inside of each window,
    plus a pair of curtains on a rod. */
 export function Windows() {
-  const { walk, day } = useDay();
-  const top = walk ? HEAD_H : WALL_H - .02;
+  const { tall, day } = useDay();
+  const top = tall ? WIN_H : WALL_H - .02;
   const fabric = useMemo(() => {
     const t = fabricTexture().clone();
     t.wrapS = RepeatWrapping; t.needsUpdate = true;
@@ -92,15 +93,16 @@ export function Windows() {
     const side = faces(r)[0];
     const face = side * r.t / 2;
     (r.open || []).filter((o) => o.kind === "window").forEach((o, k) => {
-      const s = o.at - o.w / 2, e = o.at + o.w / 2, m = o.at;
+      const s = o.at - o.w / 2, e = o.at + o.w / 2, m = o.at, SL = o.sill ?? SILL;
       const key = `${i}-${k}`;
       parts.push(
         <group key={key}>
-          <Along r={r} s={s - .02} e={e + .02} y0={SILL - .05} y1={SILL} off={face + side * .07} d={.16} />
-          <Along r={r} s={s} e={s + .06} y0={SILL} y1={top} off={face - side * .02} d={.08} color="#3a2d55" />
-          <Along r={r} s={e - .06} e={e} y0={SILL} y1={top} off={face - side * .02} d={.08} color="#3a2d55" />
-          <Along r={r} s={m - .025} e={m + .025} y0={SILL} y1={top} off={face - side * .02} d={.05} color="#3a2d55" />
-          <Along r={r} s={s} e={e} y0={top - .06} y1={top} off={face - side * .02} d={.08} color="#3a2d55" />
+          <Along r={r} s={s - .02} e={e + .02} y0={SL - .04} y1={SL} off={face + side * .05} d={.12} />
+          <Along r={r} s={s} e={s + .045} y0={SL} y1={top} off={face - side * .02} d={.08} color={FRAME} />
+          <Along r={r} s={e - .045} e={e} y0={SL} y1={top} off={face - side * .02} d={.08} color={FRAME} />
+          <Along r={r} s={m - .018} e={m + .018} y0={SL} y1={top} off={face - side * .02} d={.05} color={FRAME} />
+          <Along r={r} s={s} e={e} y0={top - .045} y1={top} off={face - side * .02} d={.08} color={FRAME} />
+          <Along r={r} s={s} e={e} y0={SL} y1={SL + .045} off={face - side * .02} d={.08} color={FRAME} />
           {/* curtains, gathered at each side, and the rod */}
           <Curtain r={r} s={s - .32} e={s + .05} top={top + .06} off={face + side * .13} map={fabric} day={day} />
           <Curtain r={r} s={e - .05} e={e + .32} top={top + .06} off={face + side * .13} map={fabric} day={day} />
@@ -127,8 +129,8 @@ function Curtain({ r, s, e, top, off, map, day }: { r: Run; s: number; e: number
 /* ---------------------------------------------------------------- feature walls */
 /* a wall of vertical wood slats, behind the living room TV */
 export function SlatWall({ x, z0, z1 }: { x: number; z0: number; z1: number }) {
-  const { walk } = useDay();
-  const H = walk ? FULL_H : WALL_H;
+  const { tall } = useDay();
+  const H = tall ? FULL_H : WALL_H;
   const n = Math.floor((z1 - z0) / .09);
   return (
     <group>
@@ -209,8 +211,8 @@ export function CeilingLights() {
 
 /* three pendant lamps over the coffee bar */
 export function Pendants({ xs, z, y }: { xs: number[]; z: number; y: number }) {
-  const { walk, day } = useDay();
-  const top = walk ? FULL_H : WALL_H;
+  const { tall, day } = useDay();
+  const top = tall ? FULL_H : WALL_H;
   const bulb = useMemo(() => new Color("#ffd9a0").multiplyScalar(day ? 1 : 2.6), [day]);
   return (
     <group>

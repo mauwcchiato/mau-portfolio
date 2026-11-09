@@ -9,3 +9,4 @@ public/assets/video
 node_modules
 dist
 *.tsbuildinfo
+.vite

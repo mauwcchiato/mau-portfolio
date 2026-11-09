@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { MathUtils } from "three";
-import { roomAt, solids, SPAWN } from "./plan";
+import { roomAt, solids, SPAWN, TREES } from "./plan";
 
 const EYE = 1.6;
 const RADIUS = .25;
 const WALK = 2.2, RUN = 4.2;          /* metres per second */
 const WALLS = solids(RADIUS);
 /* the yard around the house you can step out into */
-const BOUNDS = { x0: -11, x1: 11, z0: -8.5, z1: 9.5 };
+const BOUNDS = { x0: -14, x1: 14, z0: -11.5, z1: 11.5 };
 
 /* The on-screen joystick (phones) writes here; the rig reads it each frame.
    x: -1 left … 1 right, y: -1 back … 1 forward. */
@@ -16,7 +16,8 @@ export const stick = { x: 0, y: 0 };
 
 const blocked = (x: number, z: number) =>
   x < BOUNDS.x0 || x > BOUNDS.x1 || z < BOUNDS.z0 || z > BOUNDS.z1 ||
-  WALLS.some((w) => x > w.x0 && x < w.x1 && z > w.z0 && z < w.z1);
+  WALLS.some((w) => x > w.x0 && x < w.x1 && z > w.z0 && z < w.z1) ||
+  TREES.some(([tx, tz, k]) => Math.hypot(x - tx, z - tz) < .35 * k + RADIUS);
 
 /* First-person camera: WASD or arrows (Shift to run) or the joystick to
    walk, drag to look. Walls stop you; doorways let you through. spawn

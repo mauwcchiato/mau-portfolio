@@ -2,12 +2,11 @@ import { useMemo } from "react";
 import { BufferGeometry, Color, Float32BufferAttribute, RepeatWrapping, type Texture } from "three";
 import { carpetTexture, checkerTexture, plankTexture, plasterTexture, tileTexture } from "./textures";
 import { useDay } from "./daylight";
-import { FULL_H, HEAD_H, ROOMS, WALLS, WALL_H, type Room, type Run } from "./plan";
+import { FULL_H, HEAD_H, ROOMS, SILL, WALLS, WALL_H, WIN_H, type Room, type Run } from "./plan";
 
 const PLASTER = "#ece6f5";
 /* the cut tops of the walls glow, so the floor plan reads like a drawing */
 const CUT = new Color("#c4b5fd").multiplyScalar(1.4);
-const SILL = .9;
 const MOON = new Color("#fff4d0").multiplyScalar(1.6);
 const SUN = new Color("#fff1c4").multiplyScalar(2.4);
 
@@ -60,8 +59,8 @@ function Block({ run, s, e, y0, y1 }: { run: Run; s: number; e: number; y0: numb
    get a low wall, a sill and a pane of night-tinted glass. Walking around
    inside, the walls stand full height with a lintel over each opening. */
 function Wall({ run }: { run: Run }) {
-  const { day, walk } = useDay();
-  const H = walk ? FULL_H : WALL_H, top = walk ? HEAD_H : H;
+  const { day, tall } = useDay();
+  const H = tall ? FULL_H : WALL_H;
   const alongX = run.a[1] === run.b[1];
   const L = alongX ? run.b[0] - run.a[0] : run.b[1] - run.a[1];
   const opens = [...(run.open || [])].sort((p, q) => p.at - q.at);
@@ -70,15 +69,16 @@ function Wall({ run }: { run: Run }) {
   opens.forEach((o, k) => {
     const s = o.at - o.w / 2, e = o.at + o.w / 2;
     if (s > cur) parts.push(<Block key={"b" + k} run={run} s={cur} e={s} y0={0} y1={H} />);
-    if (walk) parts.push(<Block key={"l" + k} run={run} s={s} e={e} y0={HEAD_H} y1={H} />);
+    const head = o.kind === "door" ? HEAD_H : WIN_H, top = tall ? head : H, sill = o.sill ?? SILL;
+    if (tall) parts.push(<Block key={"l" + k} run={run} s={s} e={e} y0={head} y1={H} />);
     if (o.kind === "window") {
-      parts.push(<Block key={"w" + k} run={run} s={s} e={e} y0={0} y1={SILL} />);
+      parts.push(<Block key={"w" + k} run={run} s={s} e={e} y0={0} y1={sill} />);
       const mid = (s + e) / 2;
       const x = alongX ? run.a[0] + mid : run.a[0];
       const z = alongX ? run.a[1] : run.a[1] + mid;
       parts.push(
-        <mesh key={"g" + k} position={[x, (SILL + top) / 2, z]} rotation-y={alongX ? 0 : Math.PI / 2}>
-          <planeGeometry args={[o.w, top - SILL]} />
+        <mesh key={"g" + k} position={[x, (sill + top) / 2, z]} rotation-y={alongX ? 0 : Math.PI / 2}>
+          <planeGeometry args={[o.w, top - sill]} />
           <meshStandardMaterial color={day ? "#bfe3ff" : "#6f63b8"} transparent opacity={day ? .35 : .28} roughness={.05} metalness={.3} emissive={day ? "#9fd2ff" : "#3b2a7a"} emissiveIntensity={day ? .25 : .4} />
         </mesh>
       );
@@ -170,7 +170,7 @@ export default function Building({ onPick }: { onPick: (id: string) => void }) {
       </mesh>
       {/* a path to the front door */}
       {[0, 1, 2].map((k) => (
-        <mesh key={k} rotation-x={-Math.PI / 2} position={[-3.4, -.398, 6.6 + k * .75]} receiveShadow>
+        <mesh key={k} rotation-x={-Math.PI / 2} position={[.5, -.398, 6.7 + k * .75]} receiveShadow>
           <planeGeometry args={[.9, .5]} />
           <meshStandardMaterial color={day ? "#e4dccb" : "#3a3150"} roughness={.9} />
         </mesh>

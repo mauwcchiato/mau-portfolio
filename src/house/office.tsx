@@ -56,6 +56,31 @@ export function PcTower({ position, color, turn = 0 }: { position: [number, numb
   );
 }
 
+/* ---------------------------------------------------------------- monitor
+   A slim desktop monitor built to fit its picture exactly: a thin bezel,
+   a back housing, a neck and a base, and a small power light. */
+export function Monitor({ position, turn = 0, src, label, onClick, onHover }: {
+  position: [number, number, number]; turn?: number; src: string; label: string; onClick: () => void; onHover: OnHover;
+}) {
+  const w = .62, h = .37, b = .018;
+  const led = useLed("#4ade80", 2);
+  const at = useMemo(() => new Vector3(position[0], position[1] + .75, position[2]), [position]);
+  return (
+    <group position={position} rotation-y={turn}>
+      <group {...clickable(label, "Click to open the project", at, onClick, onHover)}>
+        <mesh position-y={.008} castShadow><boxGeometry args={[.24, .016, .16]} /><meshStandardMaterial color="#1b1824" metalness={.6} roughness={.3} /></mesh>
+        <mesh position={[0, .13, -.045]} castShadow><boxGeometry args={[.04, .25, .03]} /><meshStandardMaterial color="#1b1824" metalness={.6} roughness={.3} /></mesh>
+        <group position={[0, .23 + h / 2, 0]}>
+          <mesh castShadow><boxGeometry args={[w + 2 * b, h + 2 * b + .012, .022]} /><meshStandardMaterial color="#0f0c17" metalness={.4} roughness={.35} /></mesh>
+          <mesh position-z={-.025}><boxGeometry args={[w * .55, h * .55, .03]} /><meshStandardMaterial color="#1b1824" metalness={.5} roughness={.4} /></mesh>
+          <mesh position={[w / 2 - .02, -h / 2 - .011, .012]}><circleGeometry args={[.004, 8]} /><meshBasicMaterial color={led} toneMapped={false} /></mesh>
+        </group>
+      </group>
+      <Screen src={src} w={w} h={h} position={[0, .23 + h / 2 + .006, .0115]} />
+    </group>
+  );
+}
+
 /* ---------------------------------------------------------------- server rack
    A tall cabinet of rack units, each with a row of status lights that
    blink at their own pace. */

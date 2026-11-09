@@ -6,10 +6,12 @@ import { RESUME, RESUME_NAME } from "../components/Sidebar";
 import { DownloadIcon } from "../components/icons";
 import { useUI } from "../lib/ui";
 import type { Hover } from "./furniture";
-import HouseScene from "./HouseScene";
+import HouseScene, { type RoofState } from "./HouseScene";
+import Tutorial from "./Tutorial";
 import Panel from "./Panel";
 import { NAV, roomById, ROOMS, type Target } from "./plan";
 import { stick } from "./walk";
+import { store } from "../lib/env";
 import "../styles/house.css";
 
 /* desktop with a decent GPU gets shadows and bloom; phones get the light version */
@@ -59,17 +61,27 @@ export default function House() {
   const [walk, setWalk] = useState(false);
   const [spawn, setSpawn] = useState({ id: "living", n: 0 });
   const [walkRoom, setWalkRoom] = useState<string | null>(null);
+  /* the house opens with its roof on; the guide plays the first time it comes off */
+  const [roof, setRoof] = useState<RoofState>("on");
+  const [tour, setTour] = useState<number | null>(null);
+  const liftRoof = useCallback(() => setRoof((r) => (r === "on" ? "lifting" : r)), []);
+  const roofGone = useCallback(() => {
+    setRoof("off");
+    if (store("local").get("jm-house-guide") !== "done") setTimeout(() => setTour(0), 600);
+  }, []);
+  const closeTour = useCallback(() => { setTour(null); store("local").set("jm-house-guide", "done"); }, []);
 
   const toggleDay = useCallback(() => {
     ui.toast(day ? "Good evening. Lamps on." : "Good morning. Lights off, sun up.");
     setDay(!day);
   }, [ui, day]);
 
-  /* in the model view, choosing a room flies there; walking, it teleports you */
+  /* in the model view, choosing a room flies there (lifting the roof first
+     if it's still on); walking, it teleports you */
   const goRoom = useCallback((id: string) => {
     if (walk) setSpawn((s) => ({ id, n: s.n + 1 }));
-    else setRoom(id);
-  }, [walk]);
+    else { liftRoof(); setRoom(id); }
+  }, [walk, liftRoof]);
   const pick = useCallback((id: string) => { if (!walk) setRoom(id); }, [walk]);
 
   /* opening something also walks you into its room (in the model view) */
@@ -82,7 +94,8 @@ export default function House() {
   const close = useCallback(() => setPanel(null), []);
 
   const startWalk = useCallback(() => {
-    setSpawn((s) => ({ id: room || "living", n: s.n + 1 }));
+    setRoof("off");
+    setSpawn((s) => ({ id: room || "hall", n: s.n + 1 }));
     setHovered(null);
     setWalk(true);
   }, [room]);
@@ -94,12 +107,12 @@ export default function House() {
   /* Esc closes the panel, then leaves walking, then steps back out to the whole house */
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (ui.overlay || e.key !== "Escape") return;
+      if (ui.overlay || tour !== null || e.key !== "Escape") return;
       if (panel) close(); else if (walk) stopWalk(); else if (room) setRoom(null);
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [panel, room, walk, ui.overlay, close, stopWalk]);
+  }, [panel, room, walk, tour, ui.overlay, close, stopWalk]);
 
   const shown = walk ? walkRoom : room;
   const here = shown ? roomById(shown) : null;
@@ -123,16 +136,17 @@ export default function House() {
           onCreated={({ gl }) => { gl.toneMapping = ACESFilmicToneMapping; gl.toneMappingExposure = 1.1; }}
           onPointerMissed={() => setHovered(null)}>
           <HouseScene room={room} hi={hi} open={open} pick={pick} hover={setHovered} hovered={hovered}
-            day={day} toggleDay={toggleDay} walk={walk} spawn={spawn} walkRoom={walkRoom} onWalkRoom={setWalkRoom} />
+            day={day} toggleDay={toggleDay} walk={walk} spawn={spawn} walkRoom={walkRoom} onWalkRoom={setWalkRoom}
+            roof={roof} onRoofClick={liftRoof} onRoofGone={roofGone} />
         </Canvas>
       </div>
 
       <header className="g-nav">
-        <button className="g-nav__brand" type="button" onClick={() => (walk ? stopWalk() : setRoom(null))} aria-label="See the whole house">
+        <button className="g-nav__brand" type="button" onClick={() => { if (walk) stopWalk(); else { setRoom(null); setRoof("on"); } }} aria-label="Back to the front of the house">
           <img src="assets/brand/logo-128.png" alt="" width={36} height={36} />
           <span>MAU<b>W</b>CCHIATO</span>
         </button>
-        <p className="g-nav__where" aria-live="polite">{here ? `${here.name} · ${here.holds}` : walk ? "Outside" : "The house"}</p>
+        <p className="g-nav__where" aria-live="polite">{here ? `${here.name} · ${here.holds}` : walk ? "Outside" : roof === "off" ? "The floor plan" : "The House of My Journey"}</p>
         <nav className="g-nav__links" aria-label="Rooms">
           {NAV.map((l) => (
             <button key={l.room} type="button" className={shown === l.room ? "is-on" : undefined} onClick={() => goRoom(l.room)}>{l.label}</button>
@@ -141,7 +155,24 @@ export default function House() {
         </nav>
       </header>
 
-      <div className="g-hud">
+      {/* the intro: the closed house, a title, and the way in */}
+      {roof === "on" && !walk && ready && (
+        <section className="g-intro" aria-labelledby="g-intro-title">
+          <p className="g-intro__kicker">Jhan Maurice De Roxas · Portfolio</p>
+          <h2 id="g-intro-title">The House of My <em>Journey</em></h2>
+          <p className="g-intro__lead">
+            Every room holds a chapter: the projects I've built, the games I've made, what I've learned along the way,
+            and the four cats who keep me company.
+          </p>
+          <div className="g-intro__btns">
+            <button type="button" className="btn btn--primary" onClick={liftRoof}>Step inside</button>
+            <button type="button" className="btn btn--glass" onClick={() => ui.setView("classic")}>Classic view</button>
+          </div>
+          <p className="g-intro__hint">or click the roof to lift it off</p>
+        </section>
+      )}
+
+      <div className={"g-hud" + (roof === "off" || walk ? "" : " is-hidden")}>
         <p className="g-hud__hint">{hint}</p>
         <div className="g-hud__step">
           {!walk && here && <button type="button" className="icon-btn" onClick={() => setRoom(null)} aria-label="Back to the whole house">⌂</button>}
@@ -152,6 +183,7 @@ export default function House() {
             : <button type="button" className="g-hud__walk" onClick={startWalk}>Walk around</button>}
           <button type="button" className="icon-btn g-hud__sun" onClick={toggleDay} aria-pressed={day}
             aria-label={day ? "Switch to night" : "Switch to daytime"} title={day ? "Night" : "Daytime"}>{day ? "☾" : "☀"}</button>
+          <button type="button" className="icon-btn g-hud__help" onClick={() => setTour(0)} aria-label="How to use the house" title="Guide">?</button>
         </div>
         <button type="button" className="g-hud__classic" onClick={() => ui.setView("classic")}>Classic view</button>
       </div>
@@ -160,6 +192,7 @@ export default function House() {
       {walk && <div className="g-cross" aria-hidden="true" />}
 
       <Panel stop={panel} onClose={close} goTo={goRoom} open={open} />
+      <Tutorial step={tour} onStep={setTour} onClose={closeTour} />
     </>
   );
 }
