@@ -4,7 +4,7 @@ import { store } from "../lib/env";
 import { useUI } from "../lib/ui";
 import { DownloadIcon, SocialLinks } from "./icons";
 
-export const RESUME = "assets/docs/resume.pdf?v=3";
+export const RESUME = "assets/docs/resume.pdf?v=4";
 /* the file name the résumé saves as */
 export const RESUME_NAME = "Jhan Maurice De Roxas Resume.pdf";
 
