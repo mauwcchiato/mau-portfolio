@@ -19,7 +19,7 @@ const data: Site = {
     phone: "0932 447 5709",
     github: "https://github.com/mauwcchiato",
     githubHandle: "mauwcchiato",
-    linkedin: "https://www.linkedin.com/in/jm-de-roxas-42aa5530a/",
+    linkedin: "https://www.linkedin.com/in/jhanmauricederoxas/",
     location: "Cabuyao, Laguna",
     roles: [
       "Full-stack developer",
