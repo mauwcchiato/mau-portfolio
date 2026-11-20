@@ -8,7 +8,7 @@ const P = SITE.profile;
 
 const SOCIAL: { t: string; v: string; href: string; i: ReactNode; c: string }[] = [
   { t: "GitHub", v: "@" + P.githubHandle, href: P.github, i: <GitHubIcon />, c: "#A78BFA" },
-  { t: "LinkedIn", v: "in/jm-de-roxas", href: P.linkedin, i: <LinkedInIcon />, c: "#0A66C2" },
+  { t: "LinkedIn", v: "in/jhanmauricederoxas", href: P.linkedin, i: <LinkedInIcon />, c: "#0A66C2" },
   { t: "Email", v: P.email, href: "mailto:" + P.email, i: <MailIcon />, c: "#E879F9" }
 ];
 

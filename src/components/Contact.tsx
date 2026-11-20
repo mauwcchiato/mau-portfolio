@@ -11,7 +11,7 @@ const ROWS: { t: string; v: string; href: string; i: ReactNode }[] = [
   { t: "Email", v: P.email, href: "mailto:" + P.email, i: <MailIcon /> },
   { t: "Phone", v: P.phone, href: "tel:+63" + P.phone.replace(/\D/g, "").replace(/^0/, ""), i: <PhoneIcon /> },
   { t: "GitHub", v: "github.com/" + P.githubHandle, href: P.github, i: <GitHubIcon /> },
-  { t: "LinkedIn", v: "linkedin.com/in/jm-de-roxas", href: P.linkedin, i: <LinkedInIcon /> },
+  { t: "LinkedIn", v: "linkedin.com/in/jhanmauricederoxas", href: P.linkedin, i: <LinkedInIcon /> },
   { t: "Location", v: P.location, href: "", i: <PinIcon /> }
 ];
 
