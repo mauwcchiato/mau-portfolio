@@ -22,9 +22,10 @@ function AboutBody({ goContact }: { goContact: () => void }) {
       <Kicker>About</Kicker>
       <h2 id="gp-title">Hi, I'm Jhan Maurice</h2>
       <img className="gp__photo" src="assets/img/profile.jpg?v=2" alt="Jhan Maurice De Roxas" />
-      <p>I'm studying BS Information Technology at Mapúa Malayan Colleges Laguna, and I'm from Cabuyao, Laguna.</p>
+      <p>I'm a fourth-year BS Information Technology student at Mapúa Malayan Colleges Laguna, and I'm from Cabuyao, Laguna. I finished my capstone, Kusina Kode, on 6 November 2026.</p>
       <p>In group work I often help keep things organized, but I still enjoy doing the hands-on part. I'm most interested in how apps, servers and small devices work together.</p>
       <p>Outside of class I've served as president of our IT Society and as a student ambassador, and I like helping classmates review. Right now I'm learning more about cloud, networking and security.</p>
+      <p>I'm looking for an on-the-job training placement of 486 hours, and I can start right away.</p>
       <dl className="gp__facts">
         <div><dt>Program</dt><dd>BS Information Technology</dd></div>
         <div><dt>School</dt><dd>Mapúa Malayan Colleges Laguna</dd></div>

@@ -84,8 +84,9 @@ export default function About() {
         <div className="about">
           <div className="glass about__bio reveal" ref={bio}>
             <p>
-              Hi, I'm <strong>Jhan Maurice</strong>. I'm studying {kw("bsit", "BS Information Technology")} at{" "}
-              {kw("school", "Mapúa Malayan Colleges Laguna")}, and I'm from {kw("home", "Cabuyao, Laguna")}.
+              Hi, I'm <strong>Jhan Maurice</strong>. I'm a fourth-year {kw("bsit", "BS Information Technology")} student at{" "}
+              {kw("school", "Mapúa Malayan Colleges Laguna")}, and I'm from {kw("home", "Cabuyao, Laguna")}. I finished
+              my capstone, Kusina Kode, on 6 November 2026.
             </p>
             <p>
               In group work I often help {kw("organized", "keep things organized")}, but I still enjoy
@@ -96,6 +97,9 @@ export default function About() {
               Outside of class I've served as {kw("itsoc", "president of our IT Society")} and as a{" "}
               {kw("amb", "student ambassador")}, and I like {kw("helpful", "helping classmates review")}. Right now
               I'm learning more about <a {...lk("curious", "kw kw--go")} href="#certs">cloud, networking and security</a>.
+            </p>
+            <p>
+              I'm looking for an on-the-job training placement of 486 hours, and I can start right away.
             </p>
             <dl className="about__facts">
               <div {...lk("bsit")}><dt>Program</dt><dd>BS Information Technology</dd></div>

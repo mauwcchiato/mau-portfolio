@@ -83,7 +83,7 @@ const data: Site = {
       body: "D.I.L.I.G. put sensors, firmware, a REST hub and an Android app into one working system. Kusina Kode grew from a course project into my capstone. I also drew a burger in x86 assembly.",
       items: [
         { t: "D.I.L.I.G.", s: "IT145 / IT155P · 2026", p: "Five-tier IoT irrigation. Arduino to ESP8266 to PHP REST to MySQL to Kotlin." },
-        { t: "Kusina Kode", s: "IT123P → IT140P → capstone", p: "Filipino-cuisine word puzzle. Three iterations. Now the capstone, with a blockchain layer." },
+        { t: "Kusina Kode", s: "IT123P → IT140P → capstone", p: "Filipino-cuisine word puzzle. Three iterations, then the capstone with a blockchain layer, completed 6 Nov 2026." },
         { t: "BNK WMS", s: "2026", p: "A live web system for a pet grooming and boarding shop. I led the prototype and co-authored the build." },
         { t: "Pixels of Meaning", s: "CS125 · Nov 2025", p: "Three pixel-art pieces in x86 assembly through INT 10h. Solo. Every block is a register write." }
       ]
@@ -124,8 +124,13 @@ const data: Site = {
 
   /* shown under Leadership & recognition */
   recognition: [
-    { t: "President's Lister", p: "Mapúa Malayan Colleges Laguna", icon: "list" },
+    { t: "Consistent President's Lister", p: "Mapúa Malayan Colleges Laguna", icon: "list" },
     { t: "Full Academic Scholar", p: "Mapúa Malayan Colleges Laguna", icon: "cap" },
+    { t: "Coursera Learner Champion", p: "Recognized by the Mapúa MCL LEIO · Oct 2026", icon: "star" },
+    { t: "Second Place, Duo Singing Competition", p: "College of Computer and Information Science, Mapúa MCL", icon: "star" },
+    { t: "Top 3 of the graduating batch", p: "Senior high school · STI College Calamba", icon: "cap" },
+    { t: "Consistent Top 1, ITMAWD strand", p: "Senior high school · STI College", icon: "list" },
+    { t: "Best Expo and Best App", p: "MusiCalamba · senior high school", icon: "star" },
     { t: "Student Ambassador", p: "Mapúa Malayan Colleges Laguna · A.Y. 2023–2025", icon: "star",
       img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa MCL enrollment campaign, A.Y. 2024–2025.",
       more: [
@@ -137,14 +142,20 @@ const data: Site = {
   ],
 
   milestones: [
+    { when: "Senior high", t: "ITMAWD at STI College", p: "IT in Mobile App and Web Development. Graduated Top 3 of the batch." },
     { when: "2023", t: "Started BS Information Technology", p: "Mapúa Malayan Colleges Laguna." },
     { when: "A.Y. 2023 – 2025", t: "Student Ambassador", p: "Took part in Mapúa MCL's enrollment campaign." },
     { when: "Feb – Mar 2024", t: "Google Cloud skill badges", p: "My first steps into cloud computing." },
-    { when: "A.Y. 2024 – 2025", t: "President, IT Society (ITSOC)", p: "Worked with four officers and four year-level representatives." },
+    { when: "2024", t: "Community service volunteer", p: "Helped plan and run Halaman-ang Kapit-Bisig: Proyektong PUNO ng Pag-asa, a tree-planting and gardening initiative." },
+    { when: "A.Y. 2024 – 2025", t: "President, IT Society (ITSOC)", p: "Led a campus IT society of 700+ members." },
     { when: "Oct & Nov 2024", t: "Peer mentoring", p: "Helped classmates review Logic Design and K-maps." },
     { when: "Dec 2024", t: "Pamaskong Handog", p: "Helped organize a Christmas outreach for kindergarten pupils at Diezmo Integrated School." },
+    { when: "Jun 2025", t: "Organized a seminar", p: "Actionable Insights: Remote Sensing and Geomapping in Practice, recognized by the CCIS Dean." },
     { when: "Jul 2025", t: "CCNA: Introduction to Networks", p: "Through the Cisco Networking Academy." },
     { when: "Mar 2026", t: "Japan technology immersion", p: "Visited Miraikan and saw how technology is used in public transport." },
+    { when: "Jul 2026", t: "Freelance cloud proposal", p: "Wrote a 45-page cloud infrastructure and website proposal for BMS Group International, a licensed overseas recruitment agency." },
+    { when: "Oct 2026", t: "Coursera Learner Champion", p: "Recognized by the Mapúa MCL LEIO." },
+    { when: "Nov 2026", t: "Capstone completed", p: "Finished Kusina Kode, my capstone, on 6 November 2026." },
     { when: "2027", t: "Graduating (expected)", p: "BS Information Technology." }
   ],
 
@@ -299,11 +310,11 @@ const data: Site = {
       sub: "Filipino Cuisine Word Puzzle App",
       kicker: "Android · Capstone",
       year: "2025 – 2026",
-      course: "IT123P → IT140P → IT200-1D Capstone",
-      team: "Group project · capstone",
+      course: "IT123P → IT140P → IT200-1D Capstone · completed 6 Nov 2026",
+      team: "Group project · capstone (completed)",
       role: "Project Leader / Developer · Game Systems & Cloud Integration",
       hero: "assets/img/projects/kusinakode/v2/welcome.webp",
-      blurb: "A Wordle built out of Filipino food. Guess the dish in six tries; get its history and regional origin back as the reward. Three iterations, now my capstone.",
+      blurb: "A Wordle built out of Filipino food. Guess the dish in six tries; get its history and regional origin back as the reward. Three iterations, then my capstone, completed on 6 November 2026.",
       tagline: "Filipino cuisine as the vocabulary, and the trivia card as the prize. It works as a game first: the cultural content is what the logic is wrapped around, not decoration on top of it.",
       problem: "Cultural knowledge doesn't survive by being assigned. Younger Filipinos grow up more connected to global content than to the regional food traditions around them, and traditional instruction doesn't compete for that attention.",
       solution: "A 6×6 guessing grid with a custom image-tile keyboard, green/yellow/brown feedback, a three-hint limit and a speed timer. Twenty curated 6-letter dishes, each with a written trivia line and an image. Behind it: a PHP REST + SOAP backend on MySQL and an ASP.NET admin portal so the level content can be edited without shipping a new build.",
@@ -313,7 +324,7 @@ const data: Site = {
         "Wrote the backend: PHP REST endpoints with PDO prepared statements, plus 4 SOAP operations for analytics",
         "Designed and normalised the MySQL schema to 3NF: users, levels, unlocks, attempts",
         "Integrated Jetpack Compose UI components and wired them to StateFlow-driven ViewModels",
-        "Owns the cloud sync, data persistence and migration modules in the capstone scope"
+        "Owned the cloud sync, data persistence and migration modules in the capstone, which added cloud synchronization and a controlled reward ledger"
       ],
       tech: ["Kotlin", "Jetpack Compose", "MVVM", "StateFlow", "Ktor", "Retrofit", "PHP", "PDO", "MySQL", "SOAP", "ASP.NET", "BCrypt"],
       skills: ["Game logic", "Mobile architecture", "OOP", "API design", "Database normalisation", "Team leadership", "Secure input handling"],
@@ -327,7 +338,7 @@ const data: Site = {
         "8 REST endpoints for the app, 4 SOAP operations for the analytics dashboard"
       ],
       process: "Defence in depth on every input: client-side validation for instant feedback and reduced server load, server-side validation as the final authority, and debouncing plus rate limiting against spam. PDO prepared statements eliminate the injection surface entirely.",
-      outcome: "User survey with 6 respondents returned an average rating of about 4.8 out of 5, with no critical bugs or crashes identified. The most requested additions were more levels, sound, and a broader dish database.",
+      outcome: "Capstone completed on 6 November 2026. User survey with 6 respondents returned an average rating of about 4.8 out of 5, with no critical bugs or crashes identified. The most requested additions were more levels, sound, and a broader dish database.",
       playable: "kusinakode",
       note: "The playable demo on this page is a browser recreation of the Android original, using the same 20-dish dataset and the same artwork."
     },
@@ -355,7 +366,7 @@ const data: Site = {
       hero: "assets/img/projects/pulsepoint-landing.jpg",
       figma: "https://www.figma.com/design/fHUm15QyG01q4F4bXNJGQF/PulsePoint?node-id=1-2",
       githubSoon: true,
-      blurb: "Clinic scheduling with patient, doctor and secretary dashboards. It started as a Figma mockup. I then built the system. The study behind it earned a countersigned letter from a real hospital.",
+      blurb: "Clinic scheduling with patient, doctor and secretary dashboards. It started as a Figma mockup, then we built it in ASP.NET and SQL Server. The study behind it earned a countersigned letter from a real hospital.",
       tagline: "Mockup first, then the code. Interviews, surveys and statistical treatment, then an ASP.NET build on SQL Server that answers what the study found.",
       problem: "Clinic scheduling ran on manual coordination: a shared calendar on a reception laptop, phone bookings, and no reliable view of who was double-booked. Patients waited; staff improvised.",
       solution: "Three role-specific dashboards over a SQL Server database. Patients book and track appointments; doctors see their day; the secretary manages the schedule and pulls reports. A DBHelper data layer and a PasswordHelper for hashing sit under the ASP.NET Web Forms front end.",
@@ -382,7 +393,7 @@ const data: Site = {
         { src: "assets/img/projects/pulsepoint-landing.jpg", cap: "Figma landing page: booking, dashboard preview, queue display, and the first-come-first-serve CTA." },
         { src: "assets/img/projects/pulsepoint-architecture.png", cap: "Appointment scheduling system architecture, drawn in draw.io." }
       ],
-      note: "Started as a Figma mockup, then I built the ASP.NET system. Source is going up on GitHub."
+      note: "Started as a Figma mockup, then the team built the ASP.NET system. Source is going up on GitHub."
     },
 
     {
@@ -393,12 +404,12 @@ const data: Site = {
       sub: "Diagramming cloud systems on AWS and Azure",
       kicker: "Cloud · Diagramming",
       year: "2025 – 2026",
-      course: "IT191 Cloud Computing · Capstone",
+      course: "IT191-4P Cloud Computing (AWS-ome Tech) · Capstone",
       team: "Group projects",
-      role: "Cloud Architecture & Diagramming",
+      role: "Project Manager (AWS-ome Tech) · Cloud Architecture & Documentation",
       hero: "assets/img/projects/cloud/aws-architecture.png",
       heroFit: "contain",
-      blurb: "Cloud diagrams I drew for class and capstone systems: AWS and Azure environments, network layouts and security layers, each showing how the parts connect and why.",
+      blurb: "Cloud diagrams I drew for class and capstone systems: AWS and Azure environments, network layouts and security layers. Includes AWS-ome Tech, a target-state AWS environment for a retail client with no cloud footprint yet.",
       tagline: "A diagram is the quickest way to explain a system. These map compute, data, networking and security so someone else can build it or run it.",
       problem: "A cloud system is hard to talk about until everyone can see it: which tier talks to which, what's public and what's private, where the data lives, and what protects it.",
       solution: "Each diagram answers one of those questions. The AWS architecture maps every service across compute, database, storage, security and monitoring. The AWS network diagram lays out the VPC, subnets across two Availability Zones, gateways, route tables and security groups. The Azure architecture shows an app's admin console, API, database, file storage and supporting services. The security diagram splits protection into confidentiality, integrity and access control, and the tier diagram separates client, middleware and data.",
@@ -419,7 +430,7 @@ const data: Site = {
         "Security in three layers: data in transit and at rest, tamper evidence, and access control"
       ],
       process: "Requirements first: each one was matched to the service that satisfies it. The designs were then checked against the five pillars of the AWS Well-Architected Framework: operational excellence, security, reliability, performance and cost.",
-      outcome: "Diagrams that come with their documents: design and deployment guides, an admin guide, a runbook and a cost report.",
+      outcome: "Diagrams that come with their documents. For AWS-ome Tech, where I was project manager, we delivered the full handover set: infrastructure design document, deployment guide, administrator guide, knowledge-transfer notes, operations runbook and cost report.",
       gallery: [
         { src: "assets/img/projects/cloud/aws-architecture.png", cap: "AWS architecture: users to the internet gateway, a load-balanced web tier over two zones, private app and database subnets, and the managed services around them." },
         { src: "assets/img/projects/cloud/aws-network.png", cap: "AWS network: one VPC, public and private subnets in two Availability Zones, NAT gateways, route tables and security groups." },
@@ -495,6 +506,47 @@ const data: Site = {
       process: "The prototype came first in Figma, then the team built the PHP system from it. The system was documented as a storyboard: the user's goal, what they do, and how the system responds, scene by scene.",
       outcome: "Live online for the shop's customers, with a public home page, rates and services, a user guide, and customer sign-up.",
       gallery: []
+    },
+
+    {
+      id: "kitakits",
+      featured: true,
+      /* the public landing page, run locally; the second one scrolls */
+      laptop: [
+        { src: "assets/img/projects/kitakits/laptop/01-home.webp", cap: "Landing: attendance done in one scan." },
+        { src: "assets/img/projects/kitakits/laptop/02-landing.webp", cap: "The full landing page: how it works, the rotating QR, reports and roles.", scroll: true }
+      ],
+      rank: "New",
+      name: "KitaKits",
+      sub: "Org events and QR attendance",
+      kicker: "Next.js · Supabase",
+      year: "2026",
+      team: "Personal project",
+      role: "Design and development",
+      hero: "assets/img/projects/kitakits/laptop/01-home.webp",
+      blurb: "Events and attendance for student orgs. Officers show a QR code that changes every 20 seconds; members scan it with their phone camera to check in. Built with Next.js and Supabase.",
+      tagline: "KitaKits is Filipino slang for \"see you there.\" Show a QR code, members scan it, and the attendance list is ready before the program ends.",
+      problem: "Student orgs still pass a sign-up sheet around during events. It's slow, it interrupts the speaker, and anyone can write a friend's name on it.",
+      solution: "Officers create an org and its events; members join with a six-letter code. At the event, a full-screen QR rotates every 20 seconds and is checked inside the database, so a screenshot sent to someone at home stops working. Officers watch attendance update live, mark people manually, and export reports to CSV.",
+      contribution: [
+        "Designed and built the app: the interface, the Server Actions and the database",
+        "Wrote the Postgres schema with Row Level Security on every table",
+        "Signed the rotating QR tokens in Postgres with a per-event secret and a 20-second window",
+        "Built the officer and member roles, live attendance and CSV reports"
+      ],
+      tech: ["Next.js", "React", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS", "Zod"],
+      skills: ["Database security (RLS)", "Auth and roles", "API design", "Responsive UI"],
+      features: [
+        "Sign up, create an org, or join one with a 6-character code",
+        "Officer and member roles: members only see their own attendance",
+        "Rotating QR check-in with the phone's normal camera, no app install",
+        "Live attendance on the officer view and the projector screen",
+        "Manual marking for members without their phone",
+        "Reports: attendance per event, each member's rate, and CSV export",
+        "Responsive, with dark mode"
+      ],
+      process: "Security lives in the database, not just the UI: Row Level Security on every table, one check_in() function that verifies the token, membership and that check-in is open, and every Server Action re-checks the user's role on the server.",
+      note: "Live demo coming soon. These screens are from the app running locally."
     },
 
     {
@@ -995,11 +1047,12 @@ const data: Site = {
 
   /* ----------------------------------------------------------------- SKILLS */
   skills: [
-    { cat: "Programming", icon: "{}", items: ["Kotlin", "C#", "Python", "PHP", "C++", "x86 Assembly", "Arduino C++", "SQL", "JavaScript", "VB.NET"] },
+    { cat: "Programming", icon: "{}", items: ["Kotlin", "TypeScript", "JavaScript", "C#", "Python", "PHP", "Java", "C++", "x86 Assembly", "Arduino C++", "SQL", "VB.NET"] },
+    { cat: "Modern web & AI", icon: "✦", items: ["React", "Next.js", "Tailwind CSS", "Three.js (React Three Fiber)", "Vite", "Vercel", "Supabase", "Gemini API", "Zod structured outputs", "Prompt design"] },
     { cat: "Mobile", icon: "[]", items: ["Jetpack Compose", "MVVM", "StateFlow", "Retrofit", "Ktor", "Coroutines", "NavController", "Xamarin.Android", "Gradle"] },
     { cat: "Web & Backend", icon: "</>", items: ["ASP.NET Web Forms", "ASP.NET MVC", "PHP + PDO", "REST API design", "SOAP web services", "HTML5", "CSS3", "XAMPP / Apache"] },
     { cat: "Database", icon: "DB", items: ["MySQL", "Oracle SQL", "SQL Server", "MS Access", "ERD modelling", "3NF normalisation", "Triggers & views", "Prepared statements"] },
-    { cat: "Cloud & DevOps", icon: "☁", items: ["AWS EC2", "Amazon S3", "AWS Lambda", "CloudFront", "RDS", "VPC", "IAM", "CloudWatch", "DynamoDB", "Docker", "Kubernetes", "CI/CD", "Git"] },
+    { cat: "Cloud & DevOps", icon: "☁", items: ["AWS EC2", "Amazon S3", "AWS Lambda", "CloudFront", "RDS", "VPC", "IAM", "CloudWatch", "DynamoDB", "SNS", "AWS Backup", "Systems Manager", "Azure App Service", "Azure SQL", "Cosmos DB", "Key Vault", "Azure AD B2C", "Docker", "Kubernetes", "CI/CD", "Infrastructure as Code", "Git"] },
     { cat: "IoT & Hardware", icon: "◈", items: ["Arduino Uno", "ESP8266 NodeMCU", "DHT11", "HW-080", "Relay control", "UART serial", "RFID", "Logisim", "Karnaugh maps", "Tinkercad"] },
     { cat: "Networking", icon: "≋", items: ["Cisco Packet Tracer", "Cisco IOS", "VLANs & trunking", "Inter-VLAN routing", "STP", "EtherChannel", "DHCPv4", "HSRP", "VLSM", "IPv6", "Wireshark"] },
     { cat: "Security", icon: "🔒", items: ["Classical cryptography", "Password hashing (BCrypt)", "Defense in depth validation", "SQL injection prevention", "Least-privilege IAM", "Security group segmentation", "Rate limiting"] },
@@ -1027,7 +1080,7 @@ const data: Site = {
     { id: "ms-aipm",     name: "Microsoft AI Product Manager", issuer: "Microsoft", via: "Coursera · 5-course programme", date: "2 Oct 2025", year: 2025, type: "pro", cat: "Product", featured: true, file: "assets/certs/ms-ai-product-manager.pdf", verify: "" },
     { id: "devops-git",  name: "DevOps Essentials and Version Control with Git", issuer: "Edureka", via: "Coursera", date: "12 Mar 2026", year: 2026, type: "training", cat: "DevOps", featured: true, file: "assets/certs/devops-git.pdf", verify: "https://coursera.org/verify/BSPAGNPD5X1C" },
 
-    { id: "aws-cdas",    name: "AWS Certified Data Analytics Specialty (2023) Hands-on", issuer: "Amazon Web Services", via: "Coursera · 3-course specialization", date: "12 Mar 2026", year: 2026, type: "spec", cat: "Cloud", file: "assets/certs/aws-data-analytics-specialization.pdf", verify: "https://coursera.org/verify/specialization/LYH74CIWAGST", note: "A Coursera specialization preparing for the AWS exam: not the proctored AWS certification itself." },
+    { id: "aws-cdas",    name: "AWS Data Analytics Hands-on Specialization", issuer: "Packt", via: "Coursera · 3-course specialization", date: "12 Mar 2026", year: 2026, type: "spec", cat: "Cloud", file: "assets/certs/aws-data-analytics-specialization.pdf", verify: "https://coursera.org/verify/specialization/LYH74CIWAGST", note: "A Coursera specialization preparing for the AWS exam: not the proctored AWS certification itself." },
     { id: "aws-bdl",     name: "Building Data Lakes on AWS", issuer: "Amazon Web Services", via: "Coursera", date: "19 Feb 2026", year: 2026, type: "training", cat: "Cloud", file: "assets/certs/aws-building-data-lakes.pdf", verify: "https://coursera.org/verify/UZALM9YV5WJY" },
     { id: "s3-deep",     name: "Amazon S3 Deep Dive: Complete AWS Cloud Storage Guide", issuer: "Packt", via: "Coursera", date: "7 Jan 2026", year: 2026, type: "training", cat: "Cloud", file: "assets/certs/amazon-s3-deep-dive.pdf", verify: "https://coursera.org/verify/90XCEERTN8EN" },
     { id: "s3-basics",   name: "AWS S3 Basics", issuer: "Coursera", via: "Guided project", date: "16 Feb 2026", year: 2026, type: "training", cat: "Cloud", file: "assets/certs/aws-s3-basics-project.pdf", verify: "https://coursera.org/verify/K6UKA268L5JM" },
@@ -1081,7 +1134,7 @@ const data: Site = {
     org: "Information Technology Society (ITSOC)",
     where: "Mapúa Malayan Colleges Laguna",
     term: "Academic Year 2024 – 2025",
-    body: "The visible part is events. The actual work is venue coordination, volunteer recruitment, publicity timelines, financial reporting and a term-end report that has to reconcile all of it.",
+    body: "A campus IT society of 700+ members. The visible part is events. The actual work is venue coordination, volunteer recruitment, publicity timelines, financial reporting and a term-end report that has to reconcile all of it.",
     photos: [
       { src: "assets/img/leadership/campaign.jpg", title: "Candidate for President", sub: "ITSOC · A.Y. 2024–2025", cap: "Official candidate poster: Information Technology Society.", hero: true },
       { src: "assets/img/leadership/general-assembly.jpg", title: "IT General Assembly", sub: "On stage", cap: "Hosting the IT General Assembly as ITSOC President.", wide: true },
@@ -1126,38 +1179,49 @@ const data: Site = {
   education: [
     { k: "Ambassador", t: "Mapúa MCL Student Ambassador", p: "Official face of the A.Y. 2024–2025 enrollment campaign. This is the photograph the college published.", m: "A.Y. 2023–2025", img: "assets/img/leadership/ambassador.jpg", cap: "Mapúa Malayan Colleges Laguna ambassador campaign, A.Y. 2024–2025. I'm on the left." },
     { k: "Degree", t: "BS Information Technology", p: "Mapúa Malayan Colleges Laguna. Full academic scholar and President's Lister. Expected graduation 2027.", m: "2023 – 2027 (expected)", mark: "BSIT" },
-    { k: "Capstone", t: "Kusina Kode: Integrating Blockchain Incentives in Gamified Filipino Culinary Education", p: "Project Manager, with ownership of the game systems and cloud integration modules.", m: "Adviser: Khristian G. Kikuchi" },
+    { k: "Capstone", t: "Kusina Kode: Integrating Blockchain Incentives in Gamified Filipino Culinary Education", p: "Project lead and developer, with ownership of the game systems and cloud integration modules. Completed 6 November 2026.", m: "Adviser: Khristian G. Kikuchi" },
+    { k: "Senior high", t: "IT in Mobile App and Web Development (ITMAWD)", p: "Grade 12 at STI College Calamba, Grade 11 at STI College Ortigas-Cainta. Graduated Top 3 of the batch, consistent Top 1 of the ITMAWD strand, and Best Expo and Best App for MusiCalamba.", m: "STI College Calamba" },
     { k: "Immersion", t: "Japan Technology Exposure Tour", p: "Miraikan robotics and AI, DiverCity Tokyo, and how Japan puts technology into public transport and services.", m: "7 – 11 March 2026" }
   ],
 
   honors: [
-    "President's Lister",
+    "Consistent President's Lister",
     "Full Academic Scholar",
+    "Coursera Learner Champion · 2026",
     "President, ITSOC · A.Y. 2024–2025",
     "Student Ambassador · A.Y. 2023–2025"
   ],
 
   techIcons: [
     { name: "Kotlin", slug: "kotlin", color: "7F52FF" },
+    { name: "TypeScript", slug: "typescript", color: "3178C6" },
+    { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
     { name: "C#", slug: "csharp", color: "512BD4" },
     { name: "Python", slug: "python", color: "3776AB" },
     { name: "PHP", slug: "php", color: "777BB4" },
+    { name: "Java", slug: "openjdk", color: "F89820" },
     { name: "C++", slug: "cplusplus", color: "00599C" },
-    { name: "JavaScript", slug: "javascript", color: "F7DF1E" },
     { name: "HTML5", slug: "html5", color: "E34F26" },
     { name: "CSS3", slug: "css", color: "1572B6" },
+    { name: "React", slug: "react", color: "61DAFB" },
+    { name: "Next.js", slug: "nextdotjs", color: "FFFFFF" },
+    { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
+    { name: "Three.js", slug: "threedotjs", color: "FFFFFF" },
+    { name: "Vercel", slug: "vercel", color: "FFFFFF" },
+    { name: "Gemini API", slug: "googlegemini", color: "8E75B2" },
     { name: "MySQL", slug: "mysql", color: "4479A1" },
+    { name: "PostgreSQL", slug: "postgresql", color: "4169E1" },
+    { name: "Supabase", slug: "supabase", color: "3FCF8E" },
+    { name: "SQL Server", mark: "SQL", color: "CC2927" },
     { name: "AWS", slug: "amazonwebservices", color: "FF9900" },
+    { name: "Azure", mark: "AZ", color: "0078D4" },
     { name: "Docker", slug: "docker", color: "2496ED" },
     { name: "Kubernetes", slug: "kubernetes", color: "326CE5" },
     { name: "Git", slug: "git", color: "F05032" },
     { name: "Android", slug: "android", color: "3DDC84" },
     { name: "Arduino", slug: "arduino", color: "00979D" },
     { name: "Figma", slug: "figma", color: "F24E1E" },
-    { name: "Trello", slug: "trello", color: "0052CC" },
     { name: "Cisco", slug: "cisco", color: "1BA0D7" },
-    { name: "Wireshark", slug: "wireshark", color: "1679A7" },
-    { name: "Apache", slug: "apache", color: "D22128" },
     { name: "Power BI", slug: "powerbi", color: "F2C811" },
     { name: "Tableau", slug: "tableau", color: "E97627" },
     { name: "RFID", mark: "RF", color: "B49CFF" },
@@ -1170,15 +1234,15 @@ const data: Site = {
       n: "01",
       k: "IT, systems & build",
       ico: "</>",
-      p: "Android apps, REST APIs, databases and small hardware projects, plus the cloud setup that connects them.",
-      tags: ["Kotlin", "PHP", "Arduino", "AWS", "MySQL", "Figma"]
+      p: "Android apps, web apps, REST APIs, databases and small hardware projects, plus the cloud setup that connects them and AI features built on the Gemini API.",
+      tags: ["Kotlin", "Next.js", "TypeScript", "PHP", "Arduino", "AWS", "Azure", "MySQL", "Figma"]
     },
     {
       n: "02",
       k: "Leadership & delivery",
       ico: "★",
       p: "Keeping group work organized: planning, task tracking and documentation. Also a year serving as ITSOC president.",
-      tags: ["Project management", "Peer mentoring", "Trello", "Technical documentation"]
+      tags: ["Agile and Scrum", "Project management", "Peer mentoring", "Technical documentation"]
     }
   ],
 

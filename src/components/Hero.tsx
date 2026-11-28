@@ -15,6 +15,7 @@ const SCRIPT = [
   '<span class="k">school</span>: Mapúa MCL · BSIT',
   '<span class="k">stack</span>:',
   "  - Kotlin + Jetpack Compose",
+  "  - Next.js · TypeScript",
   "  - PHP / REST · MySQL",
   "  - AWS · Arduino / ESP8266",
   '<span class="p">$</span> <span class="caret"></span>'
@@ -90,7 +91,7 @@ export default function Hero({ ready }: { ready: boolean }) {
             </div>
             <ul className="hero__facts">
               <li><b>Android</b><span>Kotlin · Compose</span></li>
-              <li><b>Web</b><span>PHP · MySQL</span></li>
+              <li><b>Web</b><span>Next.js · PHP</span></li>
               <li><b>IoT &amp; cloud</b><span>Arduino · AWS</span></li>
             </ul>
           </div>
