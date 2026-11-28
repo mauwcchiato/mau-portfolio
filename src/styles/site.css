@@ -201,12 +201,9 @@ main, .foot { position: relative; z-index: 1; }
   transition: transform var(--t) var(--ease), box-shadow var(--t), background var(--t), border-color var(--t), color var(--t);
 }
 .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.btn--primary {
-  background: linear-gradient(135deg, var(--violet), #9333EA 55%, var(--magenta));
-  color: #fff;
-  box-shadow: 0 10px 30px -10px var(--glow), inset 0 1px 0 rgba(255,255,255,.25);
-}
-.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -12px var(--glow), inset 0 1px 0 rgba(255,255,255,.3); }
+/* a plain solid button: no gradient, no glow */
+.btn--primary { background: var(--violet); color: #fff; }
+.btn--primary:hover { background: #6D28D9; }
 .btn--primary:hover svg { transform: translateX(3px); }
 .btn--primary svg { transition: transform var(--t) var(--ease); }
 .btn--glass, .btn--ghost {
@@ -643,8 +640,7 @@ html.is-intro .hero__visual { opacity: 0; transform: scale(.94); filter: blur(6p
 }
 .hero__title em {
   font-style: normal;
-  background: linear-gradient(100deg, var(--violet-hi), var(--magenta) 55%, #FBCFE8);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  color: var(--violet-hi);
 }
 .hero__lead { margin: 0; max-width: 46ch; font-size: clamp(15px, .6rem + .5vw, 18px); line-height: 1.65; color: #C4B5FD; opacity: .9; }
 .hero__copy .profile__actions { margin-top: 6px; }
